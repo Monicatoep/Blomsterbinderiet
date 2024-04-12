@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Blomsterbinderiet.Pages
+namespace Blomsterbinderiet.Pages.Product
 {
     public class ProductDetailsModel : PageModel
     {
