@@ -36,9 +36,71 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top text-muted">
+        @* footer *@
         <div class="container">
-            &copy; 2024 - Blomsterbinderiet - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            @*  *@
+            <div class="row mt-5">
+                <div class="col">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Åbningstider</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mandag</td>
+                                <td>7-18</td>
+                            </tr>
+                            <tr>
+                                <td>Tirsdag</td>
+                                <td>7-18</td>
+                            </tr>
+                            <tr>
+                                <td>Onsdag</td>
+                                <td>7-18</td>
+                            </tr>
+                            <tr>
+                                <td>Torsdag</td>
+                                <td>7-18</td>
+                            </tr>
+                            <tr>
+                                <td>Fredag</td>
+                                <td>7-18</td>
+                            </tr>
+                            <tr>
+                                <td>Lørdag</td>
+                                <td>7-18</td>
+                            </tr>
+                            <tr>
+                                <td>Søndag</td>
+                                <td>7-18</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    
+
+                </div>
+                <div class="col">
+                    <a asp-page="/Static/About">Om os</a> <br />
+                    <a asp-page="/Static/History">Historie</a>
+                    <p></p>
+                    <p>
+                        <b>Adresse</b> - Gågaden 7, 4000 Rosilde<br />
+                        <b>Telefon</b> - 12345678<br />
+                        <b>E-mail</b> - Blomster@binderiet.org
+                    </p>
+                </div>
+                <div class="col">
+                    <a asp-page="/Static/FAQ">Ofte stillede spørgsmål</a> <br />
+                    <a asp-page="/Static/TermsOfService">Handelsbetingelser</a> <br />
+                    <a>Facebook</a> <br />
+                    <a>Instagram</a>
+                </div>
+            </div>
         </div>
     </footer>
 
