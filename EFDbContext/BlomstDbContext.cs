@@ -1,0 +1,15 @@
+﻿using Blomsterbinderiet.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Blomsterbinderiet.EFDbContext
+{
+    public class BlomstDbContext: DbContext
+    {
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            options.UseSqlServer(@"Data Source=mssql7.unoeuro.com;Initial Catalog=tinylink_se_db_blomsterbinderiet;User ID=tinylink_se;Password=dAp6gFkE93wnzmy5Bhxe;TrustServerCertificate=true");
+        }
+
+        public DbSet<User> Users { get; set; }
+    }
+}
