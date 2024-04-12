@@ -1,0 +1,62 @@
+﻿@page
+@model Blomsterbinderiet.Pages.Product.GetAllProductsModel
+@{
+}
+
+<h1 class="pb-5 pt-5 text-center">Vores Produkter</h1>
+
+<div class="row">
+    <div class="col-3">
+        <div class="card-body">
+            <h5 class="card-title">Filter</h5>
+        </div>
+    </div>
+
+    <div class="col-9">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-3">
+            @for(int i = 0; i < 24; i++)
+            {
+                var product = Model.Products.ElementAt(i);
+                <div class="card-body">
+
+                    <h5 class="card-title">@product.Name</h5>
+                    <a><img class="col-12" src="https://www.floranordica.dk/cdn/shop/products/Buket-flora-nordica-min.jpg?v=1654030000" /></a>
+                    @{
+                        string description = product.Description;
+                        if (description.Length > 60)
+                        {
+                            description = description.Substring(0, 57) + "...";
+                        }
+                        <p class="card-text">@description</p>
+                    }
+                    <p class="card-text">@product.Price kr</p>
+                    <div class="d-flex justify-content-between">
+                        <form method="post">
+                            <button class="btn btn-success" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
+                        </form>
+
+                        <a class="btn btn-primary" type="button" title="Se mere" asp-page="GetProduct" asp-route-id="@product.ID">Se mere</a>
+                    </div>
+                </div>
+            }
+            @foreach (var product in Model.Products)
+            {
+                
+            }
+        </div>
+    </div>
+</div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
