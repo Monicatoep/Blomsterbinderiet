@@ -1,0 +1,40 @@
+﻿@page
+@model Blomsterbinderiet.Pages.ProductDetailsModel
+@{
+}
+<div class="row justify-content-center"> @* potential for an carousel *@
+    <img class="col-8" src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" />
+    <div class="col-8 py-3 text-center">
+        <a><img class="col-1" src="https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg" /></a>
+        <a><img class="col-1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png" /></a>
+        <a><img class="col-1" src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg" /></a>
+        <a><img class="col-1" src="https://buffer.com/library/content/images/2023/09/instagram-image-size.jpg" /></a>
+        <a><img class="col-1" src="https://media.istockphoto.com/id/1322220448/photo/abstract-digital-futuristic-eye.jpg?s=612x612&w=0&k=20&c=oAMmGJxyTTNW0XcttULhkp5IxfW9ZTaoVdVwI2KwK5s=" /></a>
+        <a><img class="col-1" src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" /></a>
+        <a><img class="col-1" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" /></a>
+    </div>
+    <div class="col-8">
+        <div class="row">
+            <div class="col-9">
+                <p>
+
+
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultrices leo vehicula augue consectetur commodo. Aenean neque nunc, commodo sit amet metus sed, sagittis accumsan nisi. Integer euismod metus et libero gravida condimentum. Sed eget justo ac eros aliquam vestibulum. Curabitur velit leo, aliquam a orci vitae, ullamcorper ullamcorper sem. Nullam vel diam fringilla, venenatis metus ut, ultrices mauris. Morbi enim tellus, efficitur at tempor nec, interdum nec massa. Aenean fermentum lacinia turpis, porta facilisis ipsum. Donec interdum tortor ut nisl condimentum, et ornare erat tincidunt. Donec vitae quam non diam pellentesque semper. Nam elementum est pellentesque ligula cursus porta.
+
+                    Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque ut porta lacus, pharetra tristique diam. Vivamus lorem orci, tempor sed nisi in, molestie varius enim. Quisque ultrices felis metus, nec sagittis ex pretium et. Praesent cursus vitae felis at mollis. Aliquam euismod diam in quam faucibus.
+                </p>
+            </div>
+            <div class="col-3">
+                <form>
+                    <div class="form-group col mb-2">
+                        <label asp-for="Amount"></label>
+                        <input asp-for="Amount" class="form-control" value="1" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Tilføj til kurv</button>
+                </form>
+                <button class="btn btn-primary mb-2">Tilbage til oversigten</button>
+            </div>
+        </div>
+    </div>
+</div>
