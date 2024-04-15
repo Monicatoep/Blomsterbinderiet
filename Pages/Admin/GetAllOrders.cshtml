@@ -9,13 +9,14 @@
     <table class="table table-bordered table-hover table-striped" width="60%">
         <thead>
             <tr class="btn-secondary active">
-                <th>Order ID</th>
-                <th>Order Date</th>
-                <th>Item Id</th>
-                <th>Item Name</th>
-                <th>Item Price</th>
-                <th>Count</th>
-                <th>Total Order Price</th>
+                <th>Ordre ID</th>
+                <th>Kunde ID</th>
+                <th>Håndteret af</th>
+                <th>Oprettet d.</th>
+                <th>Afsluttet d.</th>
+                <th>Kommentar</th>
+                <th>Status</th>
+                <th>Total pris</th>
             </tr>
         </thead>
         <tbody>
@@ -25,26 +26,29 @@
                 {
                     <tr class="btn-secondary">
                         <td>
-                            @order.OrderId
+                            @order.Id
                         </td>
                         <td>
-                            @order.Date
+                            @order.CustomerId
                         </td>
 
                         <td>
-                            @order.ItemId
+                            @order.EmployeeId
                         </td>
                         <td>
-                            @order.Item.Name
+                            @order.OrderDate
                         </td>
                         <td>
-                            @order.Item.Price
+                            @order.CompletedDate
                         </td>
                         <td>
-                            @order.Count
+                            @order.CommentShop
                         </td>
                         <td>
-                            @(order.Count * order.Item.Price)
+                            @order.Status
+                        </td>
+                        <td>
+                            Pris
                         </td>
                     </tr>
                 }
