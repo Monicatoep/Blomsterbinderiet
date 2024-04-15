@@ -1,10 +1,12 @@
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Blomsterbinderiet.Pages.Admin
 {
+    [Authorize(Roles = "Admin, Employee")]
     public class GetAllOrdersModel : PageModel
     {
         public OrderService OrderService { get; set; }
