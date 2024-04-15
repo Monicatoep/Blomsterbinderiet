@@ -21,5 +21,14 @@ namespace Blomsterbinderiet.Pages.Admin
 
             return Page();
         }
+
+        public async Task<IActionResult> OnPostDenyAsync(int id)
+        {
+            Console.WriteLine("test");
+            Order order= OrderService.GetOrderById(id);
+            order.OrderStatus = Order.Status.Afvist;
+            await OrderService.UpdateOrderAsync(order);
+            return Page();
+        }
     }
 }
