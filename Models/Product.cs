@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
-namespace Blomsterbinderiet.Model
+namespace Blomsterbinderiet.Models
 {
 	public class Product
 	{
