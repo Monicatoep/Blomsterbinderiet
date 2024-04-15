@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Blomsterbinderiet.Model
+namespace Blomsterbinderiet.Models
 {
 	public class Keyword
 	{

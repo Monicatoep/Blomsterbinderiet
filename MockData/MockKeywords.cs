@@ -1,4 +1,4 @@
-﻿using Blomsterbinderiet.Model;
+﻿using Blomsterbinderiet.Models;
 
 namespace Blomsterbinderiet.MockData
 {
