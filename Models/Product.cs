@@ -11,8 +11,8 @@ namespace Blomsterbinderiet.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public decimal Price { get; set; }
-        public byte[] Image { get; set; }
+        public double Price { get; set; }
+        public byte[]? Image { get; set; }
         public ICollection<Keyword> Keywords { get; set; }
         public string Colour { get; set; }
 
@@ -20,7 +20,7 @@ namespace Blomsterbinderiet.Models
 		{
 		}
 
-		public Product(string name, string description, decimal price, /*byte[] image,*/ ICollection<Keyword> keywords, string colour)
+		public Product(string name, string description, double price, /*byte[] image,*/ ICollection<Keyword> keywords, string colour)
 		{
 			Name = name;
 			Description = description;
