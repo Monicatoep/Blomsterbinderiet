@@ -20,7 +20,7 @@ namespace Blomsterbinderiet.Models
         //public int DeliveryId { get; set; }
         //public Delivery Delivery { get; set; }
         public DateTime OrderDate { get; set; }
-        public DateTime CompletedDate { get; set; }
+        public DateTime? CompletedDate { get; set; }
         public string CommentShop { get; set; }
         //public ICollection<OrderLine> OrderLines { get; set; }
         //public enum MyEnum
