@@ -23,6 +23,8 @@ namespace Blomsterbinderiet.Pages.Admin
         [Required(ErrorMessage = "Du skal indtaste et password")]
         public string Password { get; set; }
 
+        [BindProperty]
+        [Required(ErrorMessage ="Du skal vælge rolle")]
         public string Role { get; set; }
 
         [BindProperty]
@@ -46,7 +48,7 @@ namespace Blomsterbinderiet.Pages.Admin
                 return Page();
             }
             await _userService.AddUserAsync(new User(_passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Admin/CreateUserSuccess");
         }
 
         public void OnGet()
