@@ -23,8 +23,6 @@ namespace Blomsterbinderiet.Models
 
         [StringLength(maximumLength:255)]
         public string? Address { get; set; }
-        //public ICollection<Order> Orders { get; set; }
-
 
         public User(string password, string role, string email, string phone, string address)
         {
