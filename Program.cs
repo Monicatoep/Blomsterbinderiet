@@ -1,11 +1,13 @@
 
 using Blomsterbinderiet.EFDbContext;
+using Blomsterbinderiet.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<BlomstDbContext>();
+builder.Services.AddSingleton<UserService>();
 
 var app = builder.Build();
 

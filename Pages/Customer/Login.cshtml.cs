@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using Blomsterbinderiet.Service;
 
 namespace Blomsterbinderiet.Pages.Customer
 {
     public class LoginModel : PageModel
     {       
-        private UserService _userService;
+        private UserService UserService;
 
         [BindProperty]
         public string Email { get; set; }
@@ -20,9 +21,9 @@ namespace Blomsterbinderiet.Pages.Customer
         public string Password { get; set; }
         public string Message { get; set; }
 
-        public LoginPageModel(UserService userService)
+        public LoginModel(UserService userService)
         {
-            _userService = userService;
+            UserService = userService;
         }
 
         public void OnGet()
@@ -31,7 +32,7 @@ namespace Blomsterbinderiet.Pages.Customer
         public async Task<IActionResult> OnPost()
         {
 
-            List<User> users = _userService.Users;
+            List<User> users = UserService.Users;
             foreach (User user in users)
             {
 
@@ -46,7 +47,7 @@ namespace Blomsterbinderiet.Pages.Customer
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, Email) };
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
                             
                         return RedirectToPage("/");
                     }
