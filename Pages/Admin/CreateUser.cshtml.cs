@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blomsterbinderiet.Pages.Admin
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "Admin")]
     public class CreateUserModel : PageModel
     {
         private UserService _userService;
@@ -33,10 +33,10 @@ namespace Blomsterbinderiet.Pages.Admin
         [Required(ErrorMessage = "Du skal indtaste en adresse")]
         public string Address { get; set; }
 
-        public CreateUserModel(UserService userService, PasswordHasher<string> passwordHasher)
+        public CreateUserModel(UserService userService)
         {
             _userService = userService;
-            this._passwordHasher = passwordHasher;
+            this._passwordHasher = new PasswordHasher<string>();
         }
 
         public async Task<IActionResult> OnPostAsync()
