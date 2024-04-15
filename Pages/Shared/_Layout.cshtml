@@ -66,7 +66,7 @@
                                 </button>
 
                                 <div class="dropdown-menu">
-                                    <a class="btn" asp-area="" asp-page="/">Profil</a>
+                                    <a class="btn" asp-area="" asp-page="/Customer/ProfilePage" asp-route-id="@Context.User.Identity.Name.">Profil</a>
                                     <a class="btn" asp-area="" asp-page="/">Mine ordrer</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="btn" asp-area="" asp-page="/Customer/Logout">Log ud</a>
