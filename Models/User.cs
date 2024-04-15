@@ -13,14 +13,12 @@ namespace Blomsterbinderiet.Models
         [Required]
         public string Password { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required]    
         public string Email { get; set; }
 
         public string? Role { get; set; }
 
         [Required]
-        [Phone]
         public string Phone { get; set; }
 
         [StringLength(maximumLength:255)]

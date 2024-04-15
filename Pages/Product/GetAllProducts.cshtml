@@ -4,6 +4,8 @@
 }
 
 <h1 class="pb-5 pt-5 text-center">Vores Produkter</h1>
+<p class="text-center">For loopet kan kun indlæse 5 produkter hvis der er 5 eller flere produkter i databasen
+</p>
 
 <div class="row">
     <div class="col-3">
@@ -14,7 +16,7 @@
 
     <div class="col-9">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-3">
-            @for(int i = 0; i < 24; i++)
+            @for(int i = 0; i < 5; i++)
             {
                 var product = Model.Products.ElementAt(i);
                 <div class="card-body">
@@ -35,7 +37,7 @@
                             <button class="btn btn-success" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
                         </form>
 
-                        <a class="btn btn-primary" type="button" title="Se mere" asp-page="GetProduct" asp-route-id="@product.ID">Se mere</a>
+                        <a class="btn btn-primary" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@product.ID">Se mere</a>
                     </div>
                 </div>
             }
