@@ -25,7 +25,13 @@ namespace Blomsterbinderiet.Service
             }
             return null;
         }
-       
+
+        public void AddUser(User user)
+        {
+            Users.Add(user);
+            DbService.AddObjectAsync(user);
+        }
+
 
     }
 }
