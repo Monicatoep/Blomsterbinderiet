@@ -28,6 +28,16 @@ namespace Blomsterbinderiet.Pages.Admin
             Order order= OrderService.GetOrderById(id);
             order.OrderStatus = Order.Status.Afvist;
             await OrderService.UpdateOrderAsync(order);
+            MyOrders = OrderService.GetAllOrders();
+            return Page();
+        }
+        public async Task<IActionResult> OnPostConfirmAsync(int id)
+        {
+            Console.WriteLine("tes2t");
+            Order order = OrderService.GetOrderById(id);
+            order.OrderStatus = Order.Status.Bekræftet;
+            await OrderService.UpdateOrderAsync(order);
+            MyOrders = OrderService.GetAllOrders();
             return Page();
         }
     }
