@@ -23,8 +23,6 @@ namespace Blomsterbinderiet.Models
         public DateTime? CompletedDate { get; set; }
         public string CommentShop { get; set; }
         //public ICollection<OrderLine> OrderLines { get; set; }
-        //public enum MyEnum
-        //{
         public Status OrderStatus { get; set; }
         
         public enum Status { Ny = 0, Afvist = 1, Bekræftet = 2, Klargøres = 3, Færdig = 4, Udlevet = 5 }
