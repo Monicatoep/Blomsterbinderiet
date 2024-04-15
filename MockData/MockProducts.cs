@@ -1,4 +1,4 @@
-﻿using Blomsterbinderiet.Model;
+﻿using Blomsterbinderiet.Models;
 using System.Data;
 using System.Reflection.Metadata;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
