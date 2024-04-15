@@ -13,6 +13,6 @@ namespace Blomsterbinderiet.EFDbContext
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Keyword> Keywords { get; set; }
-        public DbSet<User> Orders { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }
