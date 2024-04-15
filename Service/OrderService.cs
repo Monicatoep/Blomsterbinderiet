@@ -1,4 +1,5 @@
-﻿using Blomsterbinderiet.Models;
+﻿using Blomsterbinderiet.EFDbContext;
+using Blomsterbinderiet.Models;
 
 namespace Blomsterbinderiet.Service
 {
@@ -21,5 +22,15 @@ namespace Blomsterbinderiet.Service
             return orders;
         }
 
+        public Order GetOrderById(int id)
+        {
+           Order order = DbService.GetObjectByIdAsync(id).Result;
+            return order;
+        }
+        public async Task UpdateOrderAsync(Order order)
+        {
+            await DbService.UpdateObjectAsync(order);
+           
+        }
     }
 }
