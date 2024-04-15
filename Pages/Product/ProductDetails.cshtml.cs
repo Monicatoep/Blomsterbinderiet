@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
+using Blomsterbinderiet.Service;
+using Blomsterbinderiet.Models;
 
 namespace Blomsterbinderiet.Pages.Product
 {
@@ -10,8 +12,17 @@ namespace Blomsterbinderiet.Pages.Product
     {
         [BindProperty]
         public int Amount { get; set; }
-        public void OnGet()
+        public DbGenericService<Models.Product> service { get; set; }
+        public Models.Product Product { get; set; }
+
+        public ProductDetailsModel(DbGenericService<Models.Product> service)
         {
+            this.service = service;
+        }
+
+        public void OnGet(int id)
+        {
+            Product = service.GetObjectByIdAsync(id).Result;
         }
 
         public IActionResult OnPost()

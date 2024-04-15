@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int}"
 @model ProductDetailsModel
 @{
 }
@@ -16,13 +16,7 @@
     <div class="col-8">
         <div class="row">
             <div class="col-9">
-                <p>
-
-
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultrices leo vehicula augue consectetur commodo. Aenean neque nunc, commodo sit amet metus sed, sagittis accumsan nisi. Integer euismod metus et libero gravida condimentum. Sed eget justo ac eros aliquam vestibulum. Curabitur velit leo, aliquam a orci vitae, ullamcorper ullamcorper sem. Nullam vel diam fringilla, venenatis metus ut, ultrices mauris. Morbi enim tellus, efficitur at tempor nec, interdum nec massa. Aenean fermentum lacinia turpis, porta facilisis ipsum. Donec interdum tortor ut nisl condimentum, et ornare erat tincidunt. Donec vitae quam non diam pellentesque semper. Nam elementum est pellentesque ligula cursus porta.
-
-                    Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque ut porta lacus, pharetra tristique diam. Vivamus lorem orci, tempor sed nisi in, molestie varius enim. Quisque ultrices felis metus, nec sagittis ex pretium et. Praesent cursus vitae felis at mollis. Aliquam euismod diam in quam faucibus.
-                </p>
+                <p>@Model.Product.Description</p>
             </div>
             <div class="col-3">
                 <form method="post">
