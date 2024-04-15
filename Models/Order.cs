@@ -23,6 +23,10 @@ namespace Blomsterbinderiet.Models
         public DateTime? CompletedDate { get; set; }
         public string CommentShop { get; set; }
         //public ICollection<OrderLine> OrderLines { get; set; }
+        //public enum MyEnum
+        //{
+        public Status OrderStatus { get; set; }
+        
         public enum Status { Ny = 0, Afvist = 1, Bekræftet = 2, Klargøres = 3, Færdig = 4, Udlevet = 5 }
 
         public Order(int id, int customerId, User customer, int employeeId, User employee, DateTime orderDate, DateTime completedDate, string commentShop)
@@ -35,6 +39,7 @@ namespace Blomsterbinderiet.Models
             OrderDate = orderDate;
             CompletedDate = completedDate;
             CommentShop = commentShop;
+            OrderStatus = Status.Ny;
             
         }
 
