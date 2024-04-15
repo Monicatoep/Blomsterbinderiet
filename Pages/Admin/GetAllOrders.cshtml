@@ -17,6 +17,7 @@
                 <th>Kommentar</th>
                 <th>Status</th>
                 <th>Total pris</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -49,6 +50,11 @@
                         </td>
                         <td>
                             Pris
+                        </td>
+                        <td>
+                            <button class="btn-success" asp-page="confirm" asp-route-id="@order.Id">Bekræft</button>
+                            <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form>
+                            
                         </td>
                     </tr>
                 }

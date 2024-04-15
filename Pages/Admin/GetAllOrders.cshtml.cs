@@ -1,10 +1,12 @@
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Blomsterbinderiet.Pages.Admin
 {
+    [Authorize(Roles = "Admin, Employee")]
     public class GetAllOrdersModel : PageModel
     {
         public OrderService OrderService { get; set; }
@@ -19,6 +21,15 @@ namespace Blomsterbinderiet.Pages.Admin
         {
             MyOrders = OrderService.GetAllOrders();
 
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDenyAsync(int id)
+        {
+            Console.WriteLine("test");
+            Order order= OrderService.GetOrderById(id);
+            order.OrderStatus = Order.Status.Afvist;
+            await OrderService.UpdateOrderAsync(order);
             return Page();
         }
     }

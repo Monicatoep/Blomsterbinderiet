@@ -94,6 +94,25 @@
 
                             </li>
                         }
+                        else if (Context.User.IsInRole("Employee")) //Hvis logget ind som medarbejder 
+                        {
+                            <li class="nav-item dropdown">
+
+                                <button type="button" class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user"></i>
+                                    <span class="sr-only">Toggle Dropleft</span>
+                                </button>
+
+                                <div class="dropdown-menu">
+                                    <a class="btn" asp-area="" asp-page="/">Profil</a>
+                                    <a class="btn" asp-area="" asp-page="/Admin/CreateUser">Opret bruger</a>
+                                    <a class="btn" asp-area="" asp-page="/Admin/GetAllOrders">Se alle ordrer</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="btn" asp-area="" asp-page="/Customer/Logout">Log ud</a>
+                                </div>
+
+                            </li>
+                        }
                         else //Hvis ikke logget ind
                         {
                             <li class="nav-item">
