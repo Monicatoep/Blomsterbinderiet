@@ -26,10 +26,10 @@ namespace Blomsterbinderiet.Service
             return null;
         }
 
-        public void AddUser(User user)
+        public async Task AddUserAsync(User user)
         {
             Users.Add(user);
-            DbService.AddObjectAsync(user);
+            await DbService.AddObjectAsync(user);
         }
 
 

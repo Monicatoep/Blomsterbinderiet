@@ -45,14 +45,14 @@ namespace Blomsterbinderiet.Pages.Customer
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
             Role = "Customer";
-            _userService.AddUser(new User(passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
+            await _userService.AddUserAsync(new User(passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
             return RedirectToPage("/Customer/RegisterSuccess");
         }
     }

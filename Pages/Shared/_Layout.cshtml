@@ -75,7 +75,7 @@
                             </li>
                         }
 
-                        else if (Context.User.IsInRole("admin")) //Hvis logget ind som admin
+                        else if (Context.User.IsInRole("Admin")) //Hvis logget ind som admin
                         {
                             <li class="nav-item dropdown">
 
@@ -86,6 +86,8 @@
 
                                 <div class="dropdown-menu">
                                     <a class="btn" asp-area="" asp-page="/">Profil</a>
+                                    <a class="btn" asp-area="" asp-page="/">Se alle ordrer</a>
+                                    <a class="btn" asp-area="" asp-page="/Admin/CreateUser">Opret bruger</a>
                                     <a class="btn" asp-area="" asp-page="/Admin/GetAllOrders">Se alle ordrer</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="btn" asp-area="" asp-page="/Customer/Logout">Log ud</a>
