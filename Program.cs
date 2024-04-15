@@ -2,6 +2,7 @@
 using Blomsterbinderiet.EFDbContext;
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,21 @@ builder.Services.AddTransient<DbGenericService<Product>, DbGenericService<Produc
 builder.Services.AddTransient<DbGenericService<Keyword>, DbGenericService<Keyword>>();
 builder.Services.AddSingleton<UserService>();
 
+
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    // This lambda determines whether user consent for non-essential cookies is needed for a given request. options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions => {
+    cookieOptions.LoginPath = "/Customer/Login";
+
+});
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -32,4 +47,4 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.Run();
+app.Run(); 
