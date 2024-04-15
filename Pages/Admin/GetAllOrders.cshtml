@@ -1,0 +1,58 @@
+﻿@page
+@model Blomsterbinderiet.Pages.Admin.GetAllOrdersModel
+@{
+}
+<br />
+<h1>Alle ordrer</h1>
+<br />
+<div class="test">
+    <table class="table table-bordered table-hover table-striped" width="60%">
+        <thead>
+            <tr class="btn-secondary active">
+                <th>Ordre ID</th>
+                <th>Kunde ID</th>
+                <th>Håndteret af</th>
+                <th>Oprettet d.</th>
+                <th>Afsluttet d.</th>
+                <th>Kommentar</th>
+                <th>Status</th>
+                <th>Total pris</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (@Model.MyOrders != null)
+            {
+                foreach (var order in Model.MyOrders)
+                {
+                    <tr class="btn-secondary">
+                        <td>
+                            @order.Id
+                        </td>
+                        <td>
+                            @order.CustomerId
+                        </td>
+
+                        <td>
+                            @order.EmployeeId
+                        </td>
+                        <td>
+                            @order.OrderDate
+                        </td>
+                        <td>
+                            @order.CompletedDate
+                        </td>
+                        <td>
+                            @order.CommentShop
+                        </td>
+                        <td>
+                            Status
+                        </td>
+                        <td>
+                            Pris
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
