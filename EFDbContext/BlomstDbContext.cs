@@ -1,5 +1,4 @@
-﻿using Blomsterbinderiet.Model;
-using Blomsterbinderiet.Models;
+﻿using Blomsterbinderiet.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blomsterbinderiet.EFDbContext
