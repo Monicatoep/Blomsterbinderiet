@@ -41,10 +41,8 @@ namespace Blomsterbinderiet.Pages.Customer
                     var passwordHasher = new PasswordHasher<string>();
                     if (passwordHasher.VerifyHashedPassword(null, user.Password, Password) == PasswordVerificationResult.Success)
                     {
-
-                        //LoggedInUser = user;
-
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, Email) };
+                        claims.Add(new Claim(ClaimTypes.Role, user.Role));
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));

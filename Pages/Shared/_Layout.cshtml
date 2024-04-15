@@ -56,7 +56,7 @@
                         <li>
                             <a class="nav-link text-dark ps-4" asp-area="" asp-page="/"><i class="fa fa-shopping-basket fa-lg"></i></a>
                         </li>
-                        @if(true) //Hvis logget ind som bruger
+                        @if(false) //Hvis logget ind som bruger
                         {
                             <li class="nav-item dropdown">
 
@@ -69,18 +69,18 @@
                                     <a class="btn" asp-area="" asp-page="/">Profil</a>
                                     <a class="btn" asp-area="" asp-page="/">Mine ordrer</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="btn" asp-area="" asp-page="/">Log ud</a>
+                                    <a class="btn" asp-area="" asp-page="/Customer/Logout">Log ud</a>
                                 </div>
 
                             </li>
                         }
-                        else if (false)//Hvis ikke logget ind
+                        else if (true)//Hvis ikke logget ind
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/">Login</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Customer/Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Pages/Customer/CustomerSignUp">Opret bruger</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Customer/CustomerSignUp">Opret bruger</a>
                             </li>
                         }
                         else if (false) //Hvis logget ind som admin
