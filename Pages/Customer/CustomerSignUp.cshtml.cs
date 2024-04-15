@@ -23,6 +23,8 @@ namespace Blomsterbinderiet.Pages.Customer
         public string Role { get; set; }
        
         [BindProperty]
+        [MinLength(8, ErrorMessage = "Telefonnummer skal minimum være 8 tegn")]
+        [MaxLength(12, ErrorMessage = "Telefonnummer skal maksimalt være 12 tegn")]
         [Required(ErrorMessage = "Du skal indtaste et telefonnummer")]
         public string Phone { get; set; }
 
