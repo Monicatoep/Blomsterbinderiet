@@ -15,6 +15,7 @@ builder.Services.AddTransient<DbGenericService<Keyword>, DbGenericService<Keywor
 builder.Services.AddTransient<DbGenericService<Order>, DbGenericService<Order>>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<OrderService>();
+builder.Services.AddSingleton<BasketCookieService>();
 
 
 

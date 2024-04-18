@@ -18,6 +18,7 @@ namespace Blomsterbinderiet.Service
         public List<Order> GetAllOrders()
 
         {
+            Orders = DbService.GetObjectsAsync().Result.ToList();
             List<Order> orders = Orders;
             return orders;
         }
