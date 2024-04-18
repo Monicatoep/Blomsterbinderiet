@@ -15,9 +15,11 @@ namespace Blomsterbinderiet.Pages.Customer
         private UserService UserService;
 
         [BindProperty]
+        [Required]
         public string Email { get; set; }
 
         [BindProperty, DataType(DataType.Password)]
+        [Required]
         public string Password { get; set; }
         public string Message { get; set; }
         public string Id { get; set; }
@@ -33,7 +35,10 @@ namespace Blomsterbinderiet.Pages.Customer
 
         public async Task<IActionResult> OnPost()
         {
-
+            if (Email == null || Password == null)
+            {
+                Message = "Invalid attempt";
+                return Page(); }
             List<User> users = UserService.Users;
             foreach (User user in users)
             {
