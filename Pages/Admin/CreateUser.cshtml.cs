@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blomsterbinderiet.Pages.Admin
 {
-    [Authorize(Roles = "Admin, Employee")]
+    [Authorize(Roles = "Admin")]
     public class CreateUserModel : PageModel
     {
         private UserService _userService;
