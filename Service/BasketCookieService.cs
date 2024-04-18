@@ -7,6 +7,8 @@ namespace Blomsterbinderiet.Service
 {
     public class BasketCookieService
     {
+        //https://www.learnrazorpages.com/razor-pages/cookies
+
         private string _cookieName = "BlomsterBinderietBasket";
 
         public ICollection<BasketItem> ReadCookie(IRequestCookieCollection input)
