@@ -54,9 +54,14 @@ namespace Blomsterbinderiet.Pages.Product
                 }
                 temp.Add(new() { ProductID = _ProductID, Amount = _Amount });
             }
-            Found:
+        Found:
             cookieService.SaveCookie(Response.Cookies, temp);
-            return RedirectToPage("/Basket/Basket");
+
+            //the below solution is more flexible than the commented solution
+            Product = service.GetObjectByIdAsync(_ProductID).Result;
+            return Page();
+            //return RedirectToPage("/Product/ProductDetails", new { id = _ProductID });
+            
         }
     }
 }
