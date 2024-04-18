@@ -26,7 +26,7 @@ namespace Blomsterbinderiet.Pages.Admin
 
         public async Task<IActionResult> OnPostDenyAsync(int id)
         {
-            Console.WriteLine("test");
+            
             Order order= OrderService.GetOrderById(id);
             order.OrderStatus = Order.Status.Afvist;
             await OrderService.UpdateOrderAsync(order);
@@ -35,7 +35,7 @@ namespace Blomsterbinderiet.Pages.Admin
         }
         public async Task<IActionResult> OnPostConfirmAsync(int id)
         {
-            Console.WriteLine("tes2t");
+            
             Order order = OrderService.GetOrderById(id);
             order.OrderStatus = Order.Status.Bekræftet;
             await OrderService.UpdateOrderAsync(order);
