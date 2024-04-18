@@ -1,6 +1,7 @@
 using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Security.Claims;
 
 namespace Blomsterbinderiet.Pages.Customer
 {
@@ -12,12 +13,18 @@ namespace Blomsterbinderiet.Pages.Customer
         public ProfilePageModel(DbGenericService<Models.User> service)
         {
             DBService = service;
-            
         }
 
-        public void OnGet(int id)
+        public async Task OnGet()
         {
-            User = DBService.GetObjectByIdAsync(id).Result;
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+                if (userId != null)
+                {
+                    User = await DBService.GetObjectByIdAsync(Convert.ToInt32(userId));
+                }
+            }
         }
     }
 }
