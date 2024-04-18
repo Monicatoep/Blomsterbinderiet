@@ -29,7 +29,8 @@ namespace Blomsterbinderiet.Pages.Customer
 
         public void OnGet()
         {
-        }
+        }  
+
         public async Task<IActionResult> OnPost()
         {
 
@@ -43,22 +44,20 @@ namespace Blomsterbinderiet.Pages.Customer
                     if (passwordHasher.VerifyHashedPassword(null, user.Password, Password) == PasswordVerificationResult.Success)
                     {
                         Id = user.Id.ToString();
-                        var claims = new List<Claim> { new Claim(ClaimTypes.Name, Id)};
+                        var claims = new List<Claim> { new Claim(ClaimTypes.Name, Id) };
                         claims.Add(new Claim(ClaimTypes.Role, user.Role));
                         claims.Add(new Claim(ClaimTypes.Email, Email));
 
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                            
+
                         return RedirectToPage("/index");
                     }
                 }
-
             }
 
             Message = "Invalid attempt";
             return Page();
         }
-     
     }
 }

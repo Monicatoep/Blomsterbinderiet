@@ -17,6 +17,10 @@ namespace Blomsterbinderiet.Pages.Admin
         private PasswordHasher<string> _passwordHasher;
 
         [BindProperty]
+        [Required(ErrorMessage = "Du skal indtaste et navn")]
+        public string Name { get; set; }
+
+        [BindProperty]
         [Required(ErrorMessage = "Du skal indtaste en e-mailadresse")]
         public string Email { get; set; }
 
