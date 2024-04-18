@@ -3,16 +3,26 @@
 @{
 }
 <h1>Basket</h1>
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>ProductID</th>
+            <th>Product name</th>
+            <th>Price per item</th>
             <th>Amount</th>
+            <th>Sum</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-
-        </tr>
+        @foreach(Models.OrderLine item in Model.OrderLines)
+        {
+            <tr>
+                <td>@item.Product.ID</td>
+                <td>@item.Product.Name</td>
+                <td>@item.Product.Price</td>
+                <td>@item.Amount</td>
+                <td>@(item.Product.Price * item.Amount)</td>
+            </tr>
+        }
     </tbody>
 </table>
