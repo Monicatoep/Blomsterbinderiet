@@ -66,10 +66,10 @@
                                 </button>
 
                                 <div class="dropdown-menu">
-                                    <a class="btn" asp-area="" asp-page="/Customer/ProfilePage">Profil</a>
+                                    <a class="btn" asp-area="" asp-page="/UserPages/ProfilePage">Profil</a>
                                     <a class="btn" asp-area="" asp-page="/">Mine ordrer</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="btn" asp-area="" asp-page="/Customer/Logout">Log ud</a>
+                                    <a class="btn" asp-area="" asp-page="/UserPages/Logout">Log ud</a>
                                 </div>
 
                             </li>
@@ -89,7 +89,7 @@
                                     <a class="btn" asp-area="" asp-page="/Admin/CreateUser">Opret bruger</a>
                                     <a class="btn" asp-area="" asp-page="/Admin/GetAllOrders">Se alle ordrer</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="btn" asp-area="" asp-page="/Customer/Logout">Log ud</a>
+                                    <a class="btn" asp-area="" asp-page="/UserPages/Logout">Log ud</a>
                                 </div>
 
                             </li>
@@ -108,7 +108,7 @@
                                     <a class="btn" asp-area="" asp-page="/Admin/CreateUser">Opret bruger</a>
                                     <a class="btn" asp-area="" asp-page="/Admin/GetAllOrders">Se alle ordrer</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="btn" asp-area="" asp-page="/Customer/Logout">Log ud</a>
+                                    <a class="btn" asp-area="" asp-page="/UserPages/Logout">Log ud</a>
                                 </div>
 
                             </li>
@@ -116,7 +116,7 @@
                         else //Hvis ikke logget ind
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Customer/Login">Login</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/UserPages/Login">Login</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Customer/CustomerSignUp">Opret bruger</a>
