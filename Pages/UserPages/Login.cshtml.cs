@@ -22,7 +22,7 @@ namespace Blomsterbinderiet.Pages.Customer
         [Required]
         public string Password { get; set; }
         public string Message { get; set; }
-        public string Id { get; set; }
+        public string ID { get; set; }
 
         public LoginModel(UserService userService)
         {
@@ -48,7 +48,7 @@ namespace Blomsterbinderiet.Pages.Customer
                     var passwordHasher = new PasswordHasher<string>();
                     if (passwordHasher.VerifyHashedPassword(null, user.Password, Password) == PasswordVerificationResult.Success)
                     {
-                        Id = user.Id.ToString();
+                        ID = user.ID.ToString();
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, Id) };
                         claims.Add(new Claim(ClaimTypes.Role, user.Role));
                         claims.Add(new Claim(ClaimTypes.Email, Email));

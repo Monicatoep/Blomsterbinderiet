@@ -3,6 +3,7 @@ using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Blomsterbinderiet.Enum;
 
 namespace Blomsterbinderiet.Pages.Admin
 {
@@ -28,7 +29,7 @@ namespace Blomsterbinderiet.Pages.Admin
         {
             
             Order order= OrderService.GetOrderById(id);
-            order.OrderStatus = Order.Status.Afvist;
+            order.OrderStatus = Status.Afvist;
             await OrderService.UpdateOrderAsync(order);
             MyOrders = OrderService.GetAllOrders();
             return Page();
@@ -37,7 +38,7 @@ namespace Blomsterbinderiet.Pages.Admin
         {
             
             Order order = OrderService.GetOrderById(id);
-            order.OrderStatus = Order.Status.Bekræftet;
+            order.OrderStatus = Status.Bekræftet;
             await OrderService.UpdateOrderAsync(order);
             MyOrders = OrderService.GetAllOrders();
             return Page();
