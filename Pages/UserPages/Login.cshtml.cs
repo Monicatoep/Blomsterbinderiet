@@ -48,7 +48,7 @@ namespace Blomsterbinderiet.Pages.Customer
                     var passwordHasher = new PasswordHasher<string>();
                     if (passwordHasher.VerifyHashedPassword(null, user.Password, Password) == PasswordVerificationResult.Success)
                     {
-                        Id = user.Id.ToString();
+                        Id = user.ID.ToString();
                         var claims = new List<Claim> { new Claim(ClaimTypes.Name, Id) };
                         claims.Add(new Claim(ClaimTypes.Role, user.Role));
                         claims.Add(new Claim(ClaimTypes.Email, Email));

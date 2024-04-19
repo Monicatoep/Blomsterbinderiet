@@ -8,7 +8,7 @@ namespace Blomsterbinderiet.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -43,7 +43,7 @@ namespace Blomsterbinderiet.Models
 
         public override string ToString()
         {
-            return $"{{{nameof(Id)}={Id.ToString()}, {nameof(Name)}={Name}, {nameof(Password)}={Password}, {nameof(Email)}={Email}, {nameof(Role)}={Role}, {nameof(Phone)}={Phone}, {nameof(Address)}={Address}}}";
+            return $"{{{nameof(ID)}={ID.ToString()}, {nameof(Name)}={Name}, {nameof(Password)}={Password}, {nameof(Email)}={Email}, {nameof(Role)}={Role}, {nameof(Phone)}={Phone}, {nameof(Address)}={Address}}}";
         }
     }
 }

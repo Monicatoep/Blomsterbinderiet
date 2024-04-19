@@ -12,11 +12,11 @@ namespace Blomsterbinderiet.Models
         public int Id { get; set; }
 
         [Required]
-        public int CustomerId { get; set; }
+        public int CustomerID { get; set; }
         public User Customer { get; set; }
 
         [Required]
-        public int EmployeeId { get; set; }
+        public int EmployeeID { get; set; }
         public User Employee { get; set; }
         //public int DeliveryId { get; set; }
         //public Delivery Delivery { get; set; }
@@ -31,9 +31,9 @@ namespace Blomsterbinderiet.Models
         public Order(int id, int customerId, User customer, int employeeId, User employee, DateTime orderDate, DateTime completedDate, string commentShop)
         {
             Id = id;
-            CustomerId = customerId;
+            CustomerID = customerId;
             Customer = customer;
-            EmployeeId = employeeId;
+            EmployeeID = employeeId;
             Employee = employee;
             OrderDate = orderDate;
             CompletedDate = completedDate;
@@ -54,7 +54,7 @@ namespace Blomsterbinderiet.Models
 
         public override string ToString()
         {
-            return $"{{{nameof(Id)}={Id.ToString()}, {nameof(CustomerId)}={CustomerId.ToString()}, {nameof(Customer)}={Customer}, {nameof(EmployeeId)}={EmployeeId.ToString()}, {nameof(Employee)}={Employee}, {nameof(OrderDate)}={OrderDate.ToString()}, {nameof(CompletedDate)}={CompletedDate.ToString()}, {nameof(CommentShop)}={CommentShop}}}";
+            return $"{{{nameof(Id)}={Id.ToString()}, {nameof(CustomerID)}={CustomerID.ToString()}, {nameof(Customer)}={Customer}, {nameof(EmployeeID)}={EmployeeID.ToString()}, {nameof(Employee)}={Employee}, {nameof(OrderDate)}={OrderDate.ToString()}, {nameof(CompletedDate)}={CompletedDate.ToString()}, {nameof(CommentShop)}={CommentShop}}}";
         }
 
 
