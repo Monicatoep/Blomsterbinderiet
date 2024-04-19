@@ -49,7 +49,7 @@ namespace Blomsterbinderiet.Pages.Customer
                     if (passwordHasher.VerifyHashedPassword(null, user.Password, Password) == PasswordVerificationResult.Success)
                     {
                         ID = user.ID.ToString();
-                        var claims = new List<Claim> { new Claim(ClaimTypes.Name, Id) };
+                        var claims = new List<Claim> { new Claim(ClaimTypes.Name, ID) };
                         claims.Add(new Claim(ClaimTypes.Role, user.Role));
                         claims.Add(new Claim(ClaimTypes.Email, Email));
 
