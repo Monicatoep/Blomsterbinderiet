@@ -37,14 +37,14 @@ namespace Blomsterbinderiet.Pages.Customer
         public string Address { get; set; }
 
 
-        private UserService _userService;
+        private UserService UserService;
 
-        private PasswordHasher<string> passwordHasher;
+        private PasswordHasher<string> PasswordHasher;
 
         public CustomerSignUpModel(UserService userService)
         {
-            _userService = userService;
-            passwordHasher = new PasswordHasher<string>();
+            UserService = userService;
+            PasswordHasher = new PasswordHasher<string>();
         }
 
         public void OnGet()
@@ -58,7 +58,7 @@ namespace Blomsterbinderiet.Pages.Customer
                 return Page();
             }
             Role = "Customer";
-            await _userService.AddUserAsync(new User(Name, passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
+            await UserService.AddUserAsync(new User(Name, PasswordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
             return RedirectToPage("/Customer/RegisterSuccess");
         }
     }
