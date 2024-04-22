@@ -6,13 +6,18 @@ namespace Blomsterbinderiet.Service
     {
         public List<User> Users { get; set; }
 
-        //private JsonFileService<User> JsonFileService { get; set; }
         private DbGenericService<User> DbService { get; set; }
         public UserService(DbGenericService<User> dbService)
         {
             DbService =dbService;
         ;
             Users = dbService.GetObjectsAsync().Result.ToList();
+        }
+
+        public User GetUserByIdAsync(int id)
+        {
+            User user = DbService.GetObjectByIdAsync(id).Result;
+            return user;
         }
 
 
