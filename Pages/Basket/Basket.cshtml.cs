@@ -37,18 +37,5 @@ namespace Blomsterbinderiet.Pages.Basket
                 }
             }
         }
-
-        public IActionResult OnPostPlus(int ID)
-        {
-            Console.WriteLine("hello");
-            foreach (BasketItem BItem in BasketItems)
-            {
-                if (ID == BItem.ProductID)
-                {
-                    BItem.Amount++;
-                }
-            }
-            return Page();
-        }
     }
 }
