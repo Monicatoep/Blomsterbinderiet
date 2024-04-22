@@ -7,12 +7,13 @@ namespace Blomsterbinderiet.Pages.Customer
 {
     public class ProfilePageModel : PageModel
     {
-        public DbGenericService<Models.User> DBService { get; set; }
+        public UserService UserService { get; set; }
+
         public Models.User User { get; set; }
 
-        public ProfilePageModel(DbGenericService<Models.User> service)
+        public ProfilePageModel(UserService userService)
         {
-            DBService = service;
+            UserService = userService;
         }
 
         public async Task OnGet()
@@ -22,7 +23,7 @@ namespace Blomsterbinderiet.Pages.Customer
                 string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 if (userId != null)
                 {
-                    User = await DBService.GetObjectByIdAsync(Convert.ToInt32(userId));
+                    User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
                 }
             }
         }
