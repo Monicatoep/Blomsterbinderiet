@@ -12,10 +12,10 @@ namespace Blomsterbinderiet.Pages.Basket
     {
         public IEnumerable<BasketItem> BasketItems { get; set; }
         public List<OrderLine> OrderLines { get; set; }
-        public BasketService BasketService { get; set; }
+        public ProductService BasketService { get; set; }
         public BasketCookieService CookieService { get; set; }
 
-        public BasketModel(BasketService service, BasketCookieService cookieService)
+        public BasketModel(ProductService service, BasketCookieService cookieService)
         {
             this.BasketService = service;
             this.CookieService = cookieService;
