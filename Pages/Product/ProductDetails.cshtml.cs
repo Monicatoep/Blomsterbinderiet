@@ -12,53 +12,53 @@ namespace Blomsterbinderiet.Pages.Product
     public class ProductDetailsModel : PageModel
     {
         [BindProperty]
-        public int _Amount { get; set; }
+        public int Amount { get; set; }
         [BindProperty]
-        public int _ProductID { get; set; }
+        public int ProductID { get; set; }
 
-        public DbGenericService<Models.Product> service { get; set; }
-        public BasketCookieService cookieService { get; set; }
+        private ProductService ProductService { get; set; }
+        public BasketCookieService CookieService { get; set; }
         public Models.Product Product { get; set; }
 
-        public ProductDetailsModel(DbGenericService<Models.Product> service, BasketCookieService cookieService)
+        public ProductDetailsModel(ProductService service, BasketCookieService cookieService)
         {
-            this.service = service;
-            this.cookieService = cookieService;
+            this.ProductService = service;
+            this.CookieService = cookieService;
         }
 
         public void OnGet(int id)
         {
-            Product = service.GetObjectByIdAsync(id).Result;
+            Product = ProductService.GetProductByIdAsync(id).Result;
         }
 
         //cookies can only store string values
         public IActionResult OnPost()
         {
-            ICollection<BasketItem> temp = cookieService.ReadCookie(Request.Cookies);
+            ICollection<BasketItem> temp = CookieService.ReadCookie(Request.Cookies);
             
             if (temp == null)
             {
                 //Console.WriteLine("Cookie var tom");
                 temp = new List<BasketItem>();
-                temp.Add(new() { ProductID = _ProductID, Amount = _Amount });
+                temp.Add(new() { ProductID = ProductID, Amount = Amount });
             } else
             {
                 //Console.WriteLine("Cookie var ikke tom");
                 foreach(var i in temp)
                 {
-                    if(i.ProductID == _ProductID)
+                    if(i.ProductID == ProductID)
                     {
-                        i.Amount += _Amount;
+                        i.Amount += Amount;
                         goto Found;
                     }
                 }
-                temp.Add(new() { ProductID = _ProductID, Amount = _Amount });
+                temp.Add(new() { ProductID = ProductID, Amount = Amount });
             }
         Found:
-            cookieService.SaveCookie(Response.Cookies, temp);
+            CookieService.SaveCookie(Response.Cookies, temp);
 
             //the below solution is more flexible than the commented solution
-            Product = service.GetObjectByIdAsync(_ProductID).Result;
+            Product = ProductService.GetProductByIdAsync(ProductID).Result;
             return Page();
             //return RedirectToPage("/Product/ProductDetails", new { id = _ProductID });
             
