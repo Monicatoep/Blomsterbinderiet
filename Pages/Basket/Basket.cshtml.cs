@@ -14,6 +14,7 @@ namespace Blomsterbinderiet.Pages.Basket
         public List<OrderLine> OrderLines { get; set; }
         public ProductService BasketService { get; set; }
         public BasketCookieService CookieService { get; set; }
+        public double OrderSum { get; set; }
 
         public BasketModel(ProductService service, BasketCookieService cookieService)
         {
@@ -22,7 +23,7 @@ namespace Blomsterbinderiet.Pages.Basket
         }
 
         public void OnGet()
-        {
+        {   
             BasketItems = CookieService.ReadCookie(Request.Cookies);
             OrderLines = new();
             if (BasketItems != null)
@@ -32,6 +33,7 @@ namespace Blomsterbinderiet.Pages.Basket
                     Models.Product line = BasketService.GetProductByIdAsync(BItem.ProductID).Result;
                     OrderLine Temporary = new() { Amount = BItem.Amount, Product = line };
                     OrderLines.Add(Temporary);
+                    OrderSum += (Temporary.Product.Price * Temporary.Amount);
                 }
             }
         }
