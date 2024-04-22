@@ -8,18 +8,18 @@ namespace Blomsterbinderiet.Pages.Product
 {
     public class GetAllProductsModel : PageModel
     {
-        private DbGenericService<Models.Product> DbService { get; set; }
+        private ProductService ProductService { get; set; }
 
-        public GetAllProductsModel(DbGenericService<Models.Product> dbService)
+        public GetAllProductsModel(ProductService Service)
         {
-            DbService = dbService;
+            ProductService = Service;
         }
 
         public List<Models.Product> Products { get; private set; } = new List<Models.Product>();
 
 		public void OnGet()
         {
-            Products = DbService.GetObjectsAsync().Result.ToList();
+            Products = ProductService.GetProductsAsync().Result.ToList();
         }
     }
 }

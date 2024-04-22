@@ -12,10 +12,10 @@ namespace Blomsterbinderiet.Pages.Basket
     {
         public IEnumerable<BasketItem> BasketItems { get; set; }
         public List<OrderLine> OrderLines { get; set; }
-        public BasketService BasketService { get; set; }
+        public ProductService BasketService { get; set; }
         public BasketCookieService CookieService { get; set; }
 
-        public BasketModel(BasketService service, BasketCookieService cookieService)
+        public BasketModel(ProductService service, BasketCookieService cookieService)
         {
             this.BasketService = service;
             this.CookieService = cookieService;
@@ -24,15 +24,13 @@ namespace Blomsterbinderiet.Pages.Basket
         public void OnGet()
         {
             BasketItems = CookieService.ReadCookie(Request.Cookies);
-            Console.WriteLine("is basketitems empty" + BasketItems == null);
-            //Console.WriteLine(cookieValue);
             OrderLines = new();
             if (BasketItems != null)
             {
-                foreach (BasketItem helloworld in BasketItems)
+                foreach (BasketItem BItem in BasketItems)
                 {
-                    Models.Product idk = BasketService.GetProductByIdAsync(helloworld.ProductID).Result;
-                    OrderLine Temporary = new() { Amount = helloworld.Amount, Product = idk };
+                    Models.Product line = BasketService.GetProductByIdAsync(BItem.ProductID).Result;
+                    OrderLine Temporary = new() { Amount = BItem.Amount, Product = line };
                     OrderLines.Add(Temporary);
                 }
             }
