@@ -36,7 +36,6 @@ namespace Blomsterbinderiet.Pages.Customer
         [Required(ErrorMessage = "Du skal indtaste en adresse")]
         public string Address { get; set; }
 
-        [BindProperty]
         public string State { get; set; }
 
 

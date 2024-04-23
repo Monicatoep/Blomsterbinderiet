@@ -27,7 +27,7 @@ namespace Blomsterbinderiet.Models
         [StringLength(maximumLength:255)]
         public string? Address { get; set; }
 
-        public string State { get; set; }
+        public string? State { get; set; }
 
         public User(string name, string password, string role, string email, string phone, string address, string state)
         {
