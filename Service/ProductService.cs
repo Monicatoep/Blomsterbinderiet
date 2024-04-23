@@ -3,10 +3,12 @@ namespace Blomsterbinderiet.Service
 {
     public class ProductService
     {
+        public List<Product> Products { get; set; }
         private DbGenericService<Product> DbService { get; set; }
         public ProductService(DbGenericService<Product> dbService)
         {
             DbService = dbService;
+            Products = dbService.GetObjectsAsync().Result.ToList();
         }
 
         public async Task<Product> GetProductByIdAsync(int id)
