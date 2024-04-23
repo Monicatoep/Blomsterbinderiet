@@ -18,7 +18,6 @@ namespace Blomsterbinderiet.Models
 
         [Required]
         public int? EmployeeID { get; set; }
-        
         public User? Employee { get; set; }
         //public int DeliveryId { get; set; }
         //public Delivery Delivery { get; set; }
