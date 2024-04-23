@@ -61,5 +61,21 @@ namespace Blomsterbinderiet.Service
                 await context.SaveChangesAsync();
             }
         }
+
+
+        //https://stackoverflow.com/questions/77892880/are-there-any-safer-alternatives-to-hidden-input-fields-for-persisting-propertie
+        //https://www.reddit.com/r/dotnet/comments/r1srvo/updating_only_changed_fields/
+        public async Task UpdateObjectAsync(T obj, IEnumerable<string> updatedProperties)
+        {
+            using (var context = new BlomstDbContext())
+            {
+                context.Attach(obj);
+                foreach(string property in updatedProperties)
+                {
+                    context.Entry(obj).Property(property).IsModified = true;
+                }
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }
