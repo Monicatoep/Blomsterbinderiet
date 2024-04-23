@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Blomsterbinderiet.Models
 {
@@ -16,7 +17,7 @@ namespace Blomsterbinderiet.Models
         [Required]
         public string Password { get; set; }
 
-        [Required]    
+        [Required]
         public string Email { get; set; }
 
         public string? Role { get; set; }
@@ -27,7 +28,9 @@ namespace Blomsterbinderiet.Models
         [StringLength(maximumLength:255)]
         public string? Address { get; set; }
 
-        public User(string name, string password, string role, string email, string phone, string address)
+        public string? State { get; set; }
+
+        public User(string name, string password, string role, string email, string phone, string address, string state)
         {
             Name = name;
             Password = password;
@@ -35,15 +38,15 @@ namespace Blomsterbinderiet.Models
             Email = email;
             Phone = phone;
             Address = address;
+            State = state;
         }
 
         public User()
         {
         }
-
         public override string ToString()
         {
-            return $"{{{nameof(ID)}={ID.ToString()}, {nameof(Name)}={Name}, {nameof(Password)}={Password}, {nameof(Email)}={Email}, {nameof(Role)}={Role}, {nameof(Phone)}={Phone}, {nameof(Address)}={Address}}}";
+            return $"{{{nameof(ID)}={ID.ToString()}, {nameof(Name)}={Name}, {nameof(Password)}={Password}, {nameof(Email)}={Email}, {nameof(Role)}={Role}, {nameof(Phone)}={Phone}, {nameof(Address)}={Address}, {nameof(State)}={State}}}";
         }
     }
 }

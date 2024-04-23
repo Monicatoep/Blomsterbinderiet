@@ -38,6 +38,16 @@ namespace Blomsterbinderiet.Service
             return null;
         }
 
+        public void UpdateUser(User user)
+        {
+            DbService.UpdateObjectAsync(user);
+        }
+
+        public void UpdateUser(User user, IEnumerable<string> updatedProperties)
+        {
+            DbService.UpdateObjectAsync(user, updatedProperties);
+        }
+
         public async Task AddUserAsync(User user)
         {
             Users.Add(user);

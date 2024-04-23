@@ -42,25 +42,26 @@ namespace Blomsterbinderiet.Pages.Customer
             List<User> users = UserService.Users;
             foreach (User user in users)
             {
-
                 if (Email == user.Email)
                 {
-                    var passwordHasher = new PasswordHasher<string>();
-                    if (passwordHasher.VerifyHashedPassword(null, user.Password, Password) == PasswordVerificationResult.Success)
+                    if(user.State == "Aktiv")
                     {
-                        ID = user.ID.ToString();
-                        var claims = new List<Claim> { new Claim(ClaimTypes.Name, ID) };
-                        claims.Add(new Claim(ClaimTypes.Role, user.Role));
-                        claims.Add(new Claim(ClaimTypes.Email, Email));
+                        var passwordHasher = new PasswordHasher<string>();
+                        if (passwordHasher.VerifyHashedPassword(null, user.Password, Password) == PasswordVerificationResult.Success)
+                        {
+                            ID = user.ID.ToString();
+                            var claims = new List<Claim> { new Claim(ClaimTypes.Name, ID) };
+                            claims.Add(new Claim(ClaimTypes.Role, user.Role));
+                            claims.Add(new Claim(ClaimTypes.Email, Email));
 
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+                            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
-                        return RedirectToPage("/index");
+                            return RedirectToPage("/index");
+                        }
                     }
                 }
             }
-
             Message = "Invalid attempt";
             return Page();
         }
