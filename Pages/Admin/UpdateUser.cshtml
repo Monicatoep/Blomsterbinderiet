@@ -1,0 +1,47 @@
+﻿@page
+@model Blomsterbinderiet.Pages.Admin.UpdateUserModel
+@{
+}
+
+<form method="post">
+	<div class="form-group">
+		<label asp-for="User.ID" class="control-label"></label>
+		<input asp-for="User.ID" class="form-control" readonly="@(true)" />
+		<span asp-validation-for="User.ID" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="User.Name" class="control-label"></label>
+		<input asp-for="User.Name" class="form-control" />
+		<span asp-validation-for="User.Name" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="User.Email" class="control-label"></label>
+		<input asp-for="User.Email" class="form-control" />
+		<span asp-validation-for="User.Email" class="text-danger"></span>
+	</div>
+    <p>Rolle</p>
+    <div class="form-group">
+        <select asp-for="User.Role">
+            <option value="" selected>Vælg en rolle</option>
+            <option value="Employee">Medarbejder</option>
+            <option value="Admin">Administrator</option>
+            <option value="Customer">Kunde</option>
+        </select>
+        <span asp-validation-for="User.Role" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="User.Phone" class="control-label"></label>
+        <input asp-for="User.Phone" class="form-control" />
+        <span asp-validation-for="User.Phone" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="User.Address" class="control-label"></label>
+        <input asp-for="User.Address" class="form-control" />
+        <span asp-validation-for="User.Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Opdater" class="btn btn-primary" />
+    </div>
+</form>
+

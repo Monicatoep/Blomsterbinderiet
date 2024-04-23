@@ -30,7 +30,7 @@ namespace Blomsterbinderiet.Pages.Admin
 		public IActionResult OnPost()
 		{
 			User.State = "Deaktiveret";
-			UserService.
+			//UserService.
 
 			return RedirectToPage("/Admin/GetAllUsers");
 		}
