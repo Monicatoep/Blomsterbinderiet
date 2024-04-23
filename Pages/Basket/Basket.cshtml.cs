@@ -12,30 +12,42 @@ namespace Blomsterbinderiet.Pages.Basket
     {
         public IEnumerable<BasketItem> BasketItems { get; set; }
         public List<OrderLine> OrderLines { get; set; }
-        public ProductService BasketService { get; set; }
+        public ProductService ProductService { get; set; }
         public BasketCookieService CookieService { get; set; }
         public double OrderSum { get; set; }
 
-        public BasketModel(ProductService service, BasketCookieService cookieService)
+        public BasketModel(ProductService productService, BasketCookieService cookieService)
         {
-            this.BasketService = service;
+            this.ProductService = productService;
             this.CookieService = cookieService;
         }
 
         public void OnGet()
-        {   
+        {
             BasketItems = CookieService.ReadCookie(Request.Cookies);
-            OrderLines = new();
+            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            foreach (OrderLine orderLine in OrderLines)
+            {
+                OrderSum += (orderLine.Product.Price * orderLine.Amount);
+            }
+        }
+
+        public IActionResult OnPostPlus(int id)
+        {
+            BasketItems = CookieService.ReadCookie(Request.Cookies);
             if (BasketItems != null)
             {
                 foreach (BasketItem BItem in BasketItems)
                 {
-                    Models.Product line = BasketService.GetProductByIdAsync(BItem.ProductID).Result;
-                    OrderLine Temporary = new() { Amount = BItem.Amount, Product = line };
-                    OrderLines.Add(Temporary);
-                    OrderSum += (Temporary.Product.Price * Temporary.Amount);
+                    if (BItem.ProductID == id)
+                    {
+                        BItem.Amount++;
+                    }
                 }
             }
+            CookieService.SaveCookie(Response.Cookies, BasketItems);
+            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            return Page();
         }
     }
 }
