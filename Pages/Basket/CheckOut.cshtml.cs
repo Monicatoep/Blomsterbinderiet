@@ -38,7 +38,7 @@ namespace Blomsterbinderiet.Pages.Basket
                 }
             }
             OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
-            OrderSum = 100;
+            OrderSum = OrderService.GetOrderSum(OrderLines);
             Console.WriteLine(User);
         }
 
