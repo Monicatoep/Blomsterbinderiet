@@ -27,10 +27,12 @@ namespace Blomsterbinderiet.Pages.Admin
 			return Page();
 		}
 
-		public IActionResult OnPost()
+		public IActionResult OnPostConfirm(int id)
 		{
-			User.State = "Deaktiveret";
-			UserService.
+			User = UserService.GetUserByIdAsync(id);
+            Console.WriteLine(User);
+            User.State = "Deaktiveret";
+			UserService.UpdateUser(User);
 
 			return RedirectToPage("/Admin/GetAllUsers");
 		}
