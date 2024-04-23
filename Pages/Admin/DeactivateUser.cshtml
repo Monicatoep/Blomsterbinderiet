@@ -6,7 +6,7 @@
 <div class="alert alert-danger">
 	<h5>Er du sikker på at du vil deaktivere denne bruger - @Model.User.Name</h5>
 	<form method="post">
-		<a class="btn btn-danger" asp-page-handler="Confirm" asp-route-id="@Model.User.ID">Yes</a>
+		<button type="submit" class="btn btn-danger">Yes</button>
 		<a class="btn btn-primary" asp-page="/Admin/GetAllUsers">No</a>
 	</form>
 </div>

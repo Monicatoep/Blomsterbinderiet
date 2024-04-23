@@ -27,7 +27,7 @@ namespace Blomsterbinderiet.Pages.Admin
 			return Page();
 		}
 
-		public IActionResult OnPostConfirm(int id)
+		public IActionResult OnPost(int id)
 		{
 			User = UserService.GetUserByIdAsync(id);
             Console.WriteLine(User);
