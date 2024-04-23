@@ -35,6 +35,12 @@ namespace Blomsterbinderiet.Pages.UserPages
         {
             if(!ModelState.IsValid)
             {
+                Console.WriteLine(ModelState.IsValid);
+                foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                    Console.WriteLine(error.Exception);
+                }
                 return Page();
             }
             UserService.UpdateUser(User, new List<string>() { nameof(User.Name), nameof(User.Phone), nameof(User.Address) });
