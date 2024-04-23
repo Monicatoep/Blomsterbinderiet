@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Blomsterbinderiet.Enum;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Blomsterbinderiet.Models
 {
@@ -15,29 +16,29 @@ namespace Blomsterbinderiet.Models
         public int CustomerID { get; set; }
         public User Customer { get; set; }
 
-        [Required]
+        
         public int? EmployeeID { get; set; }
+        
         public User? Employee { get; set; }
         //public int DeliveryId { get; set; }
         //public Delivery Delivery { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime? CompletedDate { get; set; }
-        public string CommentShop { get; set; }
+        
+        public string? CommentShop { get; set; }
         //public ICollection<OrderLine> OrderLines { get; set; }
         public Status OrderStatus { get; set; }
         
         
 
-        public Order(int id, int customerId, User customer, int employeeId, User employee, DateTime orderDate, DateTime completedDate, string commentShop)
+        public Order(User customer, DateTime orderDate)
         {
-            Id = id;
-            CustomerID = customerId;
-            Customer = customer;
-            EmployeeID = employeeId;
-            Employee = employee;
+           
+            CustomerID = customer.ID;
+            EmployeeID = null;
+            Employee = null;
             OrderDate = orderDate;
-            CompletedDate = completedDate;
-            CommentShop = commentShop;
+            CommentShop = null;
             OrderStatus = Status.Ny;
             
         }

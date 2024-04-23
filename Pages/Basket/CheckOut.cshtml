@@ -73,6 +73,8 @@
                 </tbody>
             </table>
             Ordresum @Model.OrderSum
-            <a class="btn" asp-area="" asp-page="/Basket/CheckOut">Bekræft Order</a>
+            <form method="post" class="form-inline">
+                <button class="btn btn-success" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft Orde</button>
+            </form>
         </div>
     </div>

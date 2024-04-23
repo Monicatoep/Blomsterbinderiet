@@ -5,14 +5,17 @@ namespace Blomsterbinderiet.Service
 {
     public class OrderService
     {
-        public List<Models.Order> Orders { get; set; }
+        public List<Order> Orders { get; set; }
+        public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
-        private DbGenericService<Models.Order> DbService { get; set; }
-        public OrderService(DbGenericService<Models.Order> dbService)
+        private DbGenericService<Order> DbService { get; set; }
+        private DbGenericService<OrderLine> OrderlineService { get; set; }
+        public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService)
         {
             DbService = dbService;
             ;
             Orders = dbService.GetObjectsAsync().Result.ToList();
+            OrderlineService = orderlineService;
         }
 
         public List<Models.Order> GetAllOrders()
@@ -42,6 +45,16 @@ namespace Blomsterbinderiet.Service
                 orderSum += orderLine.Product.Price * orderLine.Amount;
             }
             return orderSum;
+        }
+        public async Task AddOrderAsync(Order order)
+        {
+            Orders.Add(order);
+            await DbService.AddObjectAsync(order);
+        }
+        public async Task AddOrderLineAsync(OrderLine orderLine)
+        {
+            OrderLines.Add(orderLine);
+            await OrderlineService.AddObjectAsync(orderLine);
         }
     }
 }

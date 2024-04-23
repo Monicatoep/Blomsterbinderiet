@@ -4,6 +4,7 @@ using Blomsterbinderiet.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blomsterbinderiet.Migrations
 {
     [DbContext(typeof(BlomstDbContext))]
-    partial class BlomstDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423092053_Orderupdate4")]
+    partial class Orderupdate4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,9 +98,6 @@ namespace Blomsterbinderiet.Migrations
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
-                    b.Property<double>("ProductPrice")
-                        .HasColumnType("float");
-
                     b.HasKey("ID");
 
                     b.HasIndex("OrderID");
@@ -167,10 +167,6 @@ namespace Blomsterbinderiet.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");

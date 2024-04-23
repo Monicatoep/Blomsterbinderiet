@@ -8,21 +8,23 @@ using System.Security.Claims;
 namespace Blomsterbinderiet.Pages.Basket
 {
     public class CheckOutModel : PageModel
-    { 
+    {
         public UserService UserService { get; set; }
 
-    public Models.User User { get; set; }
-        public IEnumerable<BasketItem> BasketItems { get; set; }
+        public User User { get; set; }
+        public OrderService OrderService { get; set; }
+
         public List<OrderLine> OrderLines { get; set; }
         public ProductService ProductService { get; set; }
         public BasketCookieService CookieService { get; set; }
         public double OrderSum { get; set; }
 
-        public CheckOutModel(UserService userService, ProductService productService, BasketCookieService cookieService)
+        public CheckOutModel(UserService userService, ProductService productService, BasketCookieService cookieService, OrderService orderService)
         {
             UserService = userService;
             this.ProductService = productService;
             this.CookieService = cookieService;
+            this.OrderService = orderService;
         }
 
         public void OnGet()
@@ -35,18 +37,31 @@ namespace Blomsterbinderiet.Pages.Basket
                     User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
                 }
             }
-            BasketItems = CookieService.ReadCookie(Request.Cookies);
-            OrderLines = new();
-            if (BasketItems != null)
+            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            OrderSum = 100;
+            Console.WriteLine(User);
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
             {
-                foreach (BasketItem BItem in BasketItems)
+                string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+                if (userId != null)
                 {
-                    Models.Product line = ProductService.GetProductByIdAsync(BItem.ProductID).Result;
-                    OrderLine Temporary = new() { Amount = BItem.Amount, Product = line };
-                    OrderLines.Add(Temporary);
-                    OrderSum += (Temporary.Product.Price * Temporary.Amount);
+                    User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
                 }
             }
+            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            
+            Models.Order order = new(User, DateTime.Now);
+            await OrderService.AddOrderAsync(order);
+            foreach (OrderLine line in OrderLines)
+            {               
+               await OrderService.AddOrderLineAsync(new OrderLine(order, line.Product, line.Amount));
+            }
+            return RedirectToPage("/Basket/Confirmation");
+            
         }
     }
 }
