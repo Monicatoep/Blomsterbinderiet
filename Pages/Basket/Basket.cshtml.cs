@@ -18,7 +18,7 @@ namespace Blomsterbinderiet.Pages.Basket
         //public OrderService OrderService { get; set; }
         public double OrderSum { get; set; }
 
-        public BasketModel(ProductService productService, BasketCookieService cookieService/*, OrderService orderService*/)
+        public BasketModel(ProductService productService, BasketCookieService cookieService /*, OrderService orderService*/)
         {
             this.ProductService = productService;
             this.CookieService = cookieService;
