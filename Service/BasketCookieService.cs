@@ -40,6 +40,10 @@ namespace Blomsterbinderiet.Service
 
         public IEnumerable<OrderLine> LoadOrderLines(IRequestCookieCollection input)
         {
+            if (ReadCookie(input) == null )
+            {
+                return null;
+            }
             List<BasketItem> basketItems = ReadCookie(input).ToList();
             List<OrderLine> orderLines = new();
 
