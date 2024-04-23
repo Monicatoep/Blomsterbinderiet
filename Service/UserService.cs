@@ -17,6 +17,7 @@ namespace Blomsterbinderiet.Service
 
         public List<User> GetAllUsers()
         {
+            Users = DbService.GetObjectsAsync().Result.ToList();
             return Users;
         }
 
