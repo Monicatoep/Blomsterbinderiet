@@ -24,7 +24,8 @@ namespace Blomsterbinderiet.Pages.UserPages
             {
                 string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 Orders = from p in OrderService.GetAllOrders() 
-                         where p.CustomerID+"" == userId 
+                         where p.CustomerID+"" == userId
+                         orderby p.OrderDate
                          select p;
                 
             }
