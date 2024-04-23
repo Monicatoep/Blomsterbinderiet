@@ -36,6 +36,8 @@ namespace Blomsterbinderiet.Pages.Customer
         [Required(ErrorMessage = "Du skal indtaste en adresse")]
         public string Address { get; set; }
 
+        public string State { get; set; }
+
 
         private UserService UserService;
 
@@ -58,7 +60,8 @@ namespace Blomsterbinderiet.Pages.Customer
                 return Page();
             }
             Role = "Customer";
-            await UserService.AddUserAsync(new User(Name, PasswordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
+            State = "Aktiv";
+            await UserService.AddUserAsync(new User(Name, PasswordHasher.HashPassword(null, Password), Role, Email, Phone, Address, State));
             return RedirectToPage("/UserPages/RegisterSuccess");
         }
     }

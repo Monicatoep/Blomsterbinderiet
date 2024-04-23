@@ -46,6 +46,9 @@ namespace Blomsterbinderiet.Pages.Admin
         [Required(ErrorMessage = "Du skal indtaste en adresse")]
         public string Address { get; set; }
 
+        [BindProperty]
+        public string State { get; set; }
+
         public CreateUserModel(UserService userService)
         {
             _userService = userService;
@@ -58,7 +61,8 @@ namespace Blomsterbinderiet.Pages.Admin
             {
                 return Page();
             }
-            await _userService.AddUserAsync(new User(Name,_passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
+            State = "Aktiv";
+            await _userService.AddUserAsync(new User(Name,_passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address, State));
             return RedirectToPage("/Admin/CreateUserSuccess");
         }
 
