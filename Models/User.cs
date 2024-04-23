@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace Blomsterbinderiet.Models
 {
@@ -16,7 +17,7 @@ namespace Blomsterbinderiet.Models
         [Required]
         public string Password { get; set; }
 
-        [Required]    
+        [Required]
         public string Email { get; set; }
 
         public string? Role { get; set; }

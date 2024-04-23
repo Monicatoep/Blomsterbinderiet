@@ -15,21 +15,30 @@ namespace Blomsterbinderiet.Pages.Basket
         public List<OrderLine> OrderLines { get; set; }
         public ProductService ProductService { get; set; }
         public BasketCookieService CookieService { get; set; }
-        //public OrderService OrderService { get; set; }
+        public OrderService OrderService { get; set; }
         public double OrderSum { get; set; }
 
-        public BasketModel(ProductService productService, BasketCookieService cookieService /*, OrderService orderService*/)
+        public BasketModel(ProductService productService, BasketCookieService cookieService, OrderService orderService)
         {
             this.ProductService = productService;
             this.CookieService = cookieService;
-            //this.OrderService = orderService;
+            this.OrderService = orderService;
         }
 
         public void OnGet()
         {
-            BasketItems = CookieService.ReadCookie(Request.Cookies);
-            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
-            //OrderSum = OrderService.GetOrderSum(OrderLines);
+            if (CookieService.ReadCookie(Request.Cookies) == null)
+            {
+                BasketItems = null;
+                OrderLines = new();
+            }
+            else
+            {
+                BasketItems = CookieService.ReadCookie(Request.Cookies);
+                OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            }
+            
+            OrderSum = OrderService.GetOrderSum(OrderLines);
         }
 
         public IActionResult OnPostPlus(int id)
@@ -47,7 +56,7 @@ namespace Blomsterbinderiet.Pages.Basket
             }
             CookieService.SaveCookie(Response.Cookies, BasketItems);
             OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
-            //OrderSum = OrderService.GetOrderSum(OrderLines);
+            OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
         }
 
@@ -75,7 +84,7 @@ namespace Blomsterbinderiet.Pages.Basket
             }
             CookieService.SaveCookie(Response.Cookies, BasketItems);
             OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
-            //OrderSum = OrderService.GetOrderSum(OrderLines);
+            OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
         }
     }

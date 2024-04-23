@@ -40,6 +40,11 @@ namespace Blomsterbinderiet.Service
         public double GetOrderSum(List<OrderLine> orderLines)
         {
             double orderSum = 0;
+            if (orderLines == null)
+            {
+                return orderSum; 
+            }
+            
             foreach (OrderLine orderLine in orderLines)
             {
                 orderSum += orderLine.Product.Price * orderLine.Amount;
