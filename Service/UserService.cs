@@ -1,4 +1,5 @@
-﻿using Blomsterbinderiet.Models;
+﻿using Blomsterbinderiet.Migrations;
+using Blomsterbinderiet.Models;
 
 namespace Blomsterbinderiet.Service
 {
@@ -12,6 +13,11 @@ namespace Blomsterbinderiet.Service
             DbService =dbService;
         ;
             Users = dbService.GetObjectsAsync().Result.ToList();
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return Users;
         }
 
         public User GetUserByIdAsync(int id)
@@ -35,6 +41,34 @@ namespace Blomsterbinderiet.Service
         {
             Users.Add(user);
             await DbService.AddObjectAsync(user);
+        }
+
+        public IEnumerable<User> SortByName()
+        {
+            return from user in Users
+                   orderby user.Name
+                   select user;
+        }
+
+        public IEnumerable<User> SortByNameDescending()
+        {
+            return from user in Users
+                   orderby user.Name descending
+                   select user;
+        }
+
+        public IEnumerable<User> SortByRole()
+        {
+            return from user in Users
+                   orderby user.Role
+                   select user;
+        }
+
+        public IEnumerable<User> SortByRoleDescending()
+        {
+            return from user in Users
+                   orderby user.Role descending
+                   select user;
         }
 
 

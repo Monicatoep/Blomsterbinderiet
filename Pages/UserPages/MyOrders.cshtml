@@ -1,0 +1,24 @@
+﻿@page
+@model Blomsterbinderiet.Pages.UserPages.MyOrdersModel
+@{
+}
+<h1>Dine ordrer</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Bestillings dato</th>
+            <th>Status</th>
+            <th>ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Models.Order item in Model.Orders)
+        {
+            <tr>
+                <td>@item.OrderDate</td>
+                <td>@item.OrderStatus</td>
+                <td>@item.Id</td>
+            </tr>
+        }
+    </tbody>
+</table>

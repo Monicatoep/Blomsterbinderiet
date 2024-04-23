@@ -18,23 +18,33 @@ namespace Blomsterbinderiet.Service
             OrderlineService = orderlineService;
         }
 
-        public List<Order> GetAllOrders()
+        public List<Models.Order> GetAllOrders()
 
         {
             Orders = DbService.GetObjectsAsync().Result.ToList();
-            List<Order> orders = Orders;
+            List<Models.Order> orders = Orders;
             return orders;
         }
 
-        public Order GetOrderById(int id)
+        public Models.Order GetOrderById(int id)
         {
-           Order order = DbService.GetObjectByIdAsync(id).Result;
+           Models.Order order = DbService.GetObjectByIdAsync(id).Result;
             return order;
         }
-        public async Task UpdateOrderAsync(Order order)
+        public async Task UpdateOrderAsync(Models.Order order)
         {
             await DbService.UpdateObjectAsync(order);
            
+        }
+
+        public double GetOrderSum(List<OrderLine> orderLines)
+        {
+            double orderSum = 0;
+            foreach (OrderLine orderLine in orderLines)
+            {
+                orderSum += orderLine.Product.Price * orderLine.Amount;
+            }
+            return orderSum;
         }
         public async Task AddOrderAsync(Order order)
         {
