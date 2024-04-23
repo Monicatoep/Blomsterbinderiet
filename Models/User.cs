@@ -11,20 +11,24 @@ namespace Blomsterbinderiet.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Du skal indtaste et navn")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Du skal indtaste et password")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Du skal indtaste en e-mailadresse")]
         public string Email { get; set; }
 
         public string? Role { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Du skal indtaste et telefonnummer")]
+        [MinLength(8, ErrorMessage = "Telefonnummer skal minimum være 8 tegn")]
+        [MaxLength(12, ErrorMessage = "Telefonnummer skal maksimalt være 12 tegn")]
         public string Phone { get; set; }
 
+        //[Required(ErrorMessage = "Du skal indtaste en adresse")]
         [StringLength(maximumLength:255)]
         public string? Address { get; set; }
 

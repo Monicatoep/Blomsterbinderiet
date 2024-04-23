@@ -2,7 +2,7 @@
 @model Blomsterbinderiet.Pages.Basket.CheckOutModel
 @{
 }
-<h1>Review order</h1>
+<h1>Ordreoplysninger</h1>
 <div>
     <div class="col-md-10">
         <div class="card mb-3">
@@ -45,7 +45,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-12">
-                        <a class="btn btn-info " target="__blank" href="">Ændre oplysninger</a>
+                        <a class="btn btn-info " target="__blank" href="">Rediger oplysninger</a>
                     </div>
                 </div>
             </div>
@@ -72,9 +72,17 @@
                     }
                 </tbody>
             </table>
+            <form method="post">
+        <div class="form-group">
+            <label asp-for="PickUpTime" class="col-form-label "></label>
+            <div>
+                <input asp-for="PickUpTime" />
+            </div>
+        </div>
+        
             Ordresum @Model.OrderSum
             <form method="post" class="form-inline">
-                <button class="btn btn-success" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft Orde</button>
+                <button class="btn btn-success" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft ordre</button>
             </form>
         </div>
     </div>

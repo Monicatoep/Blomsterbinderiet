@@ -2,11 +2,11 @@
 @model Blomsterbinderiet.Pages.Admin.DeactivateUserModel
 @{
 }
-<h1>Deaktivering></h1>
+<h1>Deaktivering</h1>
 <div class="alert alert-danger">
 	<h5>Er du sikker på at du vil deaktivere denne bruger - @Model.User.Name</h5>
 	<form method="post">
 		<button type="submit" class="btn btn-danger">Yes</button>
-		<a class="btn btn-primary" asp-page="/Item/GetAllItems">No</a>
+		<a class="btn btn-primary" asp-page="/Admin/GetAllUsers">No</a>
 	</form>
 </div>

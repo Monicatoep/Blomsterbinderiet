@@ -18,6 +18,8 @@ namespace Blomsterbinderiet.Pages.Basket
         public ProductService ProductService { get; set; }
         public BasketCookieService CookieService { get; set; }
         public double OrderSum { get; set; }
+        [BindProperty]
+        public DateTime PickUpTime { get; set; }
 
         public CheckOutModel(UserService userService, ProductService productService, BasketCookieService cookieService, OrderService orderService)
         {
@@ -38,7 +40,7 @@ namespace Blomsterbinderiet.Pages.Basket
                 }
             }
             OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
-            OrderSum = 100;
+            OrderSum = OrderService.GetOrderSum(OrderLines);
             Console.WriteLine(User);
         }
 
@@ -54,12 +56,13 @@ namespace Blomsterbinderiet.Pages.Basket
             }
             OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
             
-            Models.Order order = new(User, DateTime.Now);
+            Models.Order order = new(User, DateTime.Now, PickUpTime);
             await OrderService.AddOrderAsync(order);
             foreach (OrderLine line in OrderLines)
             {               
                await OrderService.AddOrderLineAsync(new OrderLine(order, line.Product, line.Amount));
             }
+            CookieService.SaveCookie(Response.Cookies, null);
             return RedirectToPage("/Basket/Confirmation");
             
         }
