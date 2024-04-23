@@ -6,10 +6,10 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Produkt navn</th>
-            <th>Pris per genstand</th>
-            <th>Mængde</th>
-            <th>Sum</th>
+            <th>Produkt</th>
+            <th>Stykpris</th>
+            <th>Antal</th>
+            <th>Totalpris</th>
         </tr>
     </thead>
     <tbody>
@@ -18,9 +18,23 @@
             <tr>
                 <td>@item.Product.Name</td>
                 <td>@item.Product.Price</td>
-                <td>@item.Amount</td>
+                <td>
+                    <form method="post" class="form-inline">
+                        <div class="form-group">
+                            @item.Amount
+                            <i class="px-3"></i>
+                            <button class="btn btn-primary" type="submit" title="Plus en" asp-page-handler="Plus" asp-route-id="@item.ProductID"><i class="fa fa-plus"></i></button>
+                            <button class="btn btn-primary" type="submit" title="Minus en" asp-page-handler="Minus" asp-route-id="@item.ProductID"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </form>
+                </td>
                 <td>@(item.Product.Price * item.Amount)</td>
             </tr>
         }
     </tbody>
 </table>
+@if (HttpContext.User.Identity.IsAuthenticated) 
+{
+    <div>Ordresum @Model.OrderSum <a class="btn" asp-area="" asp-page="/Basket/CheckOut">Færdiggør Order</a></div>
+}
+else{ <div>Ordresum @Model.OrderSum <a class="btn" asp-area="" asp-page="/UserPages/Login">Færdiggør Order</a></div>}
