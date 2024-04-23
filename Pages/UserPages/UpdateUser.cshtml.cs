@@ -8,13 +8,13 @@ namespace Blomsterbinderiet.Pages.UserPages
 {
     public class UpdateUserModel : PageModel
     {
-        public DbGenericService<User> UserService { get; set; }
+        public UserService UserService { get; set; }
         public string Message { get; set; }
 
         [BindProperty]
         public User User { get; set; }
 
-        public UpdateUserModel(DbGenericService<User> userService)
+        public UpdateUserModel(UserService userService)
         {
             UserService = userService;
         }
@@ -26,7 +26,7 @@ namespace Blomsterbinderiet.Pages.UserPages
                 string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 if (userId != null)
                 {
-                    User = UserService.GetObjectByIdAsync(Convert.ToInt32(userId)).Result;
+                    User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
                 }
             }
         }
@@ -37,7 +37,7 @@ namespace Blomsterbinderiet.Pages.UserPages
             {
                 return Page();
             }
-            await UserService.UpdateObjectAsync(User, new List<string>() { nameof(User.Name), nameof(User.Phone), nameof(User.Address) });
+            UserService.UpdateUser(User, new List<string>() { nameof(User.Name), nameof(User.Phone), nameof(User.Address) });
             Message = "Opdaterede din profil";
             return Page();
         }
