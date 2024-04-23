@@ -17,6 +17,7 @@
                 <th>Kommentar</th>
                 <th>Status</th>
                 <th>Total pris</th>
+                <th></th>
                 
             </tr>
         </thead>
@@ -52,9 +53,27 @@
                             Pris
                         </td>
                         <td>
-                            <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn-success">Bekræft</button></form>
-                            <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form>
-                            
+                            @* <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn-success">Bekræft</button></form>
+                            <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form> *@
+                            @if(order.OrderStatus == Blomsterbinderiet.Enum.Status.Ny)
+                            {
+                                <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn-success">Bekræft</button></form>
+                                <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form>
+                            }
+                            else if(order.OrderStatus == Blomsterbinderiet.Enum.Status.Bekræftet)
+                            {
+                                <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn-success">Start klargøring</button></form>
+                            }
+                            else if(order.OrderStatus == Blomsterbinderiet.Enum.Status.Klargøres)
+                            {
+                                <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn-success">Overtag klargøring</button></form>
+                                <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn-success">Klar til afhentning</button></form>
+                            }
+                            else if(order.OrderStatus == Blomsterbinderiet.Enum.Status.Færdig)
+                            {
+                                <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn-success">Udleveret</button></form>
+                            }
+
                         </td>
                     </tr>
                 }

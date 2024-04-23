@@ -33,5 +33,8 @@
         }
     </tbody>
 </table>
-
-<div>Ordresum @Model.OrderSum <a class="btn" asp-area="" asp-page="/UserPages/Login">Færdiggør Order</a></div>
+@if (HttpContext.User.Identity.IsAuthenticated) 
+{
+    <div>Ordresum @Model.OrderSum <a class="btn" asp-area="" asp-page="/Basket/CheckOut">Færdiggør Order</a></div>
+}
+else{ <div>Ordresum @Model.OrderSum <a class="btn" asp-area="" asp-page="/UserPages/Login">Færdiggør Order</a></div>}

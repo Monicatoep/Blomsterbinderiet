@@ -1,0 +1,78 @@
+﻿@page
+@model Blomsterbinderiet.Pages.Basket.CheckOutModel
+@{
+}
+<h1>Review order</h1>
+<div>
+    <div class="col-md-10">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Navn</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.User.Name
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.User.Email
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Telefon</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.User.Phone
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Adresse</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        @Model.User.Address
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a class="btn btn-info " target="__blank" href="">Ændre oplysninger</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Stykpris</th>
+                        <th>Antal</th>
+                        <th>Totalpris</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Models.OrderLine item in Model.OrderLines)
+                    {
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Product.Price</td>
+                            <td>@item.Amount</td>
+                            <td>@(item.Product.Price * item.Amount)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            Ordresum @Model.OrderSum
+            <a class="btn" asp-area="" asp-page="/Basket/CheckOut">Bekræft Order</a>
+        </div>
+    </div>
