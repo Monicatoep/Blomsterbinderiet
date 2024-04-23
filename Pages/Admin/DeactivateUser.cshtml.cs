@@ -17,7 +17,6 @@ namespace Blomsterbinderiet.Pages.Admin
 		[BindProperty]
 		public User User { get; set; }
 
-
 		public IActionResult OnGet(int id)
 		{
 			User = UserService.GetUserByIdAsync(id);
@@ -30,7 +29,6 @@ namespace Blomsterbinderiet.Pages.Admin
 		public IActionResult OnPost(int id)
 		{
 			User = UserService.GetUserByIdAsync(id);
-            Console.WriteLine(User);
             User.State = "Deaktiveret";
 			UserService.UpdateUser(User);
 
