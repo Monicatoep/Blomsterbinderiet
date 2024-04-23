@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Azure.Core;
+using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
 using System.Text.Json;
 
@@ -10,6 +11,13 @@ namespace Blomsterbinderiet.Service
         //https://www.learnrazorpages.com/razor-pages/cookies
 
         private string _cookieName = "BlomsterBinderietBasket";
+
+        public ProductService ProductService { get; set; }
+
+        public BasketCookieService(ProductService productService)
+        {
+            ProductService = productService;
+        }
 
         public ICollection<BasketItem> ReadCookie(IRequestCookieCollection input)
         {
@@ -24,10 +32,25 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public void SaveCookie(IResponseCookies input, ICollection<BasketItem> listOfItems)
+        public void SaveCookie(IResponseCookies input, IEnumerable<BasketItem> listOfItems)
         {
             string jsonString = JsonSerializer.Serialize(listOfItems);
             input.Append(_cookieName, jsonString);
+        }
+
+        public IEnumerable<OrderLine> LoadOrderLines(IRequestCookieCollection input)
+        {
+            List<BasketItem> basketItems = ReadCookie(input).ToList();
+            List<OrderLine> orderLines = new();
+
+            foreach (BasketItem BItem in basketItems)
+            {
+                Product line = ProductService.GetProductByIdAsync(BItem.ProductID).Result;
+                OrderLine Temporary = new() { Amount = BItem.Amount, Product = line };
+                orderLines.Add(Temporary);
+            }
+
+            return orderLines;
         }
     }
 }

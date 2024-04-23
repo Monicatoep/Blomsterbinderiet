@@ -5,33 +5,43 @@ namespace Blomsterbinderiet.Service
 {
     public class OrderService
     {
-        public List<Order> Orders { get; set; }
+        public List<Models.Order> Orders { get; set; }
 
-        private DbGenericService<Order> DbService { get; set; }
-        public OrderService(DbGenericService<Order> dbService)
+        private DbGenericService<Models.Order> DbService { get; set; }
+        public OrderService(DbGenericService<Models.Order> dbService)
         {
             DbService = dbService;
             ;
             Orders = dbService.GetObjectsAsync().Result.ToList();
         }
 
-        public List<Order> GetAllOrders()
+        public List<Models.Order> GetAllOrders()
 
         {
             Orders = DbService.GetObjectsAsync().Result.ToList();
-            List<Order> orders = Orders;
+            List<Models.Order> orders = Orders;
             return orders;
         }
 
-        public Order GetOrderById(int id)
+        public Models.Order GetOrderById(int id)
         {
-           Order order = DbService.GetObjectByIdAsync(id).Result;
+           Models.Order order = DbService.GetObjectByIdAsync(id).Result;
             return order;
         }
-        public async Task UpdateOrderAsync(Order order)
+        public async Task UpdateOrderAsync(Models.Order order)
         {
             await DbService.UpdateObjectAsync(order);
            
+        }
+
+        public double GetOrderSum(List<OrderLine> orderLines)
+        {
+            double orderSum = 0;
+            foreach (OrderLine orderLine in orderLines)
+            {
+                orderSum += orderLine.Product.Price * orderLine.Amount;
+            }
+            return orderSum;
         }
     }
 }
