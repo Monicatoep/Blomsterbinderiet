@@ -72,8 +72,16 @@
                     }
                 </tbody>
             </table>
+            <form method="post">
+        <div class="form-group">
+            <label asp-for="PickUpTime" class="col-form-label "></label>
+            <div>
+                <input asp-for="PickUpTime" />
+            </div>
+        </div>
+        
             Ordresum @Model.OrderSum
-            <form method="post" class="form-inline">
+            
                 <button class="btn btn-success" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft Orde</button>
             </form>
         </div>
