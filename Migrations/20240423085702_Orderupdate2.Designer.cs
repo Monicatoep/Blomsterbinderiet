@@ -4,6 +4,7 @@ using Blomsterbinderiet.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blomsterbinderiet.Migrations
 {
     [DbContext(typeof(BlomstDbContext))]
-    partial class BlomstDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423085702_Orderupdate2")]
+    partial class Orderupdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,6 +64,7 @@ namespace Blomsterbinderiet.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("EmployeeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderDate")
@@ -76,35 +80,6 @@ namespace Blomsterbinderiet.Migrations
                     b.HasIndex("EmployeeID");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Blomsterbinderiet.Models.OrderLine", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<double>("ProductPrice")
-                        .HasColumnType("float");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("OrderID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("OrderLines");
                 });
 
             modelBuilder.Entity("Blomsterbinderiet.Models.Product", b =>
@@ -199,30 +174,13 @@ namespace Blomsterbinderiet.Migrations
 
                     b.HasOne("Blomsterbinderiet.Models.User", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeID");
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
                     b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("Blomsterbinderiet.Models.OrderLine", b =>
-                {
-                    b.HasOne("Blomsterbinderiet.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Blomsterbinderiet.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("KeywordProduct", b =>

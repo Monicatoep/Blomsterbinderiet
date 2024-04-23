@@ -6,7 +6,7 @@ namespace Blomsterbinderiet.Service
     public class OrderService
     {
         public List<Order> Orders { get; set; }
-        public List<OrderLine> OrderLines { get; set; }
+        public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
         private DbGenericService<Order> DbService { get; set; }
         private DbGenericService<OrderLine> OrderlineService { get; set; }

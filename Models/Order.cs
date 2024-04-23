@@ -16,8 +16,9 @@ namespace Blomsterbinderiet.Models
         public int CustomerID { get; set; }
         public User Customer { get; set; }
 
-        [Required]
+        
         public int? EmployeeID { get; set; }
+        
         public User? Employee { get; set; }
         //public int DeliveryId { get; set; }
         //public Delivery Delivery { get; set; }
@@ -34,7 +35,6 @@ namespace Blomsterbinderiet.Models
         {
            
             CustomerID = customer.ID;
-            Customer = customer;
             EmployeeID = null;
             Employee = null;
             OrderDate = orderDate;
