@@ -60,11 +60,11 @@
                             @user.State
                         </td>
                         <td>
+                            <a class="btn btn-primary btn-sm" type="button" title="Edit" asp-page="AdminUpdateUser" asp-route-id="@user.ID"><i class="fa fa-pencil-square-o"></i></a>
                             @if(user.State == "Aktiv")
                             {
                                 <a class="btn btn-danger btn-sm " type="button" title="Deactivate" asp-page="DeactivateUser" asp-route-id="@user.ID"><i class="fa fa-trash"></i></a>
                             }
-                            <a class="btn btn-primary btn-sm" type="button" title="Edit" asp-page="UpdateUser" asp-route-id="@user.ID"><i class="fa fa-pencil-square-o"></i></a>
                         </td>
                     </tr>
                 }
