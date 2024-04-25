@@ -18,7 +18,18 @@ namespace Blomsterbinderiet.Service
 
         public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            return DbService.GetObjectsAsync().Result;
+            return await DbService.GetObjectsAsync();
         }
+
+        public void UpdateProduct(Product product)
+        {
+            DbService.UpdateObjectAsync(product);
+        }
+
+        public void UpdateProduct(Product product, IEnumerable<string> updatedProperties)
+        {
+            DbService.UpdateObjectAsync(product, updatedProperties);
+        }
+
     }
 }

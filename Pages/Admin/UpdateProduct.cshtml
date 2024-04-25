@@ -1,0 +1,39 @@
+﻿@page
+@model Blomsterbinderiet.Pages.Admin.UpdateProductModel
+@{
+}
+<form method="post" enctype="multipart/form-data">
+    <input asp-for="@Model.InputProduct.ID" class="form-control" hidden />
+    <div>
+        <label asp-for="@Model.InputProduct.Name"></label>
+        <input asp-for="@Model.InputProduct.Name" class="form-control" />
+        <span asp-validation-for="@Model.InputProduct.Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="@Model.InputProduct.Description"></label>
+        <input asp-for="@Model.InputProduct.Description" class="form-control" />
+        <span asp-validation-for="@Model.InputProduct.Description" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="@Model.InputProduct.Price"></label>
+        <input asp-for="@Model.InputProduct.Price" class="form-control" />
+        <span asp-validation-for="@Model.InputProduct.Price" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="@Model.InputProduct.UploadedImage"></label>
+        <input asp-for="@Model.InputProduct.UploadedImage" class="form-control" />
+        <span asp-validation-for="@Model.InputProduct.UploadedImage" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="@Model.InputProduct.Disabled"></label>
+        <input class="form-check-input"  asp-for="@Model.InputProduct.Disabled" />
+        <span asp-validation-for="@Model.InputProduct.Disabled" class="text-danger"></span>
+    </div>
+    @if(Model.Confirmation != null)
+    {
+        <p>@Model.Confirmation</p>
+    }
+    <br />
+    <button type="submit" class="btn btn-success">Opdater</button>
+    <a asp-page="/Product/GetAllProducts" class="btn btn-danger">Fortryd</a>
+</form>

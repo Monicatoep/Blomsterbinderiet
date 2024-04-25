@@ -12,9 +12,13 @@ namespace Blomsterbinderiet.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
-        public byte[]? Image { get; set; }
+
+		[NotMapped]
+		public IFormFile? UploadedImage { get; set; }
+		public byte[]? Image { get; set; }
         public ICollection<Keyword> Keywords { get; set; }
         public string Colour { get; set; }
+		public bool Disabled { get; set; }
 
 		public Product()
 		{

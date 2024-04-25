@@ -62,6 +62,8 @@ namespace Blomsterbinderiet.Service
             }
         }
 
+        
+
 
         //https://stackoverflow.com/questions/77892880/are-there-any-safer-alternatives-to-hidden-input-fields-for-persisting-propertie
         //https://www.reddit.com/r/dotnet/comments/r1srvo/updating_only_changed_fields/
@@ -77,5 +79,7 @@ namespace Blomsterbinderiet.Service
                 await context.SaveChangesAsync();
             }
         }
+
+
     }
 }

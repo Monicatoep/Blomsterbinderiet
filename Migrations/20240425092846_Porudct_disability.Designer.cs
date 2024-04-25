@@ -4,6 +4,7 @@ using Blomsterbinderiet.EFDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blomsterbinderiet.Migrations
 {
     [DbContext(typeof(BlomstDbContext))]
-    partial class BlomstDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240425092846_Porudct_disability")]
+    partial class Porudct_disability
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,9 +71,6 @@ namespace Blomsterbinderiet.Migrations
 
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("PickUpDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

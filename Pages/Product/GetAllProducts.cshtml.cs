@@ -15,11 +15,11 @@ namespace Blomsterbinderiet.Pages.Product
             ProductService = Service;
         }
 
-        public List<Models.Product> Products { get; private set; } = new List<Models.Product>();
+        public IEnumerable<Models.Product> Products { get; private set; }
 
 		public void OnGet()
         {
-            Products = ProductService.GetProductsAsync().Result.ToList();
+            Products = ProductService.GetProductsAsync().Result;
         }
     }
 }

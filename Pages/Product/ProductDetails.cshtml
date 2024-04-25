@@ -3,7 +3,18 @@
 @{
 }
 <div class="row justify-content-center"> @* potential for an carousel *@
-    <img class="col-8" src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" />
+    @{
+        if (Model.Product.Image != null)
+        {
+            var base64 = Convert.ToBase64String(Model.Product.Image);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            <img src="@imgSrc" class="img-thumbnail col-8" />
+        } else
+        {
+            <img class="img-thumbnail col-8" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" />
+        }
+    }
+
     <div class="col-8 py-3 text-center">
         <a><img class="col-1" src="https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg" /></a>
         <a><img class="col-1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png" /></a>
