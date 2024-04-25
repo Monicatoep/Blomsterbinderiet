@@ -14,12 +14,12 @@ namespace Blomsterbinderiet.Pages.Admin
         public InputModels.UpdateProduct InputProduct { get; set; }
         public string Confirmation { get; set; }
         public ProductService ProductService { get; set; }
-        public IWebHostEnvironment WebHostEnvironment { get; }
+        public Tools tools { get; set; }
 
-        public UpdateProductModel(ProductService productService, IWebHostEnvironment webHostEnvironment)
+        public UpdateProductModel(ProductService productService, Tools tools)
         {
             ProductService = productService;
-            WebHostEnvironment = webHostEnvironment;
+            this.tools = tools;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
@@ -42,7 +42,7 @@ namespace Blomsterbinderiet.Pages.Admin
             Product.Description = InputProduct.Description;
             if(InputProduct.UploadedImage != null)
             {
-                Product.Image = ConvertToByteArray(InputProduct.UploadedImage).Result;
+                Product.Image = tools.ConvertToByteArray(InputProduct.UploadedImage).Result;
             }
             //Product.Disabled = InputProduct.Disabled;
             ProductService.UpdateProduct(Product);
@@ -52,17 +52,6 @@ namespace Blomsterbinderiet.Pages.Admin
             //return RedirectToPage("/Product/GetAllProducts");
         }
 
-        public async Task<byte[]> ConvertToByteArray(IFormFile temp)
-        {
-            var filePath = Path.Combine(Path.Combine(WebHostEnvironment.WebRootPath, "images"), temp.FileName);
-
-            using (FileStream fs = System.IO.File.Create(filePath))
-            {
-                temp.CopyTo(fs);
-            }
-            byte[] temp2 = System.IO.File.ReadAllBytes(filePath);
-            System.IO.File.Delete(filePath);
-            return temp2;
-        }
+        
     }
 }
