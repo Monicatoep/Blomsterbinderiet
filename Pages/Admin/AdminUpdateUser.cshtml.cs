@@ -33,7 +33,7 @@ namespace Blomsterbinderiet.Pages.Admin
             {
                 return Page();
             }
-            UserService.UpdateUser(User, new List<string>() { nameof(User.Name), nameof(User.Email), nameof(User.Phone), nameof(User.Address) });
+            UserService.UpdateUser(User, new List<string>() { nameof(User.Name), nameof(User.Email), nameof(User.Phone), nameof(User.Address), nameof(User.Role) });
             return RedirectToPage("GetAllUsers");
         }
     }

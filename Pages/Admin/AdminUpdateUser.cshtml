@@ -54,12 +54,13 @@
                                         <h6 class="mb-0">Role</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <select asp-for="@Model.User.Role">
+                                        <select asp-for="@Model.User.Role" >
                                             <option value="" selected>Vælg en rolle</option>
                                             <option value="Employee">Medarbejder</option>
                                             <option value="Admin">Administrator</option>
                                             <option value="Customer">Kunde</option>
                                         </select>
+                                        
                                         <span asp-validation-for="@Model.User.Role" class="text-danger"></span>
                                     </div>
                                 </div>
