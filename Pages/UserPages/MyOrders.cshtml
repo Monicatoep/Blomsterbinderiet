@@ -9,15 +9,17 @@
             <th>Bestillings dato</th>
             <th>Status</th>
             <th>ID</th>
+            <th>Mængde</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (Models.Order item in Model.Orders)
+        @foreach (var item in Model.Orders)
         {
             <tr>
-                <td>@item.OrderDate</td>
-                <td>@item.OrderStatus</td>
-                <td>@item.Id</td>
+                <td>@item.hello.OrderDate</td>
+                <td>@item.hello.OrderStatus</td>
+                <td>@item.hello.Id</td>
+                <td>@item.Amount</td>
             </tr>
         }
     </tbody>

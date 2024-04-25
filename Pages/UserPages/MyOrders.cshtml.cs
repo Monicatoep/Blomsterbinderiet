@@ -10,7 +10,7 @@ namespace Blomsterbinderiet.Pages.UserPages
     {
         public UserService UserService { get; set; }
         public OrderService OrderService { get; set; }
-        public IEnumerable<Order> Orders { get; set; }
+        public IEnumerable<test> Orders { get; set; }
 
         public MyOrdersModel(UserService userService, OrderService orderService)
         {
@@ -25,10 +25,18 @@ namespace Blomsterbinderiet.Pages.UserPages
                 string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 Orders = from p in OrderService.GetAllOrders() 
                          where p.CustomerID+"" == userId
+                         join l in OrderService.OrderlineService.GetObjectsAsync().Result on p.Id equals l.OrderID into ps
                          orderby p.OrderDate
-                         select p;
-                
+                         select new test { hello = p, hello2 = ps, Amount = ps.Sum((OrderLine o) => o.Amount)};
+               
             }
         }
+    }
+    //https://stackoverflow.com/questions/12259365/create-anonymous-object-via-linq
+    public class test
+    {
+        public Order hello;
+        public IEnumerable<OrderLine> hello2;
+        public int Amount;
     }
 }
