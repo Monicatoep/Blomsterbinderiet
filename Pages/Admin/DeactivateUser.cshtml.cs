@@ -7,11 +7,11 @@ namespace Blomsterbinderiet.Pages.Admin
 {
     public class DeactivateUserModel : PageModel
     {
-		private UserService UserService;
+		private UserService _userService;
 
 		public DeactivateUserModel(UserService userService)
 		{
-			UserService = userService;
+			_userService = userService;
 		}
 
 		[BindProperty]
@@ -19,7 +19,7 @@ namespace Blomsterbinderiet.Pages.Admin
 
 		public IActionResult OnGet(int id)
 		{
-			User = UserService.GetUserByIdAsync(id);
+			User = _userService.GetUserByIdAsync(id);
 			if (User == null)
 				return RedirectToPage("/NotFound");
 
@@ -28,9 +28,9 @@ namespace Blomsterbinderiet.Pages.Admin
 
 		public IActionResult OnPost(int id)
 		{
-			User = UserService.GetUserByIdAsync(id);
+			User = _userService.GetUserByIdAsync(id);
             User.State = "Deaktiveret";
-			UserService.UpdateUser(User);
+			_userService.UpdateUser(User);
 
 			return RedirectToPage("/Admin/GetAllUsers");
 		}

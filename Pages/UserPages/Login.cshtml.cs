@@ -12,7 +12,7 @@ namespace Blomsterbinderiet.Pages.Customer
 {
     public class LoginModel : PageModel
     {       
-        private UserService UserService;
+        private UserService _userService;
 
         [BindProperty]
         [Required]
@@ -26,7 +26,7 @@ namespace Blomsterbinderiet.Pages.Customer
 
         public LoginModel(UserService userService)
         {
-            UserService = userService;
+            _userService = userService;
         }
 
         public void OnGet()
@@ -39,7 +39,7 @@ namespace Blomsterbinderiet.Pages.Customer
             {
                 Message = "Invalid attempt";
                 return Page(); }
-            List<User> users = UserService.Users;
+            List<User> users = _userService.Users;
             foreach (User user in users)
             {
                 if (Email == user.Email)

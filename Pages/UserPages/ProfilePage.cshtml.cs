@@ -16,7 +16,7 @@ namespace Blomsterbinderiet.Pages.Customer
             UserService = userService;
         }
 
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {

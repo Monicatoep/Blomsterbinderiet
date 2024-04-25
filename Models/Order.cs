@@ -49,12 +49,6 @@ namespace Blomsterbinderiet.Models
         {
         }
 
-        public decimal GetTotal()
-        {
-            decimal total = 0;
-            return total ;
-        }
-
         public override string ToString()
         {
             return $"{{{nameof(Id)}={Id.ToString()}, {nameof(CustomerID)}={CustomerID.ToString()}, {nameof(Customer)}={Customer}, {nameof(EmployeeID)}={EmployeeID.ToString()}, {nameof(Employee)}={Employee}, {nameof(OrderDate)}={OrderDate.ToString()}, {nameof(CompletedDate)}={CompletedDate.ToString()}, {nameof(CommentShop)}={CommentShop}}}";

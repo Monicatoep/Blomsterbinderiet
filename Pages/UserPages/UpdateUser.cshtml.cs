@@ -31,7 +31,7 @@ namespace Blomsterbinderiet.Pages.UserPages
             }
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if(!ModelState.IsValid)
             {

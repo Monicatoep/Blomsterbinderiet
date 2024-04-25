@@ -39,14 +39,14 @@ namespace Blomsterbinderiet.Pages.Customer
         public string State { get; set; }
 
 
-        private UserService UserService;
+        private UserService _userService;
 
-        private PasswordHasher<string> PasswordHasher;
+        private PasswordHasher<string> _passwordHasher;
 
         public CustomerSignUpModel(UserService userService)
         {
-            UserService = userService;
-            PasswordHasher = new PasswordHasher<string>();
+            _userService = userService;
+            _passwordHasher = new PasswordHasher<string>();
         }
 
         public void OnGet()
@@ -61,7 +61,7 @@ namespace Blomsterbinderiet.Pages.Customer
             }
             Role = "Customer";
             State = "Aktiv";
-            await UserService.AddUserAsync(new User(Name, PasswordHasher.HashPassword(null, Password), Role, Email, Phone, Address, State));
+            await _userService.AddUserAsync(new User(Name, _passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address, State));
             return RedirectToPage("/UserPages/RegisterSuccess");
         }
     }
