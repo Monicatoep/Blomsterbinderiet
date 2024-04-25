@@ -12,20 +12,20 @@ namespace Blomsterbinderiet.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 		[DisplayName("Navn")]
-		[Required(ErrorMessage = "Skal angives et navn")]
+		[Required(ErrorMessage = "Der skal angives et navn")]
         public string Name { get; set; }
 
 		[DisplayName("Beskrivelse")]
-		[Required(ErrorMessage = "Skal angives en beskrivelse")]
+		[Required(ErrorMessage = "Der skal angives en beskrivelse")]
         public string Description { get; set; }
 
 		[DisplayName("Pris")]
-		[Required(ErrorMessage = "Skal angives en pris")]
-		[Range(1, int.MaxValue, ErrorMessage = "Pris skal koste 0kr eller mere")]
+		[Required(ErrorMessage = "Der skal angives en pris")]
+		[Range(1, int.MaxValue, ErrorMessage = "Pris skal være 0kr eller mere")]
         public double Price { get; set; }
 
 		[NotMapped]
-		[DisplayName("Uploadet billede")]
+		[DisplayName("Upload billede")]
 		public IFormFile? UploadedImage { get; set; }
 
 		public byte[]? Image { get; set; }
@@ -33,7 +33,7 @@ namespace Blomsterbinderiet.Models
         public ICollection<Keyword> Keywords { get; set; }
 
 		[DisplayName("Farve")]
-		[Required(ErrorMessage = "Farve skal angives")]
+		[Required(ErrorMessage = "Der skal angives en farve")]
         public string Colour { get; set; }
 
 		[DisplayName("Deaktiveret")]
