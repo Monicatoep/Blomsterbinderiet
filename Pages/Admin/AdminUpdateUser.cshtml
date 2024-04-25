@@ -1,0 +1,94 @@
+﻿@page
+@model Blomsterbinderiet.Pages.Admin.AdminUpdateUserModel
+@{
+}
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-2 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">
+                        Profiloplysninger
+                    </h4>
+                </div>
+                <div class="col-md-10">
+                    <form method="post">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Navn</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input asp-for="@Model.User.Name" class="form-control" />
+                                        <span asp-validation-for="@Model.User.Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Email</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input asp-for="@Model.User.Email" class="form-control" />
+                                        <span asp-validation-for="@Model.User.Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Telefon</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input asp-for="@Model.User.Phone" class="form-control" />
+                                        <span asp-validation-for="@Model.User.Phone" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Role</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <select asp-for="@Model.User.Role">
+                                            <option value="" selected>Vælg en rolle</option>
+                                            <option value="Employee">Medarbejder</option>
+                                            <option value="Admin">Administrator</option>
+                                            <option value="Customer">Kunde</option>
+                                        </select>
+                                        <span asp-validation-for="@Model.User.Role" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Adresse</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input asp-for="@Model.User.Address" class="form-control" />
+                                        <span asp-validation-for="@Model.User.Address" class="text-danger"></span>
+
+                                        <input asp-for="@Model.User.Password" class="form-control" hidden value="placeholder" />
+                                        <input asp-for="@Model.User.ID" class="form-control" hidden />
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-12">
+
+                                        <button type="submit" class="btn btn-success">Opdater profil</button>
+                                        <a class="btn btn-info " asp-page="GetAllUsers">Tilbage</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
