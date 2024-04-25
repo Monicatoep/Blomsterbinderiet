@@ -36,20 +36,15 @@ namespace Blomsterbinderiet.Pages.Admin
                 Confirmation = "Opdatering fejlede";
                 return Page();
             }
+
             Models.Product Product = ProductService.GetProductByIdAsync(InputProduct.ID).Result;
-            Product.Name = InputProduct.Name;
-            Product.Price = InputProduct.Price;
-            Product.Description = InputProduct.Description;
-            if(InputProduct.UploadedImage != null)
-            {
-                Product.Image = tools.ConvertToByteArray(InputProduct.UploadedImage).Result;
-            }
-            //Product.Disabled = InputProduct.Disabled;
-            ProductService.UpdateProduct(Product);
+
+            Models.Product temp = new Models.Product(Product, InputProduct,tools);
+
+            ProductService.UpdateProduct(temp);
 
             Confirmation = "Opdaterede produktet";
             return Page();
-            //return RedirectToPage("/Product/GetAllProducts");
         }
 
         

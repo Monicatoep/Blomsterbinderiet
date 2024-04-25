@@ -1,4 +1,5 @@
-﻿using Blomsterbinderiet.Models;
+﻿using Blomsterbinderiet.Migrations;
+using Blomsterbinderiet.Models;
 namespace Blomsterbinderiet.Service
 {
     public class ProductService
@@ -29,6 +30,11 @@ namespace Blomsterbinderiet.Service
         public void UpdateProduct(Product product, IEnumerable<string> updatedProperties)
         {
             DbService.UpdateObjectAsync(product, updatedProperties);
+        }
+        public async Task AddProductAsync(Product product)
+        {
+            Products.Add(product);
+            await DbService.AddObjectAsync(product);
         }
 
     }

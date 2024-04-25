@@ -43,14 +43,34 @@ namespace Blomsterbinderiet.Models
 		{
 		}
 
-		public Product(string name, string description, double price, /*byte[] image,*/ ICollection<Keyword> keywords, string colour)
+		public Product(string name, string description, double price, /*byte[] image,*/ /*ICollection<Keyword> keywords,*/ string colour)
 		{
 			Name = name;
 			Description = description;
 			Price = price;
 			//Image = image;
-			Keywords = keywords;
+			//Keywords = keywords;
 			Colour = colour;
+		}
+
+		public Product(Product product,InputModels.UpdateProduct newValues, Service.Tools tools)
+		{
+            Name = newValues.Name;
+            Description = newValues.Description;
+            Price = newValues.Price;
+            Colour = newValues.Colour;
+			if(newValues.UploadedImage != null)
+			{
+                Image = tools.ConvertToByteArray(newValues.UploadedImage).Result;
+            } else
+			{
+                Image = product.Image;
+            }
+
+
+            ID = product.ID;
+			Keywords = product.Keywords;
+			Disabled = product.Disabled;
 		}
 
 		public override string ToString()
