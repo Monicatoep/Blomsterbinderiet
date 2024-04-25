@@ -46,7 +46,6 @@ namespace Blomsterbinderiet.Pages.Admin
         [Required(ErrorMessage = "Du skal indtaste en adresse")]
         public string Address { get; set; }
 
-        [BindProperty]
         public string State { get; set; }
 
         public CreateUserModel(UserService userService)
