@@ -23,6 +23,11 @@
         <input asp-for="@Model.Product.UploadedImage" class="form-control" />
         <span asp-validation-for="@Model.Product.UploadedImage" class="text-danger"></span>
     </div>
+    <div>
+        <label asp-for="@Model.Product.Colour"></label>
+        <input asp-for="@Model.Product.Colour" class="form-control" />
+        <span asp-validation-for="@Model.Product.Colour" class="text-danger"></span>
+    </div>
     @*     <div>
     <label asp-for="@Model.InputProduct.Disabled"></label>
     <input class="form-check-input"  asp-for="@Model.InputProduct.Disabled" />

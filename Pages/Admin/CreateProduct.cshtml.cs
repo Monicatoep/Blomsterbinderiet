@@ -7,7 +7,7 @@ namespace Blomsterbinderiet.Pages.Admin
     public class CreateProductModel : PageModel
     {
         [BindProperty]
-        public Models.Product Product { get; set; }
+        public InputModels.UpdateProduct Product { get; set; }
         public string Confirmation { get; set; }
         public ProductService ProductService { get; set; }
         public IWebHostEnvironment WebHostEnvironment { get; }
@@ -30,14 +30,14 @@ namespace Blomsterbinderiet.Pages.Admin
                 Confirmation = "Oprettelse fejlede";
                 return Page();
             }
-            Models.Product Product = new Models.Product();
+            Models.Product NewProduct = new Models.Product(Product.Name,Product.Description,Product.Price, Product.Colour);
             
             if (Product.UploadedImage != null)
             {
-                Product.Image = ConvertToByteArray(Product.UploadedImage).Result;
+                NewProduct.Image = ConvertToByteArray(Product.UploadedImage).Result;
             }
             //Product.Disabled = InputProduct.Disabled;
-            await ProductService.AddProductAsync(Product);
+            await ProductService.AddProductAsync(NewProduct);
 
             Confirmation = "Tilføjet produktet";
             return Page();

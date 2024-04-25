@@ -43,13 +43,13 @@ namespace Blomsterbinderiet.Models
 		{
 		}
 
-		public Product(string name, string description, double price, /*byte[] image,*/ ICollection<Keyword> keywords, string colour)
+		public Product(string name, string description, double price, /*byte[] image,*/ /*ICollection<Keyword> keywords,*/ string colour)
 		{
 			Name = name;
 			Description = description;
 			Price = price;
 			//Image = image;
-			Keywords = keywords;
+			//Keywords = keywords;
 			Colour = colour;
 		}
 
