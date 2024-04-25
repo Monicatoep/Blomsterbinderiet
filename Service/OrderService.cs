@@ -9,7 +9,7 @@ namespace Blomsterbinderiet.Service
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
         private DbGenericService<Order> DbService { get; set; }
-        private DbGenericService<OrderLine> OrderlineService { get; set; }
+        public DbGenericService<OrderLine> OrderlineService { get; set; }
         public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService)
         {
             DbService = dbService;
