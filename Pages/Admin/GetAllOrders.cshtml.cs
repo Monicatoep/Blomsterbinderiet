@@ -73,6 +73,7 @@ namespace Blomsterbinderiet.Pages.Admin
             }
             else if(order.OrderStatus == Status.Færdig)
             {
+                order.CompletedDate = DateTime.Now;
                 order.OrderStatus = Status.Udleveret;
             }
             await OrderService.UpdateOrderAsync(order);

@@ -35,7 +35,12 @@
                         </td>
 
                         <td>
-                            @order.EmployeeID
+                            @if (order.EmployeeID != null)
+                            {
+                                @Model.UserService.GetUserByIdAsync(Convert.ToInt32(order.EmployeeID)).Name
+
+                            }
+                            
                         </td>
                         <td>
                             @order.OrderDate

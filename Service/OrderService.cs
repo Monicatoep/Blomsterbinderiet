@@ -13,7 +13,7 @@ namespace Blomsterbinderiet.Service
         public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService)
         {
             DbService = dbService;
-            ;
+            
             Orders = dbService.GetObjectsAsync().Result.ToList();
             OrderlineService = orderlineService;
         }
