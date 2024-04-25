@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace Blomsterbinderiet.Models
@@ -9,15 +11,32 @@ namespace Blomsterbinderiet.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
+		[DisplayName("Navn")]
+		[Required(ErrorMessage = "Skal angives et navn")]
         public string Name { get; set; }
+
+		[DisplayName("Beskrivelse")]
+		[Required(ErrorMessage = "Skal angives en beskrivelse")]
         public string Description { get; set; }
+
+		[DisplayName("Pris")]
+		[Required(ErrorMessage = "Skal angives en pris")]
+		[Range(1, int.MaxValue, ErrorMessage = "Pris skal koste 0kr eller mere")]
         public double Price { get; set; }
 
 		[NotMapped]
+		[DisplayName("Uploadet billede")]
 		public IFormFile? UploadedImage { get; set; }
+
 		public byte[]? Image { get; set; }
+
         public ICollection<Keyword> Keywords { get; set; }
+
+		[DisplayName("Farve")]
+		[Required(ErrorMessage = "Farve skal angives")]
         public string Colour { get; set; }
+
+		[DisplayName("Deaktiveret")]
 		public bool Disabled { get; set; }
 
 		public Product()

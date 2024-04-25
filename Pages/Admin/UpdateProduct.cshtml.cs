@@ -4,6 +4,7 @@ using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
 using Blomsterbinderiet.Migrations;
 using Microsoft.AspNetCore.Hosting;
+using System.ComponentModel.DataAnnotations;
 
 namespace Blomsterbinderiet.Pages.Admin
 {
