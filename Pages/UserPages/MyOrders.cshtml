@@ -6,20 +6,20 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Bestillings dato</th>
-            <th>Status</th>
             <th>ID</th>
+            <th>Bestillings dato</th>
             <th>Mængde</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Orders)
+        @foreach (var order in Model.Orders)
         {
             <tr>
-                <td>@item.hello.OrderDate</td>
-                <td>@item.hello.OrderStatus</td>
-                <td>@item.hello.Id</td>
-                <td>@item.Amount</td>
+                <td>@order.Order.Id</td>
+                <td>@order.Order.OrderDate</td>
+                <td>@order.Amount</td>
+                <td>@order.Order.OrderStatus</td>
             </tr>
         }
     </tbody>
