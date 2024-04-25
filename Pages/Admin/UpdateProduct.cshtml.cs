@@ -4,6 +4,7 @@ using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
 using Blomsterbinderiet.Migrations;
 using Microsoft.AspNetCore.Hosting;
+using System.ComponentModel.DataAnnotations;
 
 namespace Blomsterbinderiet.Pages.Admin
 {
@@ -24,7 +25,7 @@ namespace Blomsterbinderiet.Pages.Admin
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Models.Product Product = await ProductService.GetProductByIdAsync(id);
-            InputProduct = new() { ID = Product.ID, Description = Product.Description, Name = Product.Name, Price = Product.Price, Disabled=Product.Disabled };
+            InputProduct = new() { ID = Product.ID, Description = Product.Description, Name = Product.Name, Price = Product.Price, /*Disabled=Product.Disabled*/ };
             return Page();
         }
 
@@ -43,7 +44,7 @@ namespace Blomsterbinderiet.Pages.Admin
             {
                 Product.Image = ConvertToByteArray(InputProduct.UploadedImage).Result;
             }
-            Product.Disabled = InputProduct.Disabled;
+            //Product.Disabled = InputProduct.Disabled;
             ProductService.UpdateProduct(Product);
 
             Confirmation = "Opdaterede produktet";
@@ -73,6 +74,6 @@ namespace Blomsterbinderiet.Pages.Admin
         public string Description { get; set; }
         public double Price { get; set; }
         public IFormFile? UploadedImage { get; set; }
-        public bool Disabled { get; set; }
+        //public bool Disabled { get; set; }
     }
 }
