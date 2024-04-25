@@ -38,12 +38,10 @@ namespace Blomsterbinderiet.Pages.Product
             
             if (temp == null)
             {
-                //Console.WriteLine("Cookie var tom");
                 temp = new List<BasketItem>();
                 temp.Add(new() { ProductID = ProductID, Amount = Amount });
             } else
             {
-                //Console.WriteLine("Cookie var ikke tom");
                 foreach(var i in temp)
                 {
                     if(i.ProductID == ProductID)
