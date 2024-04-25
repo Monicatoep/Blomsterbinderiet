@@ -28,9 +28,9 @@ namespace Blomsterbinderiet.Models
         [MaxLength(12, ErrorMessage = "Telefonnummer skal maksimalt være 12 tegn")]
         public string Phone { get; set; }
 
-        //[Required(ErrorMessage = "Du skal indtaste en adresse")]
+        [Required(ErrorMessage = "Du skal indtaste en adresse")]
         [StringLength(maximumLength:255)]
-        public string? Address { get; set; }
+        public string Address { get; set; }
 
         public string? State { get; set; }
 
