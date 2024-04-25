@@ -11,7 +11,7 @@ namespace Blomsterbinderiet.Pages.Admin
     public class UpdateProductModel : PageModel
     {
         [BindProperty]
-        public InputUpdateProductModel InputProduct { get; set; }
+        public InputModels.UpdateProduct InputProduct { get; set; }
         public string Confirmation { get; set; }
         public ProductService ProductService { get; set; }
         public IWebHostEnvironment WebHostEnvironment { get; }
@@ -64,16 +64,5 @@ namespace Blomsterbinderiet.Pages.Admin
             System.IO.File.Delete(filePath);
             return temp2;
         }
-    }
-
-    [ModelMetadataType(typeof(Models.Product))]
-    public class InputUpdateProductModel
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public double Price { get; set; }
-        public IFormFile? UploadedImage { get; set; }
-        //public bool Disabled { get; set; }
     }
 }
