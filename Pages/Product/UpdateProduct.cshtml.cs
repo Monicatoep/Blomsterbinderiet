@@ -25,7 +25,7 @@ namespace Blomsterbinderiet.Pages.Product
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Models.Product Product = await ProductService.GetProductByIdAsync(id);
-            InputProduct = new() { ID = Product.ID, Description = Product.Description, Name = Product.Name, Price = Product.Price, /*Disabled=Product.Disabled*/ };
+            InputProduct = new(Product);
             return Page();
         }
 
@@ -39,9 +39,9 @@ namespace Blomsterbinderiet.Pages.Product
 
             Models.Product Product = ProductService.GetProductByIdAsync(InputProduct.ID).Result;
 
-            Models.Product temp = new Models.Product(Product, InputProduct, tools);
+            InputProduct.UpdateParameterWithNewValues(Product);
 
-            ProductService.UpdateProduct(temp);
+            ProductService.UpdateProduct(Product);
 
             Confirmation = "Opdaterede produktet";
             return Page();

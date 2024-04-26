@@ -30,12 +30,9 @@ namespace Blomsterbinderiet.Pages.Product
                 Confirmation = "Oprettelse fejlede";
                 return Page();
             }
-            Models.Product NewProduct = new Models.Product(Product.Name, Product.Description, Product.Price, Product.Colour);
+            Models.Product NewProduct = new();
 
-            if (Product.UploadedImage != null)
-            {
-                NewProduct.Image = Tools.ConvertToByteArray(Product.UploadedImage).Result;
-            }
+            Product.UpdateParameterWithNewValues(NewProduct);
 
             await ProductService.AddProductAsync(NewProduct);
 
