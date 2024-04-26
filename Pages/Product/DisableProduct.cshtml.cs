@@ -28,9 +28,7 @@ namespace Blomsterbinderiet.Pages.Product
 
         public IActionResult OnPost(int id)
         {
-            Product = _productService.GetProductByIdAsync(id).Result;
-            Product.Disabled = true;
-            _productService.UpdateProduct(Product);
+            _productService.DisableProducAsync(id);
 
             return RedirectToPage("/Product/GetAllProducts");
         }

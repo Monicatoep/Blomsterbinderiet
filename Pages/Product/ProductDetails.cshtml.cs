@@ -34,7 +34,7 @@ namespace Blomsterbinderiet.Pages.Product
         //cookies can only store string values
         public IActionResult OnPost()
         {
-            ICollection<BasketItem> temp = CookieService.ReadCookie(Request.Cookies);
+            ICollection<BasketItem> temp = CookieService.ReadCookie(Request.Cookies).Result;
             
             if (temp == null)
             {

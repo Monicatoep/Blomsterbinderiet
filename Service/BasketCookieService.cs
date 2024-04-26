@@ -19,7 +19,7 @@ namespace Blomsterbinderiet.Service
             ProductService = productService;
         }
 
-        public ICollection<BasketItem> ReadCookie(IRequestCookieCollection input)
+        public async Task<ICollection<BasketItem>> ReadCookie(IRequestCookieCollection input)
         {
             var cookieValue = input[_cookieName];
             if (String.IsNullOrWhiteSpace(cookieValue))
@@ -32,22 +32,21 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public void SaveCookie(IResponseCookies input, IEnumerable<BasketItem> listOfItems)
+        public async Task SaveCookie(IResponseCookies input, IEnumerable<BasketItem> listOfItems)
         {
             string jsonString = JsonSerializer.Serialize(listOfItems);
             input.Append(_cookieName, jsonString);
         }
 
-        public IEnumerable<OrderLine> LoadOrderLines(IRequestCookieCollection input)
+        public async Task<IEnumerable<OrderLine>> LoadOrderLines(IEnumerable<BasketItem> basket)
         {
-            if (ReadCookie(input) == null )
+            if (basket == null )
             {
                 return null;
             }
-            List<BasketItem> basketItems = ReadCookie(input).ToList();
             List<OrderLine> orderLines = new();
 
-            foreach (BasketItem BItem in basketItems)
+            foreach (BasketItem BItem in basket)
             {
                 Product line = ProductService.GetProductByIdAsync(BItem.ProductID).Result;
                 OrderLine Temporary = new() { Amount = BItem.Amount, Product = line };
@@ -55,6 +54,62 @@ namespace Blomsterbinderiet.Service
             }
 
             return orderLines;
+        }
+
+        public async Task<IEnumerable<BasketItem>?> PlusOne(IRequestCookieCollection input, IResponseCookies output, int id)
+        {
+            ICollection<BasketItem> data = await ReadCookie(input);
+            BasketItem temp;
+            if (data != null)
+            {
+                int length = data.Count;
+                for (int i = 0; i < length; i++)
+                {
+                    temp = data.ElementAt(i);
+
+                    if (temp.ProductID == id)
+                    {
+                        temp.Amount += 1;
+                        if (temp.Amount <= 0)
+                        {
+                            data.Remove(temp);
+                        }
+                        goto found;
+                    }
+                }
+            }
+            return data;
+            found:
+            await SaveCookie(output, data);
+            return data;
+        }
+
+        public async Task<IEnumerable<BasketItem>?> MinusOne(IRequestCookieCollection input, IResponseCookies output, int id)
+        {
+            ICollection<BasketItem> data = await ReadCookie(input);
+            BasketItem temp;
+            if (data != null)
+            {
+                int length = data.Count;
+                for(int i=0; i< length; i++)
+                {
+                    temp = data.ElementAt(i);
+
+                    if (temp.ProductID == id)
+                    {
+                        temp.Amount -= 1;
+                        if (temp.Amount <=0)
+                        {
+                            data.Remove(temp);
+                        }
+                        goto found;
+                    }
+                }
+            }
+            return data;
+            found:
+            await SaveCookie(output, data);
+            return data;
         }
     }
 }

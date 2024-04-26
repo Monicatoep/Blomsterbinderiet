@@ -29,7 +29,7 @@ namespace Blomsterbinderiet.Pages.Basket
             this.OrderService = orderService;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
@@ -39,9 +39,10 @@ namespace Blomsterbinderiet.Pages.Basket
                     User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
                 }
             }
-            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookie(Request.Cookies);
+            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
             OrderSum = OrderService.GetOrderSum(OrderLines);
-            Console.WriteLine(User);
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -54,7 +55,8 @@ namespace Blomsterbinderiet.Pages.Basket
                     User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
                 }
             }
-            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookie(Request.Cookies);
+            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
             
             Models.Order order = new(User, DateTime.Now, PickUpTime);
             await OrderService.AddOrderAsync(order);

@@ -34,57 +34,55 @@ namespace Blomsterbinderiet.Pages.Basket
             }
             else
             {
-                BasketItems = CookieService.ReadCookie(Request.Cookies);
-                OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+                BasketItems = CookieService.ReadCookie(Request.Cookies).Result;
+                OrderLines = CookieService.LoadOrderLines(BasketItems).Result.ToList();
             }
             
             OrderSum = OrderService.GetOrderSum(OrderLines);
         }
 
-        public IActionResult OnPostPlus(int id)
+        public async Task<IActionResult> OnPostPlus(int id)
         {
-            BasketItems = CookieService.ReadCookie(Request.Cookies);
-            if (BasketItems != null)
-            {
-                foreach (BasketItem BItem in BasketItems)
-                {
-                    if (BItem.ProductID == id)
-                    {
-                        BItem.Amount++;
-                    }
-                }
-            }
-            CookieService.SaveCookie(Response.Cookies, BasketItems);
-            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            IEnumerable<BasketItem> basketItems = await CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
+
+            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
+
             OrderSum = OrderService.GetOrderSum(OrderLines);
+            
             return Page();
         }
 
-        public IActionResult OnPostMinus(int id)
+        public async Task<IActionResult> OnPostMinus(int id)
         {
-            BasketItems = CookieService.ReadCookie(Request.Cookies).ToList();
-            BasketItem tempProduct = null;
-            if (BasketItems != null)
-            {
-                foreach (BasketItem BItem in BasketItems)
-                {
-                    if (BItem.ProductID == id)
-                    {
-                        BItem.Amount--;
-                        tempProduct = BItem;
-                    }
-                }
-                if (tempProduct != null)
-                {
-                    if (tempProduct.Amount == 0)
-                    {
-                        BasketItems.Remove(tempProduct);
-                    }
-                }
-            }
-            CookieService.SaveCookie(Response.Cookies, BasketItems);
-            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            IEnumerable<BasketItem> basketItems = await CookieService.MinusOne(Request.Cookies, Response.Cookies, id);
+
+            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
+
             OrderSum = OrderService.GetOrderSum(OrderLines);
+
+            //BasketItems = CookieService.ReadCookie(Request.Cookies).ToList();
+            //BasketItem tempProduct = null;
+            //if (BasketItems != null)
+            //{
+            //    foreach (BasketItem BItem in BasketItems)
+            //    {
+            //        if (BItem.ProductID == id)
+            //        {
+            //            BItem.Amount--;
+            //            tempProduct = BItem;
+            //        }
+            //    }
+            //    if (tempProduct != null)
+            //    {
+            //        if (tempProduct.Amount == 0)
+            //        {
+            //            BasketItems.Remove(tempProduct);
+            //        }
+            //    }
+            //}
+            //CookieService.SaveCookie(Response.Cookies, BasketItems);
+            //OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            //OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
         }
     }
