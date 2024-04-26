@@ -1,5 +1,7 @@
 ﻿using Blomsterbinderiet.EFDbContext;
+using Blomsterbinderiet.Enum;
 using Blomsterbinderiet.Models;
+using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
 {
@@ -10,6 +12,8 @@ namespace Blomsterbinderiet.Service
 
         private DbGenericService<Order> DbService { get; set; }
         public DbGenericService<OrderLine> OrderlineService { get; set; }
+        public UserService UserService { get; set; }
+    
         public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService)
         {
             DbService = dbService;
@@ -60,6 +64,50 @@ namespace Blomsterbinderiet.Service
         {
             OrderLines.Add(orderLine);
             await OrderlineService.AddObjectAsync(orderLine);
+        }
+
+        public async Task DenyOrderAsync(int id)
+        {
+            Order order = DbService.GetObjectByIdAsync(id).Result;
+            order.OrderStatus = Status.Afvist;
+            await DbService.UpdateObjectAsync(order);
+        }
+
+        public async Task ConfirmOrderAsync(int id)
+        {
+            Order order = DbService.GetObjectByIdAsync(id).Result;
+            order.OrderStatus = Status.Bekræftet;
+            await DbService.UpdateObjectAsync(order);
+        }
+
+        public async Task OrderInProgressAsync(int id, string uId)
+        {
+            Order order = DbService.GetObjectByIdAsync(id).Result;
+            order.OrderStatus = Status.Klargøres;
+
+            string userId = uId;
+            if (userId != null)
+            {
+                order.Employee = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
+                order.EmployeeID = order.Employee.ID;
+            }
+
+            await DbService.UpdateObjectAsync(order);
+        }
+
+        public async Task ChangeOrderStatusAsync(int id)
+        {
+            Order order = DbService.GetObjectByIdAsync(id).Result;
+            if (order.OrderStatus == Status.Klargøres)
+            {
+                order.OrderStatus = Status.Færdig;
+            }
+            else if (order.OrderStatus == Status.Færdig)
+            {
+                order.CompletedDate = DateTime.Now;
+                order.OrderStatus = Status.Udleveret;
+            }
+            await DbService.UpdateObjectAsync(order);
         }
     }
 }
