@@ -109,5 +109,10 @@ namespace Blomsterbinderiet.Service
             }
             await DbService.UpdateObjectAsync(order);
         }
+
+        public async Task GetOrdersByUserId()
+        {
+
+        }
     }
 }
