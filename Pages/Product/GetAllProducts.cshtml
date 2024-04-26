@@ -42,7 +42,7 @@
                             <a class="btn btn-primary" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@product.ID">Se mere</a>
                             @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
                             {
-                                <a class="btn btn-primary" asp-page="/Admin/UpdateProduct" asp-route-id="@product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
+                                <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
                             }
                         </div>
                     </div>

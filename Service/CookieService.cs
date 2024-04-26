@@ -2,6 +2,9 @@
 using Azure.Core;
 using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace Blomsterbinderiet.Service
@@ -97,6 +100,26 @@ namespace Blomsterbinderiet.Service
         public async Task<IEnumerable<BasketItem>?> PlusOne(IRequestCookieCollection input, IResponseCookies output, int id)
         {
             return await ChangeAmount(input, output, id, 1);
+        }
+
+        public async Task<ClaimsIdentity> Login(HttpContext context,IEnumerable<User> listOfUsers, string email, string password)
+        {
+            foreach (User user in listOfUsers)
+            {
+                if (email == user.Email && user.State == "Aktiv")
+                {
+                    var passwordHasher = new PasswordHasher<string>();
+                    if (passwordHasher.VerifyHashedPassword(null, user.Password, password) == PasswordVerificationResult.Success)
+                    {
+                        var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.ID.ToString()) };
+                        claims.Add(new Claim(ClaimTypes.Role, user.Role));
+                        claims.Add(new Claim(ClaimTypes.Email, email));
+
+                        return new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    }
+                }
+            }
+            return null;
         }
     }
 }

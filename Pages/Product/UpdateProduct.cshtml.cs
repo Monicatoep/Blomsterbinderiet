@@ -37,7 +37,7 @@ namespace Blomsterbinderiet.Pages.Product
                 return Page();
             }
 
-            Models.Product Product = ProductService.GetProductByIdAsync(InputProduct.ID).Result;
+            Models.Product Product = await ProductService.GetProductByIdAsync(InputProduct.ID);
 
             ProductService.UpdateProduct(InputProduct.UpdateParameterWithNewValues(Product));
 

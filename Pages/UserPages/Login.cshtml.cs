@@ -24,9 +24,12 @@ namespace Blomsterbinderiet.Pages.Customer
         public string Message { get; set; }
         public string ID { get; set; }
 
-        public LoginModel(UserService userService)
+        public CookieService cookieService { get; set; }
+
+        public LoginModel(UserService userService, CookieService cookieService)
         {
             _userService = userService;
+            this.cookieService = cookieService;
         }
 
         public void OnGet()
@@ -41,28 +44,11 @@ namespace Blomsterbinderiet.Pages.Customer
                 return Page(); 
             }
             
-            List<User> users = _userService.Users;
-            foreach (User user in users)
+            ClaimsIdentity identity = await cookieService.Login(HttpContext, await _userService.GetAllUsersAsync(), Email, Password);
+            if(identity != null)
             {
-                if (Email == user.Email)
-                {
-                    if(user.State == "Aktiv")
-                    {
-                        var passwordHasher = new PasswordHasher<string>();
-                        if (passwordHasher.VerifyHashedPassword(null, user.Password, Password) == PasswordVerificationResult.Success)
-                        {
-                            ID = user.ID.ToString();
-                            var claims = new List<Claim> { new Claim(ClaimTypes.Name, ID) };
-                            claims.Add(new Claim(ClaimTypes.Role, user.Role));
-                            claims.Add(new Claim(ClaimTypes.Email, Email));
-
-                            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-                            return RedirectToPage("/index");
-                        }
-                    }
-                }
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                return RedirectToPage("/index");
             }
             Message = "Invalid attempt";
             return Page();

@@ -18,7 +18,7 @@ builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<OrderService>();
 builder.Services.AddSingleton<ProductService>();
 builder.Services.AddSingleton<CookieService>();
-
+builder.Services.AddSingleton<Tools>();
 
 
 
