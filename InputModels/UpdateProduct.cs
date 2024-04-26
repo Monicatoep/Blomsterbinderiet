@@ -26,7 +26,7 @@ namespace Blomsterbinderiet.InputModels
             UploadedImage = product.UploadedImage;
         }
 
-        public void UpdateParameterWithNewValues(Models.Product product)
+        public Models.Product UpdateParameterWithNewValues(Models.Product product)
         {
             product.ID = ID;
             product.Name = Name;
@@ -38,6 +38,7 @@ namespace Blomsterbinderiet.InputModels
             {
                 product.Image = new Service.Tools().ConvertToByteArray(UploadedImage).Result;
             }
+            return product;
         }
 
         //public bool Disabled { get; set; }
