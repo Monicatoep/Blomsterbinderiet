@@ -60,8 +60,7 @@ namespace Blomsterbinderiet.Pages.Customer
                 return Page();
             }
             Role = "Customer";
-            State = "Aktiv";
-            await _userService.AddUserAsync(new User(Name, _passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address, State));
+            await _userService.AddUserAsync(new User(Name, _passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
             return RedirectToPage("/UserPages/RegisterSuccess");
         }
     }

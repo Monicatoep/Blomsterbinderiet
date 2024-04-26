@@ -34,7 +34,7 @@ namespace Blomsterbinderiet.Models
 
         public string? State { get; set; }
 
-        public User(string name, string password, string role, string email, string phone, string address, string state)
+        public User(string name, string password, string role, string email, string phone, string address)
         {
             Name = name;
             Password = password;
@@ -42,7 +42,7 @@ namespace Blomsterbinderiet.Models
             Email = email;
             Phone = phone;
             Address = address;
-            State = state;
+            State = "Aktiv";
         }
 
         public User()

@@ -1,5 +1,8 @@
 ﻿using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
+using System.Data;
+using System.Net;
+using System.Numerics;
 
 namespace Blomsterbinderiet.Service
 {
@@ -57,7 +60,7 @@ namespace Blomsterbinderiet.Service
         public IEnumerable<User> SortByName()
         {
             return from user in Users
-                   orderby user.Name
+            orderby user.Name
                    select user;
         }
 
