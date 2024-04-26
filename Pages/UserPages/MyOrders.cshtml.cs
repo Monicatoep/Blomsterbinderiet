@@ -23,20 +23,19 @@ namespace Blomsterbinderiet.Pages.UserPages
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
-                Orders = from p in OrderService.GetAllOrders() 
-                         where p.CustomerID+"" == userId
-                         join l in OrderService.OrderlineService.GetObjectsAsync().Result on p.Id equals l.OrderID into ps
-                         orderby p.OrderDate
-                         select new test { hello = p, hello2 = ps, Amount = ps.Sum((OrderLine o) => o.Amount)};
-               
+                Orders = from o in OrderService.GetAllOrders() 
+                         where o.CustomerID+"" == userId
+                         join l in OrderService.OrderlineService.GetObjectsAsync().Result on o.Id equals l.OrderID into ol
+                         orderby o.OrderDate descending
+                         select new test { Order = o, OrderLine = ol, Amount = ol.Sum((OrderLine o) => o.Amount)};
             }
         }
     }
     //https://stackoverflow.com/questions/12259365/create-anonymous-object-via-linq
     public class test
     {
-        public Order hello;
-        public IEnumerable<OrderLine> hello2;
+        public Order Order;
+        public IEnumerable<OrderLine> OrderLine;
         public int Amount;
     }
 }
