@@ -19,15 +19,6 @@ namespace Blomsterbinderiet.Pages.Customer
         public async Task OnGetAsync()
         {
             User = await UserService.GetUserByHttpContext(HttpContext);
-
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
-                if (userId != null)
-                {
-                    User = await UserService.GetUserByIdAsync(userId);
-                }
-            }
         }
     }
 }

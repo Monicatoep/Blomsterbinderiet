@@ -105,5 +105,12 @@ namespace Blomsterbinderiet.Service
             }
             return null;
         }
+
+        public async Task DeactivateUser(int id)
+        {
+            User user = await GetUserByIdAsync(id);
+            user.State = "Deaktiveret";
+            await UpdateUserAsync(user);
+        }
     }
 }
