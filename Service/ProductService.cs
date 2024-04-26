@@ -31,5 +31,11 @@ namespace Blomsterbinderiet.Service
             DbService.UpdateObjectAsync(product, updatedProperties);
         }
 
+        public async Task DisableProducAsync(int id)
+        {
+            Product productToBeDisabled = DbService.GetObjectByIdAsync(id).Result;
+            productToBeDisabled.Disabled = true;
+            await DbService.UpdateObjectAsync(productToBeDisabled);
+        }
     }
 }
