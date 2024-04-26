@@ -29,11 +29,8 @@ namespace Blomsterbinderiet.Pages.Admin
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			User = await _userService.GetUserByIdAsync(id);
-            User.State = "Deaktiveret";
-			await _userService.UpdateUserAsync(User);
-
-			return RedirectToPage("/Admin/GetAllUsers");
+			await _userService.DeactivateUser(id);
+            return RedirectToPage("/Admin/GetAllUsers");
 		}
     }
 }
