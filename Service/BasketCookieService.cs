@@ -56,5 +56,59 @@ namespace Blomsterbinderiet.Service
 
             return orderLines;
         }
+
+        public void PlusOne(IRequestCookieCollection input, IResponseCookies output, int id)
+        {
+            ICollection<BasketItem> data = ReadCookie(input);
+            BasketItem temp;
+            if (data != null)
+            {
+                int length = data.Count;
+                for (int i = 0; i < length; i++)
+                {
+                    temp = data.ElementAt(i);
+
+                    if (temp.ProductID == id)
+                    {
+                        temp.Amount += 1;
+                        if (temp.Amount <= 0)
+                        {
+                            data.Remove(temp);
+                        }
+                        goto found;
+                    }
+                }
+            }
+            return;
+        found:
+            SaveCookie(output, data);
+        }
+
+        public void MinusOne(IRequestCookieCollection input, IResponseCookies output, int id)
+        {
+            ICollection<BasketItem> data = ReadCookie(input);
+            BasketItem temp;
+            if (data != null)
+            {
+                int length = data.Count;
+                for(int i=0; i< length; i++)
+                {
+                    temp = data.ElementAt(i);
+
+                    if (temp.ProductID == id)
+                    {
+                        temp.Amount -= 1;
+                        if (temp.Amount <=0)
+                        {
+                            data.Remove(temp);
+                        }
+                        goto found;
+                    }
+                }
+            }
+            return;
+            found:
+            SaveCookie(output, data);
+        }
     }
 }
