@@ -93,7 +93,7 @@ namespace Blomsterbinderiet.Service
                    select user;
         }
 
-        public async Task<User> GetUserByHttpContext(HttpContext context)
+        public async Task<User> GetUserByHttpContextAsync(HttpContext context)
         {
             if (context.User.Identity.IsAuthenticated)
             {
@@ -106,7 +106,7 @@ namespace Blomsterbinderiet.Service
             return null;
         }
 
-        public async Task DeactivateUser(int id)
+        public async Task DeactivateUserAsync(int id)
         {
             User user = await GetUserByIdAsync(id);
             user.State = "Deaktiveret";

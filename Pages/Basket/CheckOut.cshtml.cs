@@ -47,7 +47,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public async Task<IActionResult> OnPostAsync()
         {
-            User = await UserService.GetUserByHttpContext(HttpContext);
+            User = await UserService.GetUserByHttpContextAsync(HttpContext);
             IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
             

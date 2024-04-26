@@ -81,13 +81,13 @@ namespace Blomsterbinderiet.Service
                     }
                 }
             }
-            data = await AddItem(data, id, amount);
+            data = await AddItemAsync(data, id, amount);
             Found:
-            await SaveCookie(output, data);
+            await SaveCookieAsync(output, data);
             return data;
         }
 
-        public async Task<ICollection<BasketItem>> AddItem(ICollection<BasketItem> basketItems, int id, int amount)
+        public async Task<ICollection<BasketItem>> AddItemAsync(ICollection<BasketItem> basketItems, int id, int amount)
         {
             Console.WriteLine("Tilføjer" + id + " " + amount);
             if(basketItems == null)
@@ -98,7 +98,7 @@ namespace Blomsterbinderiet.Service
             return basketItems;
         }
 
-        public async Task<IEnumerable<BasketItem>?> MinusOne(IRequestCookieCollection input, IResponseCookies output, int id)
+        public async Task<IEnumerable<BasketItem>?> MinusOneAsync(IRequestCookieCollection input, IResponseCookies output, int id)
         {
             return await ChangeAmountAsync(input, output, id, -1);
         }
@@ -113,7 +113,7 @@ namespace Blomsterbinderiet.Service
             return await ChangeAmountAsync(input, output, id, 1);
         }
 
-        public async Task<ClaimsIdentity> LoginAsync(HttpContext context,IEnumerable<User> listOfUsers, string email, string password)
+        public async Task<ClaimsIdentity> LoginAsync(IEnumerable<User> listOfUsers, string email, string password)
         {
             foreach (User user in listOfUsers)
             {

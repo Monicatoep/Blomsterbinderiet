@@ -21,7 +21,7 @@ namespace Blomsterbinderiet.Pages.UserPages
 
         public async Task OnGetAsync()
         {
-            Orders = await OrderService.GetOrdersByUserIdAsync((UserService.GetUserByHttpContext(HttpContext)).Result.ID);
+            Orders = await OrderService.GetOrdersByUserIdAsync((UserService.GetUserByHttpContextAsync(HttpContext)).Result.ID);
         }
     }
 }

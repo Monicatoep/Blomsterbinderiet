@@ -7,7 +7,7 @@ namespace Blomsterbinderiet.Service
     {
         private IWebHostEnvironment WebHostEnvironment { get; }
 
-        public async Task<byte[]> ConvertToByteArray(IFormFile temp)
+        public async Task<byte[]> ConvertToByteArrayAsync(IFormFile temp)
         {
             var filePath = Path.Combine(Path.Combine(WebHostEnvironment.WebRootPath, "images"), temp.FileName);
 

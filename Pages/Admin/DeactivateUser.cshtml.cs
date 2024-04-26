@@ -29,7 +29,7 @@ namespace Blomsterbinderiet.Pages.Admin
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			await _userService.DeactivateUser(id);
+			await _userService.DeactivateUserAsync(id);
             return RedirectToPage("/Admin/GetAllUsers");
 		}
     }

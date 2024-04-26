@@ -21,7 +21,7 @@ namespace Blomsterbinderiet.Pages.UserPages
 
         public async Task OnGetAsync()
         {
-            User = await UserService.GetUserByHttpContext(HttpContext);
+            User = await UserService.GetUserByHttpContextAsync(HttpContext);
         }
 
         public async Task<IActionResult> OnPostAsync()
