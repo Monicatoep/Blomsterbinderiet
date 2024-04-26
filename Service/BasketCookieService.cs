@@ -56,7 +56,7 @@ namespace Blomsterbinderiet.Service
             return orderLines;
         }
 
-        public async Task<IEnumerable<BasketItem>?> PlusOne(IRequestCookieCollection input, IResponseCookies output, int id)
+        public async Task<IEnumerable<BasketItem>?> ChangeAmount(IRequestCookieCollection input, IResponseCookies output, int id, int amount)
         {
             ICollection<BasketItem> data = await ReadCookie(input);
             BasketItem temp;
@@ -69,7 +69,7 @@ namespace Blomsterbinderiet.Service
 
                     if (temp.ProductID == id)
                     {
-                        temp.Amount += 1;
+                        temp.Amount += amount;
                         if (temp.Amount <= 0)
                         {
                             data.Remove(temp);
@@ -79,37 +79,24 @@ namespace Blomsterbinderiet.Service
                 }
             }
             return data;
-            found:
+        found:
             await SaveCookie(output, data);
             return data;
         }
 
         public async Task<IEnumerable<BasketItem>?> MinusOne(IRequestCookieCollection input, IResponseCookies output, int id)
         {
-            ICollection<BasketItem> data = await ReadCookie(input);
-            BasketItem temp;
-            if (data != null)
-            {
-                int length = data.Count;
-                for(int i=0; i< length; i++)
-                {
-                    temp = data.ElementAt(i);
+            return await ChangeAmount(input, output, id, -1);
+        }
 
-                    if (temp.ProductID == id)
-                    {
-                        temp.Amount -= 1;
-                        if (temp.Amount <=0)
-                        {
-                            data.Remove(temp);
-                        }
-                        goto found;
-                    }
-                }
-            }
-            return data;
-            found:
-            await SaveCookie(output, data);
-            return data;
+        public async Task<IEnumerable<BasketItem>?> PlusMany(IRequestCookieCollection input, IResponseCookies output, int id, int amount)
+        {
+            return await ChangeAmount(input, output, id, amount);
+        }
+
+        public async Task<IEnumerable<BasketItem>?> PlusOne(IRequestCookieCollection input, IResponseCookies output, int id)
+        {
+            return await ChangeAmount(input, output, id, 1);
         }
     }
 }
