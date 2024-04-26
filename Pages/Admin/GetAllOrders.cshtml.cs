@@ -30,53 +30,27 @@ namespace Blomsterbinderiet.Pages.Admin
         }
         public async Task<IActionResult> OnPostDenyAsync(int id)
         {
-            
-            Order order= OrderService.GetOrderById(id);
-            order.OrderStatus = Status.Afvist;
-            await OrderService.UpdateOrderAsync(order);
+            OrderService.DenyOrderAsync(id);
             MyOrders = OrderService.GetAllOrders();
             return Page();
         }
         public async Task<IActionResult> OnPostConfirmAsync(int id)
         {
-            
-            Order order = OrderService.GetOrderById(id);
-            order.OrderStatus = Status.Bekræftet;
-            await OrderService.UpdateOrderAsync(order);
+            OrderService.ConfirmOrderAsync(id);
             MyOrders = OrderService.GetAllOrders();
             return Page();
         }
         public async Task<IActionResult> OnPostInProgressAsync(int id)
         {
-
-            Order order = OrderService.GetOrderById(id);
-            order.OrderStatus = Status.Klargøres;
-
             string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
-                if (userId != null)
-                {
-                    order.Employee = await UserService.GetUserByIdAsync(userId);
-                    order.EmployeeID = order.Employee.ID;
-                }
-            
-            await OrderService.UpdateOrderAsync(order);
+            OrderService.OrderInProgressAsync(id, userId);
             MyOrders = OrderService.GetAllOrders();
             return Page();
         }
 
         public async Task<IActionResult> OnPostChangeStatusAsync(int id)
         {
-            Order order = OrderService.GetOrderById(id);
-            if(order.OrderStatus == Status.Klargøres)
-            {
-                order.OrderStatus = Status.Færdig;
-            }
-            else if(order.OrderStatus == Status.Færdig)
-            {
-                order.CompletedDate = DateTime.Now;
-                order.OrderStatus = Status.Udleveret;
-            }
-            await OrderService.UpdateOrderAsync(order);
+            OrderService.ChangeOrderStatusAsync(id);
             MyOrders = OrderService.GetAllOrders();
             return Page(); 
         }

@@ -53,26 +53,6 @@ namespace Blomsterbinderiet.Models
 			Colour = colour;
 		}
 
-		public Product(Product product,InputModels.UpdateProduct newValues, Service.Tools tools)
-		{
-            Name = newValues.Name;
-            Description = newValues.Description;
-            Price = newValues.Price;
-            Colour = newValues.Colour;
-			if(newValues.UploadedImage != null)
-			{
-                Image = tools.ConvertToByteArray(newValues.UploadedImage).Result;
-            } else
-			{
-                Image = product.Image;
-            }
-
-
-            ID = product.ID;
-			Keywords = product.Keywords;
-			Disabled = product.Disabled;
-		}
-
 		public override string ToString()
 		{
 			return $"{{{nameof(ID)}={ID.ToString()}, {nameof(Name)}={Name}, {nameof(Description)}={Description}, {nameof(Price)}={Price.ToString()}, {nameof(Image)}={Image}, {nameof(Keywords)}={Keywords}, {nameof(Colour)}={Colour}}}";
