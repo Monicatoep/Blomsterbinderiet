@@ -34,29 +34,29 @@ namespace Blomsterbinderiet.Pages.Basket
             }
             else
             {
-                BasketItems = CookieService.ReadCookie(Request.Cookies);
-                OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+                BasketItems = CookieService.ReadCookie(Request.Cookies).Result;
+                OrderLines = CookieService.LoadOrderLines(BasketItems).Result.ToList();
             }
             
             OrderSum = OrderService.GetOrderSum(OrderLines);
         }
 
-        public IActionResult OnPostPlus(int id)
+        public async Task<IActionResult> OnPostPlus(int id)
         {
-            CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
+            IEnumerable<BasketItem> basketItems = await CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
             
             return Page();
         }
 
-        public IActionResult OnPostMinus(int id)
+        public async Task<IActionResult> OnPostMinus(int id)
         {
-            CookieService.MinusOne(Request.Cookies, Response.Cookies, id);
+            IEnumerable<BasketItem> basketItems = await CookieService.MinusOne(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLines(Request.Cookies).ToList();
+            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
 
