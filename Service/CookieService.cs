@@ -77,14 +77,25 @@ namespace Blomsterbinderiet.Service
                         {
                             data.Remove(temp);
                         }
-                        goto found;
+                        goto Found;
                     }
                 }
             }
-            return data;
-        found:
+            data = await AddItem(data, id, amount);
+            Found:
             await SaveCookie(output, data);
             return data;
+        }
+
+        public async Task<ICollection<BasketItem>> AddItem(ICollection<BasketItem> basketItems, int id, int amount)
+        {
+            Console.WriteLine("Tilføjer" + id + " " + amount);
+            if(basketItems == null)
+            {
+                basketItems = new List<BasketItem>();
+            }
+            basketItems.Add(new() { ProductID = id, Amount = amount });
+            return basketItems;
         }
 
         public async Task<IEnumerable<BasketItem>?> MinusOne(IRequestCookieCollection input, IResponseCookies output, int id)

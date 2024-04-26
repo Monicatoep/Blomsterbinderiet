@@ -3,7 +3,7 @@ using static Azure.Core.HttpHeader;
 
 namespace Blomsterbinderiet.Service
 {
-    public class Tools
+    public class ImageService
     {
         private IWebHostEnvironment WebHostEnvironment { get; }
 
