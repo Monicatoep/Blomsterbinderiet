@@ -25,16 +25,16 @@ namespace Blomsterbinderiet.Pages.Basket
             this.OrderService = orderService;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            if (CookieService.ReadCookieAsync(Request.Cookies).Result == null)
+            if (await CookieService.ReadCookieAsync(Request.Cookies) == null)
             {
                 BasketItems = null;
                 OrderLines = new();
             }
             else
             {
-                BasketItems = CookieService.ReadCookieAsync(Request.Cookies).Result;
+                BasketItems = await CookieService.ReadCookieAsync(Request.Cookies);
                 if(BasketItems != null)
                 {
                     OrderLines = CookieService.LoadOrderLinesAsync(BasketItems).Result.ToList();
@@ -47,7 +47,7 @@ namespace Blomsterbinderiet.Pages.Basket
             OrderSum = OrderService.GetOrderSum(OrderLines);
         }
 
-        public async Task<IActionResult> OnPostPlus(int id)
+        public async Task<IActionResult> OnPostPlusAsync(int id)
         {
             IEnumerable<BasketItem> basketItems = await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
 
@@ -58,7 +58,7 @@ namespace Blomsterbinderiet.Pages.Basket
             return Page();
         }
 
-        public async Task<IActionResult> OnPostMinus(int id)
+        public async Task<IActionResult> OnPostMinusAsync(int id)
         {
             IEnumerable<BasketItem> basketItems = await CookieService.MinusOneAsync(Request.Cookies, Response.Cookies, id);
 
