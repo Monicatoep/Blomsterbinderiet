@@ -29,7 +29,7 @@ namespace Blomsterbinderiet.Pages.Basket
             this.OrderService = orderService;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
