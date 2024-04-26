@@ -30,15 +30,11 @@ namespace Blomsterbinderiet.Pages.Product
                 Confirmation = "Oprettelse fejlede";
                 return Page();
             }
-            Models.Product NewProduct = new();
 
-            Product.UpdateParameterWithNewValues(NewProduct);
-
-            await ProductService.AddProductAsync(NewProduct);
+            await ProductService.AddProductAsync(Product.UpdateParameterWithNewValues(new()));
 
             Confirmation = "Tilføjet produktet";
             return Page();
-            //return RedirectToPage("/Product/GetAllProducts");
         }
     }
 

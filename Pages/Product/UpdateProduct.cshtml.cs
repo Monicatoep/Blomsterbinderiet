@@ -39,9 +39,7 @@ namespace Blomsterbinderiet.Pages.Product
 
             Models.Product Product = ProductService.GetProductByIdAsync(InputProduct.ID).Result;
 
-            InputProduct.UpdateParameterWithNewValues(Product);
-
-            ProductService.UpdateProduct(Product);
+            ProductService.UpdateProduct(InputProduct.UpdateParameterWithNewValues(Product));
 
             Confirmation = "Opdaterede produktet";
             return Page();
