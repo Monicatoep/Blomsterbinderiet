@@ -2,7 +2,7 @@ using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Blomsterbinderiet.Pages.Admin
+namespace Blomsterbinderiet.Pages.Product
 {
     public class CreateProductModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace Blomsterbinderiet.Pages.Admin
 
         public void OnGet()
         {
-           
+
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -30,8 +30,8 @@ namespace Blomsterbinderiet.Pages.Admin
                 Confirmation = "Oprettelse fejlede";
                 return Page();
             }
-            Models.Product NewProduct = new Models.Product(Product.Name,Product.Description,Product.Price, Product.Colour);
-            
+            Models.Product NewProduct = new Models.Product(Product.Name, Product.Description, Product.Price, Product.Colour);
+
             if (Product.UploadedImage != null)
             {
                 NewProduct.Image = ConvertToByteArray(Product.UploadedImage).Result;
@@ -58,5 +58,5 @@ namespace Blomsterbinderiet.Pages.Admin
         }
     }
 
-    
+
 }

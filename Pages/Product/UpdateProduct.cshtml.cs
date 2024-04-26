@@ -6,7 +6,7 @@ using Blomsterbinderiet.Migrations;
 using Microsoft.AspNetCore.Hosting;
 using System.ComponentModel.DataAnnotations;
 
-namespace Blomsterbinderiet.Pages.Admin
+namespace Blomsterbinderiet.Pages.Product
 {
     public class UpdateProductModel : PageModel
     {
@@ -31,7 +31,7 @@ namespace Blomsterbinderiet.Pages.Admin
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 Confirmation = "Opdatering fejlede";
                 return Page();
@@ -39,7 +39,7 @@ namespace Blomsterbinderiet.Pages.Admin
 
             Models.Product Product = ProductService.GetProductByIdAsync(InputProduct.ID).Result;
 
-            Models.Product temp = new Models.Product(Product, InputProduct,tools);
+            Models.Product temp = new Models.Product(Product, InputProduct, tools);
 
             ProductService.UpdateProduct(temp);
 
@@ -47,6 +47,6 @@ namespace Blomsterbinderiet.Pages.Admin
             return Page();
         }
 
-        
+
     }
 }

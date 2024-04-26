@@ -1,5 +1,5 @@
 ﻿@page
-@model Blomsterbinderiet.Pages.Admin.CreateProductModel
+@model CreateProductModel
 @{
 }
 <form method="post" enctype="multipart/form-data">
@@ -38,6 +38,6 @@
         <p>@Model.Confirmation</p>
     }
     <br />
-    <button type="submit" class="btn btn-success">Opdater</button>
+    <button type="submit" class="btn btn-success">Opret produkt</button>
     <a asp-page="/Product/GetAllProducts" class="btn btn-danger">Fortryd</a>
 </form>

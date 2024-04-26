@@ -11,7 +11,7 @@ namespace Blomsterbinderiet.InputModels
         public double Price { get; set; }
         public string Colour { get; set; }
         public IFormFile? UploadedImage { get; set; }
-        public string Colour { get; set; }
+        
         //public bool Disabled { get; set; }
     }
 }
