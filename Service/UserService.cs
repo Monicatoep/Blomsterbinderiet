@@ -1,5 +1,8 @@
 ﻿using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
 {
@@ -10,23 +13,28 @@ namespace Blomsterbinderiet.Service
         private DbGenericService<User> DbService { get; set; }
         public UserService(DbGenericService<User> dbService)
         {
-            DbService =dbService;
+            DbService = dbService;
         ;
             Users = dbService.GetObjectsAsync().Result.ToList();
         }
 
-        public List<User> GetAllUsers()
+        public async Task<List<User>> GetAllUsers()
         {
             Users = DbService.GetObjectsAsync().Result.ToList();
             return Users;
         }
 
-        public User GetUserByIdAsync(int id)
+        public async Task<User> GetUserByIdAsync(int id)
         {
-            User user = DbService.GetObjectByIdAsync(id).Result;
+            User user = await DbService.GetObjectByIdAsync(id);
             return user;
         }
 
+        public async Task<User> GetUserByIdAsync(string id)
+        {
+            User user = await DbService.GetObjectByIdAsync(Convert.ToInt32(id));
+            return user;
+        }
 
         public User GetUserByEmail(string email)
         {
@@ -38,14 +46,14 @@ namespace Blomsterbinderiet.Service
             return null;
         }
 
-        public void UpdateUser(User user)
+        public async Task UpdateUserAsync(User user)
         {
-            DbService.UpdateObjectAsync(user);
+            await DbService.UpdateObjectAsync(user);
         }
 
-        public void UpdateUser(User user, IEnumerable<string> updatedProperties)
+        public async Task UpdateUserAsync(User user, IEnumerable<string> updatedProperties)
         {
-            DbService.UpdateObjectAsync(user, updatedProperties);
+            await DbService.UpdateObjectAsync(user, updatedProperties);
         }
 
         public async Task AddUserAsync(User user)
@@ -81,7 +89,6 @@ namespace Blomsterbinderiet.Service
                    orderby user.Role descending
                    select user;
         }
-
 
     }
 }

@@ -23,7 +23,7 @@ namespace Blomsterbinderiet.Pages.Customer
                 string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 if (userId != null)
                 {
-                    User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
+                    User = await UserService.GetUserByIdAsync(userId);
                 }
             }
         }
