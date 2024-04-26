@@ -39,8 +39,8 @@ namespace Blomsterbinderiet.Pages.Basket
                     User = await UserService.GetUserByIdAsync(userId);
                 }
             }
-            IEnumerable<BasketItem> basketItems = CookieService.ReadCookie(Request.Cookies).Result;
-            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
+            IEnumerable<BasketItem> basketItems = CookieService.ReadCookieAsync(Request.Cookies).Result;
+            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
             OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
         }
@@ -48,8 +48,8 @@ namespace Blomsterbinderiet.Pages.Basket
         public async Task<IActionResult> OnPostAsync()
         {
             User = await UserService.GetUserByHttpContext(HttpContext);
-            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookie(Request.Cookies);
-            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
+            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
+            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
             
             Models.Order order = new(User, DateTime.Now, PickUpTime);
             await OrderService.AddOrderAsync(order);
@@ -57,7 +57,7 @@ namespace Blomsterbinderiet.Pages.Basket
             {               
                await OrderService.AddOrderLineAsync(new OrderLine(order, line.Product, line.Amount));
             }
-            CookieService.SaveCookie(Response.Cookies, null);
+            CookieService.SaveCookieAsync(Response.Cookies, null);
             return RedirectToPage("/Basket/Confirmation");
             
         }

@@ -15,10 +15,10 @@ namespace Blomsterbinderiet.Pages.Customer
             this.CookieService = cookieService;
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            CookieService.SaveCookie(Response.Cookies, null);
+            CookieService.SaveCookieAsync(Response.Cookies, null);
             return RedirectToPage("/index");
         }
     }

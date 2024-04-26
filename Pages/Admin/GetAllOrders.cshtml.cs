@@ -24,34 +24,34 @@ namespace Blomsterbinderiet.Pages.Admin
         }
         public IActionResult OnGet()
         {
-            MyOrders = OrderService.GetAllOrders();
+            MyOrders = OrderService.GetAllOrdersAsync().Result;
 
             return Page();
         }
         public async Task<IActionResult> OnPostDenyAsync(int id)
         {
             OrderService.DenyOrderAsync(id);
-            MyOrders = OrderService.GetAllOrders();
+            MyOrders = await OrderService.GetAllOrdersAsync();
             return Page();
         }
         public async Task<IActionResult> OnPostConfirmAsync(int id)
         {
             OrderService.ConfirmOrderAsync(id);
-            MyOrders = OrderService.GetAllOrders();
+            MyOrders = await OrderService.GetAllOrdersAsync();
             return Page();
         }
         public async Task<IActionResult> OnPostInProgressAsync(int id)
         {
             string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
             OrderService.OrderInProgressAsync(id, userId);
-            MyOrders = OrderService.GetAllOrders();
+            MyOrders = await OrderService.GetAllOrdersAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostChangeStatusAsync(int id)
         {
             OrderService.ChangeOrderStatusAsync(id);
-            MyOrders = OrderService.GetAllOrders();
+            MyOrders = await OrderService.GetAllOrdersAsync();
             return Page(); 
         }
     }

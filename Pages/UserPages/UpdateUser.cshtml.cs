@@ -19,7 +19,7 @@ namespace Blomsterbinderiet.Pages.UserPages
             UserService = userService;
         }
 
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
             User = await UserService.GetUserByHttpContext(HttpContext);
         }

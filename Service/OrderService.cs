@@ -23,7 +23,7 @@ namespace Blomsterbinderiet.Service
             OrderlineService = orderlineService;
         }
 
-        public List<Models.Order> GetAllOrders()
+        public async Task<List<Models.Order>> GetAllOrdersAsync()
 
         {
             Orders = DbService.GetObjectsAsync().Result.ToList();
@@ -31,9 +31,9 @@ namespace Blomsterbinderiet.Service
             return orders;
         }
 
-        public Models.Order GetOrderById(int id)
+        public async Task<Models.Order> GetOrderByIdAsync(int id)
         {
-           Models.Order order = DbService.GetObjectByIdAsync(id).Result;
+           Models.Order order = await DbService.GetObjectByIdAsync(id);
             return order;
         }
         public async Task UpdateOrderAsync(Models.Order order)
@@ -111,10 +111,10 @@ namespace Blomsterbinderiet.Service
             await DbService.UpdateObjectAsync(order);
         }
 
-        public async Task<IEnumerable<MyOrdersDAO>> GetOrdersByUserId(int id)
+        public async Task<IEnumerable<MyOrdersDAO>> GetOrdersByUserIdAsync(int id)
         {
             int userId = id;
-            var orders = from o in GetAllOrders()
+            var orders = from o in await GetAllOrdersAsync()
                      where o.CustomerID == userId
                      join l in OrderlineService.GetObjectsAsync().Result on o.Id equals l.OrderID into ol
                      orderby o.OrderDate descending

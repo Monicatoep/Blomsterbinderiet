@@ -17,9 +17,9 @@ namespace Blomsterbinderiet.Pages.Product
 
         public IEnumerable<Models.Product> Products { get; private set; }
 
-		public void OnGet()
+		public async Task OnGetAsync()
         {
-            Products = ProductService.GetProductsAsync().Result;
+            Products = await ProductService.GetProductsAsync();
         }
     }
 }

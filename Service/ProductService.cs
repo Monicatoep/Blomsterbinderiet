@@ -22,14 +22,14 @@ namespace Blomsterbinderiet.Service
             return await DbService.GetObjectsAsync();
         }
 
-        public void UpdateProduct(Product product)
+        public async Task UpdateProductAsync(Product product)
         {
-            DbService.UpdateObjectAsync(product);
+            await DbService.UpdateObjectAsync(product);
         }
 
-        public void UpdateProduct(Product product, IEnumerable<string> updatedProperties)
+        public async Task UpdateProductAsync(Product product, IEnumerable<string> updatedProperties)
         {
-            DbService.UpdateObjectAsync(product, updatedProperties);
+            await DbService.UpdateObjectAsync(product, updatedProperties);
         }
         public async Task AddProductAsync(Product product)
         {
@@ -37,7 +37,7 @@ namespace Blomsterbinderiet.Service
             await DbService.AddObjectAsync(product);
         }
 
-        public async Task DisableProducAsync(int id)
+        public async Task DisableProductAsync(int id)
         {
             Product productToBeDisabled = DbService.GetObjectByIdAsync(id).Result;
             productToBeDisabled.Disabled = true;

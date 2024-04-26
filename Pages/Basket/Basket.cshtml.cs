@@ -27,17 +27,17 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public void OnGet()
         {
-            if (CookieService.ReadCookie(Request.Cookies).Result == null)
+            if (CookieService.ReadCookieAsync(Request.Cookies).Result == null)
             {
                 BasketItems = null;
                 OrderLines = new();
             }
             else
             {
-                BasketItems = CookieService.ReadCookie(Request.Cookies).Result;
+                BasketItems = CookieService.ReadCookieAsync(Request.Cookies).Result;
                 if(BasketItems != null)
                 {
-                    OrderLines = CookieService.LoadOrderLines(BasketItems).Result.ToList();
+                    OrderLines = CookieService.LoadOrderLinesAsync(BasketItems).Result.ToList();
                 } else
                 {
                     OrderLines = new();
@@ -49,9 +49,9 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public async Task<IActionResult> OnPostPlus(int id)
         {
-            IEnumerable<BasketItem> basketItems = await CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
+            IEnumerable<BasketItem> basketItems = await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
+            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
             
@@ -60,9 +60,9 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public async Task<IActionResult> OnPostMinus(int id)
         {
-            IEnumerable<BasketItem> basketItems = await CookieService.MinusOne(Request.Cookies, Response.Cookies, id);
+            IEnumerable<BasketItem> basketItems = await CookieService.MinusOneAsync(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
+            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
 

@@ -17,18 +17,18 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         public Models.Product Product { get; set; }
 
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            Product = _productService.GetProductByIdAsync(id).Result;
+            Product = await _productService.GetProductByIdAsync(id);
             if (Product == null)
                 return RedirectToPage("/NotFound");
 
             return Page();
         }
 
-        public IActionResult OnPost(int id)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            _productService.DisableProducAsync(id);
+            await _productService.DisableProductAsync(id);
 
             return RedirectToPage("/Product/GetAllProducts");
         }

@@ -26,15 +26,15 @@ namespace Blomsterbinderiet.Pages.Product
             this.CookieService = cookieService;
         }
 
-        public void OnGet(int id)
+        public async Task OnGetAsync(int id)
         {
-            Product = ProductService.GetProductByIdAsync(id).Result;
+            Product = await ProductService.GetProductByIdAsync(id);
         }
 
         //cookies can only store string values
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            await CookieService.PlusMany(Request.Cookies, Response.Cookies, ProductID, Amount);
+            await CookieService.PlusManyAsync(Request.Cookies, Response.Cookies, ProductID, Amount);
 
             Product = ProductService.GetProductByIdAsync(ProductID).Result;
             return Page();

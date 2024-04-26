@@ -22,7 +22,7 @@ namespace Blomsterbinderiet.Service
             ProductService = productService;
         }
 
-        public async Task<ICollection<BasketItem>> ReadCookie(IRequestCookieCollection input)
+        public async Task<ICollection<BasketItem>> ReadCookieAsync(IRequestCookieCollection input)
         {
             var cookieValue = input[_cookieName];
             if (String.IsNullOrWhiteSpace(cookieValue))
@@ -35,13 +35,13 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task SaveCookie(IResponseCookies input, IEnumerable<BasketItem> listOfItems)
+        public async Task SaveCookieAsync(IResponseCookies input, IEnumerable<BasketItem> listOfItems)
         {
             string jsonString = JsonSerializer.Serialize(listOfItems);
             input.Append(_cookieName, jsonString);
         }
 
-        public async Task<IEnumerable<OrderLine>> LoadOrderLines(IEnumerable<BasketItem> basket)
+        public async Task<IEnumerable<OrderLine>> LoadOrderLinesAsync(IEnumerable<BasketItem> basket)
         {
             if (basket == null )
             {
@@ -59,9 +59,9 @@ namespace Blomsterbinderiet.Service
             return orderLines;
         }
 
-        public async Task<IEnumerable<BasketItem>?> ChangeAmount(IRequestCookieCollection input, IResponseCookies output, int id, int amount)
+        public async Task<IEnumerable<BasketItem>?> ChangeAmountAsync(IRequestCookieCollection input, IResponseCookies output, int id, int amount)
         {
-            ICollection<BasketItem> data = await ReadCookie(input);
+            ICollection<BasketItem> data = await ReadCookieAsync(input);
             BasketItem temp;
             if (data != null)
             {
@@ -83,26 +83,26 @@ namespace Blomsterbinderiet.Service
             }
             return data;
         found:
-            await SaveCookie(output, data);
+            await SaveCookieAsync(output, data);
             return data;
         }
 
-        public async Task<IEnumerable<BasketItem>?> MinusOne(IRequestCookieCollection input, IResponseCookies output, int id)
+        public async Task<IEnumerable<BasketItem>?> MinusOneAsync(IRequestCookieCollection input, IResponseCookies output, int id)
         {
-            return await ChangeAmount(input, output, id, -1);
+            return await ChangeAmountAsync(input, output, id, -1);
         }
 
-        public async Task<IEnumerable<BasketItem>?> PlusMany(IRequestCookieCollection input, IResponseCookies output, int id, int amount)
+        public async Task<IEnumerable<BasketItem>?> PlusManyAsync(IRequestCookieCollection input, IResponseCookies output, int id, int amount)
         {
-            return await ChangeAmount(input, output, id, amount);
+            return await ChangeAmountAsync(input, output, id, amount);
         }
 
-        public async Task<IEnumerable<BasketItem>?> PlusOne(IRequestCookieCollection input, IResponseCookies output, int id)
+        public async Task<IEnumerable<BasketItem>?> PlusOneAsync(IRequestCookieCollection input, IResponseCookies output, int id)
         {
-            return await ChangeAmount(input, output, id, 1);
+            return await ChangeAmountAsync(input, output, id, 1);
         }
 
-        public async Task<ClaimsIdentity> Login(HttpContext context,IEnumerable<User> listOfUsers, string email, string password)
+        public async Task<ClaimsIdentity> LoginAsync(HttpContext context,IEnumerable<User> listOfUsers, string email, string password)
         {
             foreach (User user in listOfUsers)
             {

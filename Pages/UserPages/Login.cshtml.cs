@@ -24,19 +24,19 @@ namespace Blomsterbinderiet.Pages.Customer
         public string Message { get; set; }
         public string ID { get; set; }
 
-        public CookieService cookieService { get; set; }
+        public CookieService CookieService { get; set; }
 
         public LoginModel(UserService userService, CookieService cookieService)
         {
             _userService = userService;
-            this.cookieService = cookieService;
+            this.CookieService = cookieService;
         }
 
         public void OnGet()
         {
         }  
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (Email == null || Password == null)
             {
@@ -44,7 +44,7 @@ namespace Blomsterbinderiet.Pages.Customer
                 return Page(); 
             }
             
-            ClaimsIdentity identity = await cookieService.Login(HttpContext, await _userService.GetAllUsersAsync(), Email, Password);
+            ClaimsIdentity identity = await CookieService.LoginAsync(HttpContext, await _userService.GetAllUsersAsync(), Email, Password);
             if(identity != null)
             {
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
