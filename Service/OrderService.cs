@@ -1,4 +1,5 @@
-﻿using Blomsterbinderiet.EFDbContext;
+﻿using Blomsterbinderiet.DAO;
+using Blomsterbinderiet.EFDbContext;
 using Blomsterbinderiet.Enum;
 using Blomsterbinderiet.Models;
 using System.Security.Claims;
@@ -110,9 +111,15 @@ namespace Blomsterbinderiet.Service
             await DbService.UpdateObjectAsync(order);
         }
 
-        public async Task GetOrdersByUserId()
+        public async Task<IEnumerable<MyOrdersDAO>> GetOrdersByUserId(int id)
         {
-
+            int userId = id;
+            var orders = from o in GetAllOrders()
+                     where o.CustomerID == userId
+                     join l in OrderlineService.GetObjectsAsync().Result on o.Id equals l.OrderID into ol
+                     orderby o.OrderDate descending
+                     select new DAO.MyOrdersDAO{ Order = o, OrderLine = ol, Amount = ol.Sum((OrderLine o) => o.Amount) };
+            return orders;
         }
     }
 }

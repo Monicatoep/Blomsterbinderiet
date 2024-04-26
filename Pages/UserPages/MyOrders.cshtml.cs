@@ -21,12 +21,7 @@ namespace Blomsterbinderiet.Pages.UserPages
 
         public async Task OnGet()
         {
-            int userId = (await UserService.GetUserByHttpContext(HttpContext)).ID;
-            Orders = from o in OrderService.GetAllOrders()
-                     where o.CustomerID == userId
-                     join l in OrderService.OrderlineService.GetObjectsAsync().Result on o.Id equals l.OrderID into ol
-                     orderby o.OrderDate descending
-                     select new MyOrders { Order = o, OrderLine = ol, Amount = ol.Sum((OrderLine o) => o.Amount) };
+            Orders = await OrderService.GetOrdersByUserId((UserService.GetUserByHttpContext(HttpContext)).Result.ID);
         }
     }
 }
