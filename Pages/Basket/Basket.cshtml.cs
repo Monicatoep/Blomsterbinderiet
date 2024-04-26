@@ -27,7 +27,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public void OnGet()
         {
-            if (CookieService.ReadCookie(Request.Cookies) == null)
+            if (CookieService.ReadCookie(Request.Cookies).Result == null)
             {
                 BasketItems = null;
                 OrderLines = new();
@@ -35,7 +35,13 @@ namespace Blomsterbinderiet.Pages.Basket
             else
             {
                 BasketItems = CookieService.ReadCookie(Request.Cookies).Result;
-                OrderLines = CookieService.LoadOrderLines(BasketItems).Result.ToList();
+                if(BasketItems != null)
+                {
+                    OrderLines = CookieService.LoadOrderLines(BasketItems).Result.ToList();
+                } else
+                {
+                    OrderLines = new();
+                }
             }
             
             OrderSum = OrderService.GetOrderSum(OrderLines);
