@@ -17,20 +17,21 @@ namespace Blomsterbinderiet.Pages.Admin
 		[BindProperty]
 		public User User { get; set; }
 
-		public IActionResult OnGet(int id)
+		public async Task<IActionResult> OnGetAsync(int id)
 		{
-			User = _userService.GetUserByIdAsync(id);
+			User = await _userService.GetUserByIdAsync(id);
 			if (User == null)
+			{
 				return RedirectToPage("/NotFound");
-
+			}
 			return Page();
 		}
 
-		public IActionResult OnPost(int id)
+		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			User = _userService.GetUserByIdAsync(id);
+			User = await _userService.GetUserByIdAsync(id);
             User.State = "Deaktiveret";
-			_userService.UpdateUser(User);
+			await _userService.UpdateUserAsync(User);
 
 			return RedirectToPage("/Admin/GetAllUsers");
 		}

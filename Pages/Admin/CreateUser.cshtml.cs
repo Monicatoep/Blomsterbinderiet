@@ -60,7 +60,6 @@ namespace Blomsterbinderiet.Pages.Admin
             {
                 return Page();
             }
-
             await _userService.AddUserAsync(new User(Name,_passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
             return RedirectToPage("/Admin/CreateUserSuccess");
         }

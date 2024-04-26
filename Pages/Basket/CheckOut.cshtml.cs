@@ -36,10 +36,10 @@ namespace Blomsterbinderiet.Pages.Basket
                 string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 if (userId != null)
                 {
-                    User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
+                    User = await UserService.GetUserByIdAsync(userId);
                 }
             }
-            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookie(Request.Cookies);
+            IEnumerable<BasketItem> basketItems = CookieService.ReadCookie(Request.Cookies).Result;
             OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
             OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
@@ -52,7 +52,7 @@ namespace Blomsterbinderiet.Pages.Basket
                 string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 if (userId != null)
                 {
-                    User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
+                    User = await UserService.GetUserByIdAsync(userId);
                 }
             }
             IEnumerable<BasketItem> basketItems = await CookieService.ReadCookie(Request.Cookies);

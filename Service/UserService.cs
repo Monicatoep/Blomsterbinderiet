@@ -21,7 +21,7 @@ namespace Blomsterbinderiet.Service
             Users = dbService.GetObjectsAsync().Result.ToList();
         }
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<User>> GetAllUsersAsync()
         {
             Users = DbService.GetObjectsAsync().Result.ToList();
             return Users;

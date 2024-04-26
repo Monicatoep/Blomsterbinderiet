@@ -55,7 +55,7 @@ namespace Blomsterbinderiet.Pages.Admin
             string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 if (userId != null)
                 {
-                    order.Employee = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
+                    order.Employee = await UserService.GetUserByIdAsync(userId);
                     order.EmployeeID = order.Employee.ID;
                 }
             

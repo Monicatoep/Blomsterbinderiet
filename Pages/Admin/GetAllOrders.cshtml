@@ -37,8 +37,7 @@
                         <td>
                             @if (order.EmployeeID != null)
                             {
-                                @Model.UserService.GetUserByIdAsync(Convert.ToInt32(order.EmployeeID)).Name
-
+                                @Model.UserService.GetUserByIdAsync(Convert.ToInt32(order.EmployeeID)).Result.Name
                             }
                             
                         </td>

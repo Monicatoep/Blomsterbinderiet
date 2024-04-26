@@ -16,9 +16,9 @@ namespace Blomsterbinderiet.Pages.Admin
             UserService = userService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Users = UserService.GetAllUsers();
+            Users = await UserService.GetAllUsersAsync();
 
             return Page();
         }

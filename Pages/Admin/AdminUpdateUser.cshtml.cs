@@ -17,9 +17,9 @@ namespace Blomsterbinderiet.Pages.Admin
             UserService = userService;
         }
 
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            User = UserService.GetUserByIdAsync(id);
+            User = await UserService.GetUserByIdAsync(id);
             if (User == null)
             {
                 return RedirectToPage("GetAllUsers");
@@ -27,13 +27,13 @@ namespace Blomsterbinderiet.Pages.Admin
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            UserService.UpdateUser(User, new List<string>() { nameof(User.Name), nameof(User.Email), nameof(User.Phone), nameof(User.Address), nameof(User.Role) });
+            await UserService.UpdateUserAsync(User, new List<string>() { nameof(User.Name), nameof(User.Email), nameof(User.Phone), nameof(User.Address), nameof(User.Role) });
             return RedirectToPage("GetAllUsers");
         }
     }
