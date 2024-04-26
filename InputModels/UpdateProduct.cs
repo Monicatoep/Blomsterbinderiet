@@ -36,7 +36,7 @@ namespace Blomsterbinderiet.InputModels
             product.UploadedImage = UploadedImage;
             if(UploadedImage != null)
             {
-                product.Image = new Service.Tools().ConvertToByteArray(UploadedImage).Result;
+                product.Image = new Service.ImageService().ConvertToByteArray(UploadedImage).Result;
             }
             return product;
         }

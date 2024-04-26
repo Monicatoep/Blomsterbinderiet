@@ -10,9 +10,9 @@ namespace Blomsterbinderiet.Pages.Product
         public InputModels.UpdateProduct Product { get; set; }
         public string Confirmation { get; set; }
         public ProductService ProductService { get; set; }
-        public Tools Tools { get; set; }
+        public ImageService Tools { get; set; }
 
-        public CreateProductModel(ProductService productService, Tools tools)
+        public CreateProductModel(ProductService productService, ImageService tools)
         {
             ProductService = productService;
             Tools = tools;
