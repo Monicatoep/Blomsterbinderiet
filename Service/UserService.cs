@@ -93,5 +93,17 @@ namespace Blomsterbinderiet.Service
                    select user;
         }
 
+        public async Task<User> GetUserByHttpContext(HttpContext context)
+        {
+            if (context.User.Identity.IsAuthenticated)
+            {
+                string userId = context.User.FindFirst(ClaimTypes.Name)?.Value;
+                if (userId != null)
+                {
+                    return await GetUserByIdAsync(userId);
+                }
+            }
+            return null;
+        }
     }
 }

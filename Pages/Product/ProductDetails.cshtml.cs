@@ -32,34 +32,12 @@ namespace Blomsterbinderiet.Pages.Product
         }
 
         //cookies can only store string values
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
-            ICollection<BasketItem> temp = CookieService.ReadCookie(Request.Cookies).Result;
-            
-            if (temp == null)
-            {
-                temp = new List<BasketItem>();
-                temp.Add(new() { ProductID = ProductID, Amount = Amount });
-            } else
-            {
-                foreach(var i in temp)
-                {
-                    if(i.ProductID == ProductID)
-                    {
-                        i.Amount += Amount;
-                        goto Found;
-                    }
-                }
-                temp.Add(new() { ProductID = ProductID, Amount = Amount });
-            }
-        Found:
-            CookieService.SaveCookie(Response.Cookies, temp);
+            await CookieService.PlusMany(Request.Cookies, Response.Cookies, ProductID, Amount);
 
-            //the below solution is more flexible than the commented solution
             Product = ProductService.GetProductByIdAsync(ProductID).Result;
             return Page();
-            //return RedirectToPage("/Product/ProductDetails", new { id = _ProductID });
-            
         }
     }
 }
