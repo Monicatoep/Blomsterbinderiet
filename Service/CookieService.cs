@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace Blomsterbinderiet.Service
 {
-    public class BasketCookieService
+    public class CookieService
     {
         //https://www.learnrazorpages.com/razor-pages/cookies
 
@@ -14,7 +14,7 @@ namespace Blomsterbinderiet.Service
 
         public ProductService ProductService { get; set; }
 
-        public BasketCookieService(ProductService productService)
+        public CookieService(ProductService productService)
         {
             ProductService = productService;
         }

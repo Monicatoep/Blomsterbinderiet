@@ -16,12 +16,12 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public List<OrderLine> OrderLines { get; set; }
         public ProductService ProductService { get; set; }
-        public BasketCookieService CookieService { get; set; }
+        public CookieService CookieService { get; set; }
         public double OrderSum { get; set; }
         [BindProperty]
         public DateTime PickUpTime { get; set; }
 
-        public CheckOutModel(UserService userService, ProductService productService, BasketCookieService cookieService, OrderService orderService)
+        public CheckOutModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
         {
             UserService = userService;
             this.ProductService = productService;
@@ -47,14 +47,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
-                if (userId != null)
-                {
-                    User = await UserService.GetUserByIdAsync(userId);
-                }
-            }
+            User = await UserService.GetUserByHttpContext(HttpContext);
             IEnumerable<BasketItem> basketItems = await CookieService.ReadCookie(Request.Cookies);
             OrderLines = CookieService.LoadOrderLines(basketItems).Result.ToList();
             

@@ -17,10 +17,10 @@ namespace Blomsterbinderiet.Pages.Product
         public int ProductID { get; set; }
 
         private ProductService ProductService { get; set; }
-        public BasketCookieService CookieService { get; set; }
+        public CookieService CookieService { get; set; }
         public Models.Product Product { get; set; }
 
-        public ProductDetailsModel(ProductService service, BasketCookieService cookieService)
+        public ProductDetailsModel(ProductService service, CookieService cookieService)
         {
             this.ProductService = service;
             this.CookieService = cookieService;
