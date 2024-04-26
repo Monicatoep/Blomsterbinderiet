@@ -14,11 +14,11 @@ namespace Blomsterbinderiet.Pages.Basket
         public ICollection<BasketItem> BasketItems { get; set; }
         public List<OrderLine> OrderLines { get; set; }
         public ProductService ProductService { get; set; }
-        public BasketCookieService CookieService { get; set; }
+        public CookieService CookieService { get; set; }
         public OrderService OrderService { get; set; }
         public double OrderSum { get; set; }
 
-        public BasketModel(ProductService productService, BasketCookieService cookieService, OrderService orderService)
+        public BasketModel(ProductService productService, CookieService cookieService, OrderService orderService)
         {
             this.ProductService = productService;
             this.CookieService = cookieService;
