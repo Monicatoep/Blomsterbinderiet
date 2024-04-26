@@ -19,14 +19,14 @@ namespace Blomsterbinderiet.Pages.UserPages
             UserService = userService;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
                 if (userId != null)
                 {
-                    User = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
+                    User = await UserService.GetUserByIdAsync(userId);
                 }
             }
         }
@@ -35,15 +35,9 @@ namespace Blomsterbinderiet.Pages.UserPages
         {
             if(!ModelState.IsValid)
             {
-                Console.WriteLine(ModelState.IsValid);
-                foreach (var error in ViewData.ModelState.Values.SelectMany(modelState => modelState.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                    Console.WriteLine(error.Exception);
-                }
                 return Page();
             }
-            UserService.UpdateUser(User, new List<string>() { nameof(User.Name), nameof(User.Phone), nameof(User.Address) });
+            await UserService.UpdateUserAsync(User, new List<string>() { nameof(User.Name), nameof(User.Phone), nameof(User.Address) });
             Message = "Opdaterede din profil";
             return Page();
         }

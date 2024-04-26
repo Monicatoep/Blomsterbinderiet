@@ -38,7 +38,9 @@ namespace Blomsterbinderiet.Pages.Customer
             if (Email == null || Password == null)
             {
                 Message = "Invalid attempt";
-                return Page(); }
+                return Page(); 
+            }
+            
             List<User> users = _userService.Users;
             foreach (User user in users)
             {
