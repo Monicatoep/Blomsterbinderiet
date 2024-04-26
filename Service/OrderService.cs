@@ -88,7 +88,7 @@ namespace Blomsterbinderiet.Service
             string userId = uId;
             if (userId != null)
             {
-                order.Employee = UserService.GetUserByIdAsync(Convert.ToInt32(userId));
+                order.Employee = await UserService.GetUserByIdAsync(userId);
                 order.EmployeeID = order.Employee.ID;
             }
 
