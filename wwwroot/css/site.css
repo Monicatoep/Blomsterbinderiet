@@ -29,8 +29,10 @@ body {
     color: #F4EBE8;
 }
 
-#productcard{
-
+#productcard {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
 }
 
 #btngreen {
@@ -38,7 +40,13 @@ body {
     border: none;
 }
 
-#innercard {
+#outercard {
     background-color: #D2BEB7;
     border: none
+}
+
+#titlecard {
+    background-color: #A0BF91;
+    border: none;
+    color: white
 }
