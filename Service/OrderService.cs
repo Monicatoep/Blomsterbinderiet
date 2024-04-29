@@ -121,5 +121,15 @@ namespace Blomsterbinderiet.Service
                      select new DAO.MyOrdersDAO{ Order = o, OrderLine = ol, Amount = ol.Sum((OrderLine o) => o.Amount) };
             return orders;
         }
+
+        public async Task CreateNewOrder(User user, DateTime pickUpTime, List<OrderLine> orderLines)
+        {
+            Models.Order order = new(user, DateTime.Now, pickUpTime);
+            await AddOrderAsync(order);
+            foreach (OrderLine line in orderLines)
+            {
+                await AddOrderLineAsync(new OrderLine(order, line.Product, line.Amount));
+            }
+        }
     }
 }
