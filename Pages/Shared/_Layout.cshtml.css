@@ -59,11 +59,7 @@ button.accept-policy {
 
 .dropdown-menu {
     background: #FFDA9E;
-    border-color: #826C64;
-}
-
-.dropdown-divider {
-    color: #826C64;
+    border: none;
 }
 
 p {

@@ -25,7 +25,7 @@ body {
 .card {
     margin-bottom: 10px;
     border: none;
-    background-color: #826C64;
+    background-color: #A49089;
     color: #F4EBE8;
 }
 
@@ -45,4 +45,8 @@ body {
 
 #textcolor {
     color: #F4EBE8;
+}
+
+#dividercolor {
+    color: #826C64;
 }

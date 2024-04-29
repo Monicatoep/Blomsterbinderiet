@@ -29,7 +29,7 @@
                             </a>
                             <div class="dropdown-menu">
                                 <a class="nav-link" asp-area="" asp-page="/Product/GetAllProducts">GetAllProducts</a>
-                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider" id="dividercolor"></div>
                                 <a class="nav-link" asp-area="" asp-page="/">Blomster 2</a>
                             </div>
                         </li>
@@ -54,7 +54,7 @@
                             </div>
                         </li>
                         <li>
-                            <a class="nav-link text-white ps-4" asp-area="" asp-page="/Basket/Basket"><i class="fa fa-shopping-basket fa-lg"></i></a>
+                            <a class="nav-link text-white ps-4" asp-area="" asp-page="/Basket/Basket"><i class="fa fa-shopping-basket fa-lg" id="textcolor"></i></a>
                         </li>
                         @if (Context.User.IsInRole("Customer")) //Hvis logget ind som bruger
                         {
@@ -63,14 +63,14 @@
                             <li class="nav-item dropdown">
 
                                 <button type="button" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-user"></i>
+                                    <i class="fa fa-user" id="textcolor"></i>
                                     <span class="sr-only">Toggle Dropleft</span>
                                 </button>
 
                                 <div class="dropdown-menu">
                                     <a class="btn" asp-area="" asp-page="/UserPages/ProfilePage">Profil</a>
                                     <a class="btn" asp-area="" asp-page="/UserPages/MyOrders">Mine ordrer</a>
-                                    <div class="dropdown-divider"></div>
+                                    <div class="dropdown-divider" id="dividercolor"></div>
                                     <a class="btn" asp-area="" asp-page="/UserPages/Logout">Log ud</a>
                                 </div>
 
@@ -82,7 +82,7 @@
                             <li class="nav-item dropdown">
 
                                 <button type="button" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-user"></i>
+                                    <i class="fa fa-user" id="textcolor"></i>
                                     <span class="sr-only">Toggle Dropleft</span>
                                 </button>
 
@@ -92,7 +92,7 @@
                                     <a class="btn" asp-area="" asp-page="/Admin/GetAllUsers">Se alle brugere</a>
                                     <a class="btn" asp-area="" asp-page="/Admin/GetAllOrders">Se alle ordrer</a>
                                     <a class="btn" asp-area="" asp-page="/Admin/CreateProduct">Opret nyt product</a>
-                                    <div class="dropdown-divider"></div>
+                                    <div class="dropdown-divider" id="dividercolor"></div>
                                     <a class="btn" asp-area="" asp-page="/UserPages/Logout">Log ud</a>
                                 </div>
 
@@ -103,7 +103,7 @@
                             <li class="nav-item dropdown">
 
                                 <button type="button" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa fa-user"></i>
+                                    <i class="fa fa-user" id="textcolor"></i>
                                     <span class="sr-only">Toggle Dropleft</span>
                                 </button>
 
@@ -112,7 +112,7 @@
                                     <a class="btn" asp-area="" asp-page="/Admin/CreateUser">Opret bruger</a>
                                     <a class="btn" asp-area="" asp-page="/Admin/GetAllOrders">Se alle ordrer</a>
                                     <a class="btn" asp-area="" asp-page="/Product/CreateProduct">Opret nyt product</a>
-                                    <div class="dropdown-divider"></div>
+                                    <div class="dropdown-divider" id="dividercolor"></div>
                                     <a class="btn" asp-area="" asp-page="/UserPages/Logout">Log ud</a>
                                 </div>
 
@@ -121,10 +121,10 @@
                         else //Hvis ikke logget ind
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/UserPages/Login">Login</a>
+                                <a class="nav-link" id="textcolor" asp-area="" asp-page="/UserPages/Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Customer/CustomerSignUp">Opret bruger</a>
+                                <a class="nav-link" id="textcolor" asp-area="" asp-page="/Customer/CustomerSignUp">Opret bruger</a>
                             </li>
                         }
                         
