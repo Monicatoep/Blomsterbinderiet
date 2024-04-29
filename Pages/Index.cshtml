@@ -4,10 +4,10 @@
     ViewData["Title"] = "Home page";
 }
 
-<a class="btn btn-danger text-center container-fluid pt-3" href="Product/GetAllProducts">
+<a class="btn btn-danger text-center container-fluid pt-3" id="btngreen" href="Product/GetAllProducts">
     <h4>Mors dag er lige om hjørnet, køb din buket her</h4>
 </a>
-<div class="card mt-5">
+<div class="card mt-5" id="innercard">
     <div class="container">
         <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
             @for (int i = 0; i < 4; i++) @* Rettet, så det starter på 0 *@
@@ -27,7 +27,7 @@
                                 <p>@description</p>
                             }
                                 <p class="text-center pt-2">
-                                    <a class="btn btn-danger text-center" type="button" title="Se mere" asp-page="/Product/ProductDetails" asp-route-id="@product.ID">Se mere</a>
+                                    <a class="btn btn-danger text-center" id="btngreen" type="button" title="Se mere" asp-page="/Product/ProductDetails" asp-route-id="@product.ID">Se mere</a>
                                 </p>
                         </div>
                     </div>
