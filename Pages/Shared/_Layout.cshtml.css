@@ -5,10 +5,11 @@ a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
+  color: white;
 }
 
 a {
-  color: #0077cc;
+  color: white;
 }
 
 .btn-primary {
@@ -21,6 +22,11 @@ a {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.navbar {
+    background-color: #826C64;
+    color: white;
 }
 
 .border-top {
