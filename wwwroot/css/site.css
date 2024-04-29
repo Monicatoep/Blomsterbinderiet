@@ -25,7 +25,7 @@ body {
 .card {
     margin-bottom: 10px;
     border: none;
-    background-color: #826C64;
+    background-color: #A49089;
     color: #F4EBE8;
 }
 
@@ -44,6 +44,15 @@ body {
     background-color: #D2BEB7;
     border: none
 }
+
+#textcolor {
+    color: #F4EBE8;
+}
+
+#dividercolor {
+    color: #826C64;
+}
+
 
 #titlecard {
     background-color: #A0BF91;
