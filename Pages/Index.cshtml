@@ -14,10 +14,22 @@
             {
                 var product = Model.ProductService.Products.ElementAt(i);
                 <div class="pb-3 px-3">
-                    <div class="col card p-3" >
-                       <a asp-page="/Product/ProductDetails" asp-route-id="@product.ID"><img src=/images/1156_crop50_1445x.jpg class="card-img-top" alt="Billede af buket"></a>
+                    <div class="col card p-3">
+                        @{
+                            if (product.Image != null)
+                            {
+                                var base64 = Convert.ToBase64String(product.Image);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                <a asp-page="/Product/ProductDetails" asp-route-id="@product.ID"><img src="@imgSrc" class="img-thumbnail col-12 mb-3" /></a>
+                            }
+                            else
+                            {
+                                <a asp-page="/Product/ProductDetails" asp-route-id="@product.ID"><img class="img-thumbnail col-12 mb-3" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" /></a>
+                            }
+                        }
                         <div>
-                            <h5 class="font-weight-bold">@product.Name</h5>
+                            <h5 class="font-weight-bold ">@product.Name</h5>
                             @{
                                 string description = product.Description;
                                 if (description.Length > 60)
