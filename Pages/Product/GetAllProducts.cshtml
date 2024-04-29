@@ -35,14 +35,14 @@
                                     {
                                         var base64 = Convert.ToBase64String(product.Image);
                                         var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                        <img src="@imgSrc" class="img-thumbnail col-12" />
+                                        <img src="@imgSrc" class="img-thumbnail col-12 mb-3" />
                                     }
                                     else
                                     {
-                                        <img class="img-thumbnail col-12" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" />
+                                        <img class="img-thumbnail col-12 mb-3" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" />
                                     }
                                 }
-                                @* <a><img class="col-12" src="https://www.floranordica.dk/cdn/shop/products/Buket-flora-nordica-min.jpg?v=1654030000" /></a> *@
+                                
                                 @{
                                     string description = product.Description;
                                     if (description.Length > 60)
@@ -57,7 +57,7 @@
                                         <button class="btn btn-success" id="btngreen" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
                                     </form>
 
-                                    <a class="btn btn-primary" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@product.ID">Se mere</a>
+                                    <a class="btn" id="btnlight" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@product.ID">Se mere</a>
                                     @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
                                     {
                                         <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
