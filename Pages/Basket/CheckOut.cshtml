@@ -2,16 +2,20 @@
 @model Blomsterbinderiet.Pages.Basket.CheckOutModel
 @{
 }
-<h1>Ordreoplysninger</h1>
-<div>
+
+
+<div class="container p-4">
     <div class="col-md-10">
+        <div class="card mb-3 p-3" id="titlecard">
+            <h1>Ordreoplysninger</h1>
+        </div>
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Navn</h6>
+                        <h6 class="mb-0" id="textcolor">Navn</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="col-sm-9" id="textcolor">
                         @Model.User.Name
                     </div>
                 </div>
@@ -20,7 +24,7 @@
                     <div class="col-sm-3">
                         <h6 class="mb-0">Email</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="col-sm-9" id="textcolor">
                         @Model.User.Email
                     </div>
                 </div>
@@ -29,7 +33,7 @@
                     <div class="col-sm-3">
                         <h6 class="mb-0">Telefon</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="col-sm-9" id="textcolor">
                         @Model.User.Phone
                     </div>
                 </div>
@@ -38,52 +42,70 @@
                     <div class="col-sm-3">
                         <h6 class="mb-0">Adresse</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="col-sm-9" id="textcolor">
                         @Model.User.Address
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-sm-12">
-                        <a class="btn btn-info " asp-page="/UserPages/UpdateUser">Rediger oplysninger</a>
+                        <a class="btn btn-danger" id="btngreen" asp-page="/UserPages/UpdateUser">Rediger oplysninger</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
         <div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Produkt</th>
-                        <th>Stykpris</th>
-                        <th>Antal</th>
-                        <th>Totalpris</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (Models.OrderLine item in Model.OrderLines)
-                    {
-                        <tr>
-                            <td>@item.Product.Name</td>
-                            <td>@item.Product.Price</td>
-                            <td>@item.Amount</td>
-                            <td>@(item.Product.Price * item.Amount)</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <form method="post">
-                <div class="form-group pb-4">
-                    <label asp-for="PickUpTime" class="col-form-label ">Afhentningstidspunkt</label>
-                    <div>
-                        <input asp-for="PickUpTime" />
-                    </div>
+
+             
+            
+
+            <div class="col-md-10">
+                <div class="card p-2" id="titlecard">
+
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Produkt</th>
+                                <th>Stykpris</th>
+                                <th>Antal</th>
+                                <th>Totalpris</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Models.OrderLine item in Model.OrderLines)
+                            {
+                                <tr>
+                                    <td>@item.Product.Name</td>
+                                    <td>@item.Product.Price</td>
+                                    <td>@item.Amount</td>
+                                    <td>@(item.Product.Price * item.Amount)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <u>Totalpris @Model.OrderSum kr</u>
+
+
+
+
+                    <form method="post">
+                        <div class="form-group pt-4 pb-4">
+                            <label asp-for="PickUpTime" class="col-form-label ">Afhentningstidspunkt</label>
+                            <div>
+                                <input asp-for="PickUpTime" />
+                            </div>
+                        </div>
+                        <button class="btn btn-danger" id="btnyellow" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft ordre</button>
+                    </form>
+
+
                 </div>
 
-                Ordresum @Model.OrderSum
-
-                <button class="btn btn-success" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft ordre</button>
-           </form> 
+            </div>
+            
         </div>
-    </div>
+   
 </div>
