@@ -15,13 +15,13 @@
     </div>
 
     <div class="col-9">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-3">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
             @if(Model.Products != null )
             {
                 @for (int i = 0; i < 5; i++)
                 {
                     var product = Model.Products.ElementAt(i);
-                    <div class="card-body">
+                    <div class="card card-body">
 
                         <h5 class="card-title">@product.Name</h5>
                         <a><img class="col-12" src="https://www.floranordica.dk/cdn/shop/products/Buket-flora-nordica-min.jpg?v=1654030000" /></a>
