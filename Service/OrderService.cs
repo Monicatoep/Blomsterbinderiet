@@ -2,25 +2,27 @@
 using Blomsterbinderiet.EFDbContext;
 using Blomsterbinderiet.Enum;
 using Blomsterbinderiet.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
 {
-    public class OrderService
+    public class OrderService : ServiceGeneric<Order>
     {
         public List<Order> Orders { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
-        private DbGenericService<Order> DbService { get; set; }
+       //private DbGenericService<Order> DbService { get; set; }
         public DbGenericService<OrderLine> OrderlineService { get; set; }
         public UserService UserService { get; set; }
     
-        public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService)
+        public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService, UserService userService) : base(dbService)
         {
-            DbService = dbService;
+            //DbService = dbService;
             
             Orders = dbService.GetObjectsAsync().Result.ToList();
             OrderlineService = orderlineService;
+            UserService = userService;
         }
 
         public async Task<List<Models.Order>> GetAllOrdersAsync()
@@ -87,6 +89,7 @@ namespace Blomsterbinderiet.Service
             order.OrderStatus = Status.Klargøres;
 
             string userId = uId;
+            
             if (userId != null)
             {
                 order.Employee = await UserService.GetUserByIdAsync(userId);
@@ -131,5 +134,7 @@ namespace Blomsterbinderiet.Service
                 await AddOrderLineAsync(new OrderLine(order, line.Product, line.Amount));
             }
         }
+
+        
     }
 }

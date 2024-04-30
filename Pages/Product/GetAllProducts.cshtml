@@ -5,16 +5,48 @@
 
 <div class="card" id="titlecard">
 <h1 class="pb-5 pt-5 text-center">Vores Produkter</h1>
-</div>
-
-<p class="text-center">
-    For loopet kan kun indlæse 5 produkter hvis der er 5 eller flere produkter i databasen
-</p>
-
 <div class="row">
     <div class="col-3">
         <div class="card-body">
             <h5 class="card-title">Filter</h5>
+            <form method="post">
+                <div>
+                    <label asp-for="@Model.SortProperty"></label>
+                    <select asp-for="@Model.SortProperty" class="form-select">
+                        <option value="@nameof(Models.Product.Name)">Navn</option>
+                        <option value="@nameof(Models.Product.Description)">Beskrivelse</option>
+                        <option value="@nameof(Models.Product.Price)">Pris</option>
+                        <option value="@nameof(Models.Product.Colour)">Farve</option>
+                    </select>
+                    <span asp-validation-for="@Model.SortProperty" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="@Model.SortDirection"></label>
+                    <input asp-for="@Model.SortDirection" class="form-check-input" />
+                    <span asp-validation-for="@Model.SortDirection" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="@Model.Colour"></label>
+                    <input asp-for="@Model.Colour" class="form-control" />
+                    <span asp-validation-for="@Model.Colour" class="text-danger"></span>
+                </div>
+                
+
+                <div class="row">
+                    <label>Price range</label>
+                    <div class="col">
+                        <input asp-for="@Model.Price1" class="form-control" />
+                        <span asp-validation-for="@Model.Price1" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="col">
+                        <input asp-for="@Model.Price2" class="form-control" />
+                        <span asp-validation-for="@Model.Price2" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-success">Bekræft</button>
+            </form>
         </div>
     </div>
 
@@ -24,7 +56,10 @@
                 <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
                     @if (Model.Products != null)
                     {
-                        @for (int i = 0; i < 5; i++)
+                            int length = Model.Products.Count();
+                            if (length >= 24) length = 24;
+                            
+                            @for (int i = 0; i < length; i++)
                         {
                             var product = Model.Products.ElementAt(i);
                             <div class="card card-body" id="productcard">
@@ -65,8 +100,22 @@
                                 </div>
                             </div>
                         }
+                            
                     }
                 </div>
+                    @{
+                        if(Model.Products != null)
+                        {
+                            int length = Model.Products.Count();
+                            if (length >= 24) length = 24;
+                            if (length == 0)
+                            {
+                                <p>Fandt ingen produkter med de givne filtre</p>
+                            }
+                        }
+                        
+                }
+                    
             </div>
         </div>
     </div>

@@ -67,6 +67,11 @@ body {
         border: none;
     }
 
+#btnyellow {
+    background-color: #FFDA9E;
+    border: none;
+}
+
 #outercard {
     background-color: #D2BEB7;
     border: none;
@@ -88,4 +93,12 @@ body {
 
 #basket {
     background-color: blue;
+}
+
+input {
+    border: none;
+}
+
+#noborder {
+    border: none;
 }

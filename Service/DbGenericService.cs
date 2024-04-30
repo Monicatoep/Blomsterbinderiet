@@ -1,5 +1,6 @@
 ﻿using Blomsterbinderiet.EFDbContext;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Blomsterbinderiet.Service
 {
@@ -80,6 +81,20 @@ namespace Blomsterbinderiet.Service
             }
         }
 
+        //https://stackoverflow.com/questions/66692883/is-using-ef-core-include-method-inside-a-foreach-can-be-a-performance-issue
+        public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<string> includeProperties)
+        {
+            using (var context = new BlomstDbContext())
+            {
+                var query = context.Set<T>().AsQueryable();
 
+                foreach (string property in includeProperties)
+                {
+                    query = query.Include(property);
+                }
+
+                return query.ToList();
+            }
+        }
     }
 }

@@ -2,88 +2,77 @@
 @model Blomsterbinderiet.Pages.UserPages.UpdateUserModel
 @{
 }
-
-<div class="container rounded bg-white mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-2 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></div>
+<div class="container p-4">
+    <div class="col-md-12">
+        <div class="card mb-3 p-3" id="titlecard">
+            <h1>Opdater profil</h1>
         </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">
-                        Profiloplysninger
-                    </h4>
-                </div>
-                <div class="col-md-10">
-                    <form method="post">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Navn</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                        <input asp-for="@Model.User.Name" class="form-control" />
-                                        <span asp-validation-for="@Model.User.Name" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                        <input asp-for="@Model.User.Email" class="form-control" readonly />
-                                        <span asp-validation-for="@Model.User.Email" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Telefon</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                        <input asp-for="@Model.User.Phone" class="form-control" />
-                                        <span asp-validation-for="@Model.User.Phone" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Adresse</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                        <input asp-for="@Model.User.Address" class="form-control" />
-                                        <span asp-validation-for="@Model.User.Address" class="text-danger"></span>
-                                        <input asp-for="@Model.User.Password" class="form-control" hidden value="placeholder"/>
-                                        <input asp-for="@Model.User.ID" class="form-control" hidden />
-                                        <input asp-for="@Model.User.Role" class="form-control" hidden />
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    
-                                    
-                                        <button type="submit" class="btn btn-success">Opdater profil</button>
-                                        @* <button type="submit" asp-page-handler="Cancel" class="btn btn-primary">Fortryd</button> *@
-                                    <a class="btn btn-info " asp-page="/UserPages/ProfilePage">Tilbage</a>
-                                </div>
-                            </div>
+        <form method="post">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Navn</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input asp-for="@Model.User.Name" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.User.Name" class="text-danger"></span>
                         </div>
                     </div>
-                    </form>
-                    @{
-                        if(Model.Message != null)
-                        {
-                            <p class="text-success">@Model.Message</p>
-                        }
-                    }
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input asp-for="@Model.User.Email" class="form-control" id="noborder" readonly />
+                            <span asp-validation-for="@Model.User.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Telefon</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input asp-for="@Model.User.Phone" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.User.Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Adresse</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <input asp-for="@Model.User.Address" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.User.Address" class="text-danger"></span>
+                            <input asp-for="@Model.User.Password" class="form-control" id="noborder" hidden value="placeholder" />
+                            <input asp-for="@Model.User.ID" class="form-control" id="noborder" hidden />
+                            <input asp-for="@Model.User.Role" class="form-control" id="noborder" hidden />
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12">
+
+
+                            <button type="submit" class="btn btn-primary" id="btnyellow">Opdater profil</button>
+                            @* <button type="submit" asp-page-handler="Cancel" class="btn btn-primary">Fortryd</button> *@
+                            <a class="btn btn-primary" id="btnlight" asp-page="/UserPages/ProfilePage">Tilbage</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        </div>
+        </form>
+        @{
+            if (Model.Message != null)
+            {
+                <p class="text-success">@Model.Message</p>
+            }
+        }
     </div>
 </div>
-</div>
+
+
+
