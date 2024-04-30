@@ -2,67 +2,56 @@
 @model ProductDetailsModel
 @{
 }
-
+<div class="container">
 <div class="padding-div">
+    <a asp-page="GetAllProducts" class="btn btn-primary mb-2" id="btnlight">Tilbage til oversigten</a>
     <div class="card" id="product-detail-card">
-   <div class="container p-4 p-xl-4">
+        <div class="container p-4">
 
-     <div class="row align-items-center">
-        <div class="col-7">
-           
-            @{
-                if (Model.Product.Image != null)
-                {
-                    var base64 = Convert.ToBase64String(Model.Product.Image);
-                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                    <img src="@imgSrc" class="img-thumbnail col-12" />
-                }
-                else
-                {
-                    <img class="img-thumbnail col-12" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" />
-                }
-            }
-            
-        </div>
-     
+            <div class="row align-items-center">
+                <div class="col-7">
 
+                    @{
+                        if (Model.Product.Image != null)
+                        {
+                            var base64 = Convert.ToBase64String(Model.Product.Image);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            <img src="@imgSrc" class="img-thumbnail col-12" />
+                        }
+                        else
+                        {
+                            <img class="img-thumbnail col-12" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" />
+                        }
+                    }
 
-        @* <div class="col-8 py-3 text-center">
-        <a><img class="col-1" src="https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg" /></a>
-        <a><img class="col-1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png" /></a>
-        <a><img class="col-1" src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg" /></a>
-        <a><img class="col-1" src="https://buffer.com/library/content/images/2023/09/instagram-image-size.jpg" /></a>
-        <a><img class="col-1" src="https://media.istockphoto.com/id/1322220448/photo/abstract-digital-futuristic-eye.jpg?s=612x612&w=0&k=20&c=oAMmGJxyTTNW0XcttULhkp5IxfW9ZTaoVdVwI2KwK5s=" /></a>
-        <a><img class="col-1" src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg" /></a>
-        <a><img class="col-1" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" /></a>
-        </div> *@
-
-
-        <div class="col-5">
-                    <h6>@Model.Product.Name</h6>
-            <p>@Model.Product.Description</p>
-            <form method="post">
-                <input asp-for="@Model.ProductID" class="form-control" value="@Model.Product.ID" hidden />
-                <div class="form-group col mb-2">
-                    <label asp-for="@Model.Amount"></label>
-                    <input asp-for="@Model.Amount" class="form-control" value="1" />
-                    <span asp-validation-for="@Model.Amount" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2" id="btngreen">Tilføj til kurv</button>
-            </form>
-            <a asp-page="GetAllProducts" class="btn btn-primary mb-2" id="btngreen">Tilbage til oversigten</a>
-            <a class="btn btn-primary" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@Model.Product.ID">Se mere</a>
-            @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
-            {
-                <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
-                @if (Model.Product.Disabled == false)
-                {
-                    <a class="btn btn-danger btn-sm " type="button" title="Disable" asp-page="DisableProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-trash"></i></a>
-                }
-            }
-        </div>
-      </div>
 
+                <div class="col-5">
+                    <h1>@Model.Product.Name</h1>
+                    <p>@Model.Product.Description</p>
+                    <form method="post" class="form">
+                        <input asp-for="@Model.ProductID" class="form-control" value="@Model.Product.ID" hidden />
+                        <div class="form-group col mb-2">
+                            <label asp-for="@Model.Amount"></label>
+                                <input asp-for="@Model.Amount" class="form-control mt-2" id="noborder" value="1" style="max-width: 3rem; color: #A0BF91" />
+                            <span asp-validation-for="@Model.Amount" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2 mt-2" id="btnyellow">Tilføj til kurv</button>
+                    </form>
+                    
+
+                    @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
+                    {
+                        <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
+                        @if (Model.Product.Disabled == false)
+                        {
+                            <a class="btn btn-danger btn-sm " type="button" title="Disable" asp-page="DisableProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-trash"></i></a>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 </div>
