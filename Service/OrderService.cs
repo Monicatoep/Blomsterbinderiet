@@ -15,12 +15,13 @@ namespace Blomsterbinderiet.Service
         public DbGenericService<OrderLine> OrderlineService { get; set; }
         public UserService UserService { get; set; }
     
-        public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService)
+        public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService, UserService userService)
         {
             DbService = dbService;
             
             Orders = dbService.GetObjectsAsync().Result.ToList();
             OrderlineService = orderlineService;
+            UserService = userService;
         }
 
         public async Task<List<Models.Order>> GetAllOrdersAsync()
@@ -87,6 +88,7 @@ namespace Blomsterbinderiet.Service
             order.OrderStatus = Status.Klargøres;
 
             string userId = uId;
+            
             if (userId != null)
             {
                 order.Employee = await UserService.GetUserByIdAsync(userId);

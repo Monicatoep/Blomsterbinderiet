@@ -43,7 +43,7 @@ namespace Blomsterbinderiet.Pages.Admin
         public async Task<IActionResult> OnPostInProgressAsync(int id)
         {
             string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
-            OrderService.OrderInProgressAsync(id, userId);
+            await OrderService.OrderInProgressAsync(id, userId);
             MyOrders = await OrderService.GetAllOrdersAsync();
             return Page();
         }
