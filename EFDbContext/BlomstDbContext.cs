@@ -15,5 +15,7 @@ namespace Blomsterbinderiet.EFDbContext
         public DbSet<Keyword> Keywords { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderLine> OrderLines { get; set; }
+        public DbSet<Delivery> Deliveries { get; set; }
+
     }
 }

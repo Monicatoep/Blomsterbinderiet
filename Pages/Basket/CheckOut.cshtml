@@ -56,9 +56,25 @@
         </div>
     </div>
 
-
-
-
+    @if (Model.User.Role == "Undertaker")
+    {
+        <div class="form-group">
+            <label asp-for="@Model.Delivery.DeseasedName" class="control-label">Afdødes navn</label>
+            <input asp-for="@Model.Delivery.DeseasedName" class="form-control" id="noborder" />
+            <span asp-validation-for="@Model.Delivery.DeseasedName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Delivery.CeremonyStart" class="control-label">Begravelses start</label>
+            <input asp-for="@Model.Delivery.CeremonyStart" class="form-control" id="noborder" />
+            <span asp-validation-for="@Model.Delivery.CeremonyStart" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Delivery.Address" class="control-label">Afleveringssted</label>
+            <input asp-for="@Model.Delivery.Address" class="form-control" id="noborder" />
+            <span asp-validation-for="@Model.Delivery.Address" class="text-danger"></span>
+        </div>
+    }
+            
 
     <div class="col-md-10">
         <div class="card p-3" id="titlecard">
@@ -86,10 +102,9 @@
                 </tbody>
             </table>
 
+          
+            
             <u>Totalpris @Model.OrderSum kr</u>
-
-
-
 
             <form method="post">
                 <div class="form-group pt-4 pb-4">
