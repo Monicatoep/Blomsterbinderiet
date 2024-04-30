@@ -79,7 +79,5 @@ namespace Blomsterbinderiet.Service
                 await context.SaveChangesAsync();
             }
         }
-
-
     }
 }
