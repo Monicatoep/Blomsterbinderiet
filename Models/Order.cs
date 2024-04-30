@@ -18,10 +18,10 @@ namespace Blomsterbinderiet.Models
 
         
         public int? EmployeeID { get; set; }
-        
         public User? Employee { get; set; }
-        //public int DeliveryId { get; set; }
-        //public Delivery Delivery { get; set; }
+        
+        public int? DeliveryId { get; set; }
+        public Delivery? Delivery { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime? CompletedDate { get; set; }
         public DateTime PickUpDate { get; set; }
@@ -34,7 +34,6 @@ namespace Blomsterbinderiet.Models
 
         public Order(User customer, DateTime orderDate, DateTime PickUpTime)
         {
-           
             CustomerID = customer.ID;
             EmployeeID = null;
             Employee = null;
@@ -42,8 +41,7 @@ namespace Blomsterbinderiet.Models
             CommentShop = null;
             PickUpDate = PickUpTime;
             OrderStatus = Status.Ny;
-            
-        }
+        }   
 
         public Order()
         {

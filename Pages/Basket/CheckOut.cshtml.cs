@@ -21,6 +21,9 @@ namespace Blomsterbinderiet.Pages.Basket
         [BindProperty]
         public DateTime PickUpTime { get; set; }
 
+        [BindProperty]
+        public Models.Delivery? Delivery { get; set; }
+
         public CheckOutModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
         {
             UserService = userService;
