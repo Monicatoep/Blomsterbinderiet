@@ -24,12 +24,12 @@
 
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Blomster
                             </a>
-                            <div class="dropdown-menu">
-                                <a class="nav-link text-white" asp-area="" asp-page="/Product/GetAllProducts">GetAllProducts</a>'
-                                <a class="nav-link text-white" asp-area="" asp-page="/">Blomster 2</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-white" asp-area="" asp-page="/Product/GetAllProducts">GetAllProducts</a>
+                                <a class="dropdown-item text-white" asp-area="" asp-page="/">Blomster 2</a>
                             </div>
                         </li>
 
@@ -61,12 +61,12 @@
 
                             <li class="nav-item dropdown">
 
-                                <button type="button" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-user" id="textcolor"></i>
                                     <span class="sr-only">Toggle Dropleft</span>
                                 </button>
 
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu dropdown-menu-left">
                                     <a class="btn text-white" asp-area="" asp-page="/UserPages/ProfilePage">Profil</a>
                                     <a class="btn text-white" asp-area="" asp-page="/UserPages/MyOrders">Mine ordrer</a>
                                     <a class="btn text-white" asp-area="" asp-page="/UserPages/Logout">Log ud</a>
