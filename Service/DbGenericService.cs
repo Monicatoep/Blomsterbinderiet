@@ -82,19 +82,34 @@ namespace Blomsterbinderiet.Service
         }
 
         //https://stackoverflow.com/questions/66692883/is-using-ef-core-include-method-inside-a-foreach-can-be-a-performance-issue
-        public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<string> includeProperties)
+
+
+        public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<Expression<Func<T, bool>>>? conditions = null, IEnumerable<string>? includes = null)
         {
             using (var context = new BlomstDbContext())
             {
-                var query = context.Set<T>().AsQueryable();
+                var query = context.Set<T>().AsNoTracking().AsQueryable();
 
-                foreach (string property in includeProperties)
+                if(includes != null)
                 {
-                    query = query.Include(property);
+                    foreach (string property in includes)
+                    {
+                        query = query.Include(property);
+                    }
+                }
+
+                if (conditions != null)
+                {
+                    foreach (Expression<Func<T, bool>> condition in conditions)
+                    {
+                        query = query.Where(condition);
+                    }
                 }
 
                 return query.ToList();
             }
         }
+
+
     }
 }

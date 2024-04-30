@@ -4,6 +4,7 @@ using Blomsterbinderiet.Models;
 using Blomsterbinderiet.MockData;
 using Blomsterbinderiet.Service;
 using System.ComponentModel;
+using System.Linq.Expressions;
 
 namespace Blomsterbinderiet.Pages.Product
 {
@@ -37,19 +38,11 @@ namespace Blomsterbinderiet.Pages.Product
 		public async Task OnGetAsync()
         {
             Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
-            List<Func<Models.Product, bool>> conditions = new() { };
-            foreach (var product in await ProductService.GetAllDataAsync(conditions,new List<string>() { nameof(Models.Product.Keywords)}))
-            {
-                foreach(Keyword tag in product.Keywords)
-                {
-                    Console.WriteLine(tag);
-                }
-            }
         }
 
         public async Task<IActionResult> OnPost()
         {
-            List< Func<Models.Product, bool>> conditions = new();
+            List< Expression<Func<Models.Product, bool>>> conditions = new();
             if(Colour != null)
             {
                 conditions.Add(p => p.Colour.Contains(Colour));
@@ -61,7 +54,8 @@ namespace Blomsterbinderiet.Pages.Product
                 conditions.Add(p => p.Price >= min && p.Price <= maks);
             }
 
-            Products = await ProductService.FilterAndSort(conditions, new List<string>() { nameof(Models.Product.Keywords) }, SortDirection, SortProperty);
+            Products = await ProductService.GetAllDataAsync(conditions);
+            Products = await ProductService.OrderBy(Products, SortProperty, SortDirection);
 
             return Page();
         }
