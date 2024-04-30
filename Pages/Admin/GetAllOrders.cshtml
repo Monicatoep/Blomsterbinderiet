@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="test">
-                        <table class="table table-bordered table-hover table-striped" width="60%">
+                        <table class="table table-bordered" width="60%">
                             <thead>
                                 <tr class="btn-secondary active">
                                     <th>Ordre ID</th>
@@ -50,12 +50,13 @@
                                             </button>
 
                                             <div>
-
-                                                <div class="dropdown-menu">
-                                                    <label asp-for="Date" class="col-form-label ">Vælg dato</label><a asp-page-handler="FilterByDueDate"><i class="fa fa-check"></i></a>
-                                                    <input asp-for=Date />
-                                                </div>
-
+                                                <form method="post" asp-page-handler="FilterByDueDate">
+                                                    <div class="dropdown-menu">
+                                                        <label asp-for="Date" class="col-form-label">Vælg dato</label>
+                                                        <input asp-for="Date" class="form-control" />
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
 
                                             </div>
 
@@ -97,7 +98,9 @@
                                 {
                                     foreach (var order in Model.MyOrders)
                                     {
-                                        <tr class="btn-secondary">
+                                        @* ændrer farven på hele rækken hvis ordren er ny *@
+                                        var rowStyle = (order.OrderStatus == Enums.Status.Ny) ? "table-success" : "";
+                                        <tr class="btn-secondary @rowStyle">
                                             <td>
                                                 @order.Id
                                             </td>
@@ -166,4 +169,3 @@
     </div>
 </div>
 
-   

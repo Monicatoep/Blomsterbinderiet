@@ -19,6 +19,7 @@ namespace Blomsterbinderiet.Pages.Admin
         public List<Models.Order> MyOrders { get; set; }
         public List<User> Employees { get; set; }
         public Status[] StatusList{ get; set; }
+        [BindProperty]
         public DateOnly Date { get; set; }
       
 
@@ -55,11 +56,14 @@ namespace Blomsterbinderiet.Pages.Admin
         }
         public IActionResult OnGetSortByDueDateDes()
         {
+            
             MyOrders = OrderService.SortByDueDateDes().ToList();
             return Page();
         }
-        public IActionResult OnGetFilterByDueDate()
+        public IActionResult OnPostFilterByDueDate()
         {
+            Console.WriteLine("handler");
+            
             MyOrders = OrderService.FilterByDueDate(Date).ToList();
             return Page();
         }

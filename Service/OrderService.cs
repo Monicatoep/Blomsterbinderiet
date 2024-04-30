@@ -5,6 +5,7 @@ using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Blomsterbinderiet.Service
 {
@@ -156,7 +157,13 @@ namespace Blomsterbinderiet.Service
         }
         public IEnumerable<Models.Order> FilterByDueDate(DateOnly date)
         {
-            return Orders;
+
+            Console.WriteLine(date);
+            
+            return from order in Orders
+                   where order.PickUpDate.Date.Equals(date)
+                   select order;
+
         }
         public IEnumerable<Models.Order> SortByEmployee()
         {
@@ -173,7 +180,9 @@ namespace Blomsterbinderiet.Service
         }
         public IEnumerable<Models.Order> FilterByEmployee(int id)
         {
-            return Orders;
+            return from order in Orders
+                   where order.EmployeeID ==id
+                          select order;
         }
         public IEnumerable<Models.Order> SortByStatus()
         {
