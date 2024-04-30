@@ -24,15 +24,13 @@ a {
   border-color: #1861ac;
 }
 
-/* Override CSS to force the dropdown to open towards the left */
-.nav-item .dropdown-menu {
-    left: 0; /* Align the dropdown menu to the left edge of its parent .nav-item */
-    right: auto; /* Override any existing right alignment */
-    transform: none !important; /* Important to override any existing transformations */
+
+.position-relative .badge {
+    top: 0;
+   
+    right: 0;
+    
 }
-
-
-
 
 .navbar {
     background-color: #826C64;
