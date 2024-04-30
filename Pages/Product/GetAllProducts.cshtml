@@ -56,7 +56,10 @@
                 <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
                     @if (Model.Products != null)
                     {
-                        @for (int i = 0; i < 5; i++)
+                            int length = Model.Products.Count();
+                            if (length >= 24) length = 24;
+                            
+                            @for (int i = 0; i < length; i++)
                         {
                             var product = Model.Products.ElementAt(i);
                             <div class="card card-body" id="productcard">
@@ -97,8 +100,22 @@
                                 </div>
                             </div>
                         }
+                            
                     }
                 </div>
+                    @{
+                        if(Model.Products != null)
+                        {
+                            int length = Model.Products.Count();
+                            if (length >= 24) length = 24;
+                            if (length == 0)
+                            {
+                                <p>Fandt ingen produkter med de givne filtre</p>
+                            }
+                        }
+                        
+                }
+                    
             </div>
         </div>
     </div>

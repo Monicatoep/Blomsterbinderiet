@@ -35,6 +35,14 @@ namespace Blomsterbinderiet.Pages.Product
 		public async Task OnGetAsync()
         {
             Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
+
+            foreach (var product in await ProductService.GetObjectsAsync(new List<string>() { nameof(Models.Product.Keywords)}))
+            {
+                foreach(Keyword tag in product.Keywords)
+                {
+                    Console.WriteLine(tag);
+                }
+            }
         }
 
         public async Task<IActionResult> OnPost()
