@@ -2,40 +2,57 @@
 @model Blomsterbinderiet.Pages.Basket.BasketModel
 @{
 }
-<h1>Kurv</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Produkt</th>
-            <th>Stykpris</th>
-            <th>Antal</th>
-            <th>Totalpris</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(Models.OrderLine item in Model.OrderLines)
-        {
-            <tr>
-                <td>@item.Product.Name</td>
-                <td>@item.Product.Price</td>
-                <td>
-                    <form method="post" class="form-inline">
-                        <div class="form-group">
-                            @item.Amount
-                            <i class="px-3"></i>
-                            <button class="btn btn-primary" type="submit" title="Plus en" asp-page-handler="Plus" asp-route-id="@item.Product.ID"><i class="fa fa-plus"></i></button>
-                            <button class="btn btn-primary" type="submit" title="Minus en" asp-page-handler="Minus" asp-route-id="@item.Product.ID"><i class="fa fa-minus"></i></button>
-                        </div>
-                    </form>
-                </td>
-                <td>@(item.Product.Price * item.Amount)</td>
-            </tr>
-        }
-        
-    </tbody>
-</table>
-@if (HttpContext.User.Identity.IsAuthenticated) 
-{
-    <div>Ordresum @Model.OrderSum <a class="btn" asp-area="" asp-page="/Basket/CheckOut">Færdiggør ordre</a></div>
-}
-else{ <div>Ordresum @Model.OrderSum <a class="btn" asp-area="" asp-page="/UserPages/Login">Færdiggør ordre</a></div>}
+
+<div class="container p-4">
+    <div class="col-md-12">
+        <div class="card mb-3 p-3" id="titlecard">
+            <h1>Kurv</h1>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Produkt</th>
+                            <th>Stykpris</th>
+                            <th>Antal</th>
+                            <th>Totalpris</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Models.OrderLine item in Model.OrderLines)
+                        {
+                            <tr>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Product.Price</td>
+                                <td>
+                                    <form method="post" class="form-inline">
+                                        <div class="form-group">
+                                            @item.Amount
+                                            <i class="px-3"></i>
+                                            <button class="btn btn-primary" type="submit" title="Plus en" asp-page-handler="Plus" asp-route-id="@item.Product.ID"><i class="fa fa-plus"></i></button>
+                                            <button class="btn btn-primary" type="submit" title="Minus en" asp-page-handler="Minus" asp-route-id="@item.Product.ID"><i class="fa fa-minus"></i></button>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>@(item.Product.Price * item.Amount)</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                @if (HttpContext.User.Identity.IsAuthenticated)
+                {
+                    <div class="pb-3">Totalpris @Model.OrderSum kr</div>
+                    <a class="btn btn-primary" id="btnyellow" asp-area="" asp-page="/Basket/CheckOut">Færdiggør ordre</a>
+                }
+                else
+                {
+                    <div class="pb-3">Totalpris @Model.OrderSum kr</div>
+                    <a class="btn btn-primary" id="btnyellow" asp-area="" asp-page="/UserPages/Login">Færdiggør ordre</a>
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,18 @@
 ﻿using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
 namespace Blomsterbinderiet.Service
 {
-    public class ProductService
+    public class ProductService : ServiceGeneric<Product>
     {
         public List<Product> Products { get; set; }
-        private DbGenericService<Product> DbService { get; set; }
-        public ProductService(DbGenericService<Product> dbService)
+        //private DbGenericService<Product> DbService { get; set; }
+        public ProductService(DbGenericService<Product> dbService) : base(dbService)
         {
-            DbService = dbService;
+            //DbService = dbService;
             Products = dbService.GetObjectsAsync().Result.ToList();
         }
 

@@ -1,30 +1,104 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #F5FBF1;
 }
 
 .card {
     margin-bottom: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-color: #826C64;
-    background-color: #826C64
+    border: none;
+    background-color: #A49089;
+    color: #F4EBE8;
+}
+
+#productcard {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 30px;
+}
+
+.padding-div {
+    margin: 65px;
+    padding-right: 60px;
+    padding-left: 60px;
+}
+
+#product-detail-card {
+    /*background-color: #A7A0BC;*/
+    background-color: #A0BF91;
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+#btngreen {
+    background-color: #A0BF91;
+    border: none;
+}
+
+
+#btnlight {
+    background-color: #F4EBE8;
+    color: #48413F;
+    border: none;
+}
+
+    #btnlight:hover {
+        background-color: #EEE1DD;
+        border: none;
+    }
+
+#btnyellow {
+    background-color: #FFDA9E;
+    border: none;
+}
+
+#outercard {
+    background-color: #D2BEB7;
+    border: none;
+}
+
+#textcolor {
+    color: #F4EBE8;
+}
+
+#dividercolor {
+    color: #826C64;
+}
+
+#titlecard {
+    background-color: #A0BF91;
+    border: none;
+    color: white
+}
+
+#basket {
+    background-color: blue;
+}
+
+input {
+    border: none;
+}
+
+#noborder {
+    border: none;
 }

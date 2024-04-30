@@ -3,11 +3,12 @@ using Blomsterbinderiet.EFDbContext;
 using Blomsterbinderiet.Enums;
 using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
 {
-    public class OrderService
+    public class OrderService : ServiceGeneric<Order>
     {
         public List<Models.Order> Orders { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
@@ -18,10 +19,11 @@ namespace Blomsterbinderiet.Service
     
         public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService)
         {
-            DbService = dbService;
+            //DbService = dbService;
             
             Orders = dbService.GetObjectsAsync().Result.ToList();
             OrderlineService = orderlineService;
+            UserService = userService;
         }
 
         public async Task<List<Models.Order>> GetAllOrdersAsync()
@@ -97,6 +99,7 @@ namespace Blomsterbinderiet.Service
             order.OrderStatus = Status.Klargøres;
 
             string userId = uId;
+            
             if (userId != null)
             {
                 order.Employee = await UserService.GetUserByIdAsync(userId);
@@ -191,5 +194,7 @@ namespace Blomsterbinderiet.Service
         {
             return Orders;
         }
+
+        
     }
 }

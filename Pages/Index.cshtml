@@ -4,10 +4,10 @@
     ViewData["Title"] = "Home page";
 }
 
-<a class="btn btn-danger text-center container-fluid pt-3" href="Product/GetAllProducts">
+<a class="btn btn-danger text-center container-fluid pt-3" id="btngreen" href="Product/GetAllProducts">
     <h4>Mors dag er lige om hjørnet, køb din buket her</h4>
 </a>
-<div class="card mt-5">
+<div class="card mt-5" id="outercard">
     <div class="container">
         <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
             @for (int i = 0; i < 4; i++) @* Rettet, så det starter på 0 *@
@@ -15,9 +15,21 @@
                 var product = Model.ProductService.Products.ElementAt(i);
                 <div class="pb-3 px-3">
                     <div class="col card p-3">
-                       <a asp-page="/Product/ProductDetails" asp-route-id="@product.ID"><img src=/images/1156_crop50_1445x.jpg class="card-img-top" alt="Billede af buket"></a>
+                        @{
+                            if (product.Image != null)
+                            {
+                                var base64 = Convert.ToBase64String(product.Image);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                <a asp-page="/Product/ProductDetails" asp-route-id="@product.ID"><img src="@imgSrc" class="img-thumbnail col-12 mb-3" /></a>
+                            }
+                            else
+                            {
+                                <a asp-page="/Product/ProductDetails" asp-route-id="@product.ID"><img class="img-thumbnail col-12 mb-3" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" /></a>
+                            }
+                        }
                         <div>
-                            <h5 class="font-weight-bold">@product.Name</h5>
+                            <h5 class="font-weight-bold ">@product.Name</h5>
                             @{
                                 string description = product.Description;
                                 if (description.Length > 60)
@@ -27,7 +39,7 @@
                                 <p>@description</p>
                             }
                                 <p class="text-center pt-2">
-                                    <a class="btn btn-danger text-center" type="button" title="Se mere" asp-page="/Product/ProductDetails" asp-route-id="@product.ID">Se mere</a>
+                                    <a class="btn btn-danger text-center" id="btngreen" type="button" title="Se mere" asp-page="/Product/ProductDetails" asp-route-id="@product.ID">Se mere</a>
                                 </p>
                         </div>
                     </div>
@@ -39,7 +51,7 @@
 
 <div class="card mt-5">
     <div class="card-body">
-        <h5 class="card-title text-center pt-4">Tag den smukkeste afsked</h5>
+        <h3 class="card-title text-center pt-4">Tag den smukkeste afsked</h3>
         <div class="row pt-4 pb-5">
             <div class="col-sm-4">
                 <div class="card">
@@ -47,7 +59,7 @@
                         <h5 class="card-title text-center">Kistepynt</h5>
 
                         <p class="text-center pt-2">
-                            <a class="btn btn-danger text-center" href="Product/GetAllProducts">Se mere</a>
+                            <a class="btn btn-danger text-center" id="btngreen" href="Product/GetAllProducts">Se mere</a>
                         </p>
                     </div>
                 </div>
@@ -58,7 +70,7 @@
                         <h5 class="card-title text-center">Bårebuketter</h5>
 
                         <p class="text-center pt-2">
-                            <a class="btn btn-danger text-center" href="Product/GetAllProducts">Se mere</a>
+                            <a class="btn btn-danger text-center" id="btngreen" href="Product/GetAllProducts">Se mere</a>
                         </p>
                     </div>
                 </div>
@@ -69,24 +81,24 @@
                         <h5 class="card-title text-center">Farvelroser mm.</h5>
 
                         <p class="text-center pt-2">
-                            <a class="btn btn-danger text-center" href="Product/GetAllProducts">Se mere</a>
+                            <a class="btn btn-danger text-center" id="btngreen" href="Product/GetAllProducts">Se mere</a>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
         <p class="text-center pt-2 pb-4">
-            <a class="btn btn-danger text-center" href="Product/GetAllProducts">Se vores udvalg</a>
+            <a class="btn btn-danger text-center" id="btngreen" href="Product/GetAllProducts">Se vores udvalg</a>
         </p>
     </div>
 </div>
 
 <div class="card mt-5 mb-5">
     <div class="card-body">
-        <h5 class="card-title text-center pt-4">Skal du giftes i 2024?</h5> 
+        <h3 class="card-title text-center pt-4">Skal du giftes i 2024?</h3> 
         <p class="card-text text-center pt-2">Find inspiration til din brudebuket og alle de andre blomster til din store dag</p>
         <p class="text-center pt-2 pb-4">
-            <a class="btn btn-danger text-center" href="Product/GetAllProducts">Se galleri</a>
+            <a class="btn btn-danger text-center" id="btngreen" href="Product/GetAllProducts">Se galleri</a>
         </p>
     </div>
 </div>

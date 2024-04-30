@@ -9,14 +9,14 @@ using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
 {
-    public class UserService
+    public class UserService : ServiceGeneric<User>
     {
         public List<User> Users { get; set; }
 
-        private DbGenericService<User> DbService { get; set; }
-        public UserService(DbGenericService<User> dbService)
+        //private DbGenericService<User> DbService { get; set; }
+        public UserService(DbGenericService<User> dbService) : base(dbService)
         {
-            DbService = dbService;
+            //DbService = dbService;
         ;
             Users = dbService.GetObjectsAsync().Result.ToList();
         }
