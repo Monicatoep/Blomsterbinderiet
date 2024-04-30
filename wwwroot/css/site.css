@@ -30,6 +30,21 @@ body {
 }
 
 #productcard {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 30px;
+}
+
+.padding-div {
+    margin: 65px;
+    padding-right: 60px;
+    padding-left: 60px;
+}
+
+#product-detail-card {
+    /*background-color: #A7A0BC;*/
+    background-color: #A0BF91;
+    color: white;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 20px;
@@ -39,6 +54,7 @@ body {
     background-color: #A0BF91;
     border: none;
 }
+
 
 #btnlight {
     background-color: #F4EBE8;
