@@ -7,18 +7,18 @@ using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
 {
-    public class OrderService
+    public class OrderService : ServiceGeneric<Order>
     {
         public List<Order> Orders { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
-        private DbGenericService<Order> DbService { get; set; }
+       //private DbGenericService<Order> DbService { get; set; }
         public DbGenericService<OrderLine> OrderlineService { get; set; }
         public UserService UserService { get; set; }
     
-        public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService, UserService userService)
+        public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService, UserService userService) : base(dbService)
         {
-            DbService = dbService;
+            //DbService = dbService;
             
             Orders = dbService.GetObjectsAsync().Result.ToList();
             OrderlineService = orderlineService;

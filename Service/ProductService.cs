@@ -6,13 +6,13 @@ using System.Linq;
 using System.Reflection;
 namespace Blomsterbinderiet.Service
 {
-    public class ProductService
+    public class ProductService : ServiceGeneric<Product>
     {
         public List<Product> Products { get; set; }
-        private DbGenericService<Product> DbService { get; set; }
-        public ProductService(DbGenericService<Product> dbService)
+        //private DbGenericService<Product> DbService { get; set; }
+        public ProductService(DbGenericService<Product> dbService) : base(dbService)
         {
-            DbService = dbService;
+            //DbService = dbService;
             Products = dbService.GetObjectsAsync().Result.ToList();
         }
 
@@ -46,17 +46,6 @@ namespace Blomsterbinderiet.Service
             Product productToBeDisabled = DbService.GetObjectByIdAsync(id).Result;
             productToBeDisabled.Disabled = true;
             await DbService.UpdateObjectAsync(productToBeDisabled);
-        }
-
-        public async Task<IEnumerable<Product>> GetAllDataAsync(IEnumerable<Func<Product, bool>> conditions)
-        {
-            IEnumerable<Product> data = (await DbService.GetObjectsAsync());
-            foreach(Func<Product, bool> condition in conditions)
-            {
-                Console.WriteLine(condition);
-                data = data.Where(condition);
-            }
-            return data;
         }
     }
 }
