@@ -2,73 +2,84 @@
 @model Blomsterbinderiet.Pages.Admin.GetAllUsersModel
 @{
 }
-<br />
-<h1>Alle brugere</h1>
-<br />
-<div class="test">
-    <table class="table table-bordered table-hover table-striped" width="60%">
-        <thead>
-            <tr class="btn-secondary active">
-                <th>ID</th>
-                <th>
-                    Navn 
-                    <div>
-                        <a data-toggle="tooltip" title="Sort By Name" asp-page-handler="SortByName"><i class="fa fa-angle-up"></i></a>
-                        <a data-toggle="tooltip" title="Sort By Name Descending" asp-page-handler="SortByNameDescending"><i class="fa fa-angle-down"></i></a>
-                    </div>
-                </th>
-                <th>Email</th>
-                <th>
-                    Rolle
-                    <div>
-                        <a data-toggle="tooltip" title="Sort By Name" asp-page-handler="SortByRole"><i class="fa fa-angle-up"></i></a>
-                        <a data-toggle="tooltip" title="Sort By Name Descending" asp-page-handler="SortByRoleDescending"><i class="fa fa-angle-down"></i></a>
-                    </div>
-                </th>
-                <th>Telefon</th>
-                <th>Adresse</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (@Model.Users != null)
-            {
-                foreach (var user in Model.Users)
-                {
-                    <tr class="btn-secondary">
-                        <td>
-                            @user.ID
-                        </td>
-                        <td>
-                            @user.Name
-                        </td>
+<div class="container p-4">
+    <div class="col-md-12">
+        <div class="card mb-3 p-3" id="titlecard">
+            <h1>Alle brugere</h1>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="test">
+                        <table class="table table-bordered table-hover table-striped" width="60%">
+                            <thead>
+                                <tr class="btn-secondary active">
+                                    <th>ID</th>
+                                    <th>
+                                        Navn
+                                        <div>
+                                            <a data-toggle="tooltip" title="Sort By Name" asp-page-handler="SortByName"><i class="fa fa-angle-up"></i></a>
+                                            <a data-toggle="tooltip" title="Sort By Name Descending" asp-page-handler="SortByNameDescending"><i class="fa fa-angle-down"></i></a>
+                                        </div>
+                                    </th>
+                                    <th>Email</th>
+                                    <th>
+                                        Rolle
+                                        <div>
+                                            <a data-toggle="tooltip" title="Sort By Name" asp-page-handler="SortByRole"><i class="fa fa-angle-up"></i></a>
+                                            <a data-toggle="tooltip" title="Sort By Name Descending" asp-page-handler="SortByRoleDescending"><i class="fa fa-angle-down"></i></a>
+                                        </div>
+                                    </th>
+                                    <th>Telefon</th>
+                                    <th>Adresse</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (@Model.Users != null)
+                                {
+                                    foreach (var user in Model.Users)
+                                    {
+                                        <tr class="btn-secondary">
+                                            <td>
+                                                @user.ID
+                                            </td>
+                                            <td>
+                                                @user.Name
+                                            </td>
 
-                        <td>
-                            @user.Email
-                        </td>
-                        <td>
-                            @user.Role
-                        </td>
-                        <td>
-                            @user.Phone
-                        </td>
-                        <td>
-                            @user.Address
-                        </td>
-                        <td>
-                            @user.State
-                        </td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" type="button" title="Edit" asp-page="AdminUpdateUser" asp-route-id="@user.ID"><i class="fa fa-pencil-square-o"></i></a>
-                            @if(user.State == "Aktiv")
-                            {
-                                <a class="btn btn-danger btn-sm " type="button" title="Deactivate" asp-page="DeactivateUser" asp-route-id="@user.ID"><i class="fa fa-trash"></i></a>
-                            }
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+                                            <td>
+                                                @user.Email
+                                            </td>
+                                            <td>
+                                                @user.Role
+                                            </td>
+                                            <td>
+                                                @user.Phone
+                                            </td>
+                                            <td>
+                                                @user.Address
+                                            </td>
+                                            <td>
+                                                @user.State
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary btn-sm" type="button" title="Edit" asp-page="AdminUpdateUser" asp-route-id="@user.ID"><i class="fa fa-pencil-square-o"></i></a>
+                                                @if (user.State == "Aktiv")
+                                                {
+                                                    <a class="btn btn-danger btn-sm " type="button" title="Deactivate" asp-page="DeactivateUser" asp-route-id="@user.ID"><i class="fa fa-trash"></i></a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
