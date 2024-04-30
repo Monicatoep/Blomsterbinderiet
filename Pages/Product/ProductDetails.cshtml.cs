@@ -6,13 +6,16 @@ using System.Security.Claims;
 using Blomsterbinderiet.Service;
 using Blomsterbinderiet.Models;
 using System.Text.Json;
+using System.ComponentModel;
 
 namespace Blomsterbinderiet.Pages.Product
 {
     public class ProductDetailsModel : PageModel
     {
         [BindProperty]
+        [DisplayName("Mængde")]
         public int Amount { get; set; }
+
         [BindProperty]
         public int ProductID { get; set; }
 

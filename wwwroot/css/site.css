@@ -30,13 +30,13 @@ body {
 }
 
 #productcard {
-    margin-left: 25px;
-    margin-right: 25px;
+    margin-left: 35px;
+    margin-right: 35px;
     margin-bottom: 30px;
 }
 
 .padding-div {
-    margin: 65px;
+    margin: 60px;
     padding-right: 60px;
     padding-left: 60px;
 }
@@ -45,8 +45,6 @@ body {
     /*background-color: #A7A0BC;*/
     background-color: #A0BF91;
     color: white;
-    margin-left: 10px;
-    margin-right: 10px;
     margin-bottom: 20px;
 }
 

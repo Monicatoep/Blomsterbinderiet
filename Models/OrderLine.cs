@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Blomsterbinderiet.Models
@@ -17,6 +18,7 @@ namespace Blomsterbinderiet.Models
         [Required]
         public double ProductPrice { get; set; }
         [Required]
+        [DisplayName("Mængde")]
         public int Amount { get; set; }
 
         public OrderLine()
