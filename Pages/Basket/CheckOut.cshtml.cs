@@ -50,7 +50,7 @@ namespace Blomsterbinderiet.Pages.Basket
             IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
-            await OrderService.CreateNewOrder(User, PickUpTime, OrderLines);
+            await OrderService.CreateNewOrder(User, PickUpDate, PickUpTime, OrderLines);
           
             await CookieService.SaveCookieAsync(Response.Cookies, null);
             return RedirectToPage("/Basket/Confirmation");

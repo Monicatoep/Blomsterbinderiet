@@ -36,7 +36,7 @@ namespace Blomsterbinderiet.Service
         {
             Orders = DbService.GetObjectsAsync().Result.ToList();
             List<Models.Order> orders = (from order in Orders
-                                         where order.PickUpDate.Date < (DateTime.Now.AddDays(7)) && order.PickUpDate >= DateTime.Now
+                                         where order.PickUpDate < DateOnly.FromDateTime(DateTime.Now.Date).AddDays(7) && order.PickUpDate>=DateOnly.FromDateTime(DateTime.Now.Date)
                                          select order).ToList();
             return orders;
         }
@@ -133,9 +133,9 @@ namespace Blomsterbinderiet.Service
             return orders;
         }
 
-        public async Task CreateNewOrder(User user, DateTime pickUpTime, List<OrderLine> orderLines)
+        public async Task CreateNewOrder(User user,DateOnly pickUpDate, TimeOnly pickUpTime, List<OrderLine> orderLines)
         {
-            Models.Order order = new(user, DateTime.Now, pickUpTime);
+            Models.Order order = new(user, DateTime.Now,pickUpDate, pickUpTime);
             await AddOrderAsync(order);
             foreach (OrderLine line in orderLines)
             {
@@ -146,13 +146,13 @@ namespace Blomsterbinderiet.Service
         public  IEnumerable<Models.Order> SortByDueDate()
         {
                return from order in Orders
-                      orderby order.PickUpDate.Date
+                      orderby order.PickUpDate
                       select order;
         }
         public IEnumerable<Models.Order> SortByDueDateDes()
         {
             return from order in Orders
-                   orderby order.PickUpDate.Date descending
+                   orderby order.PickUpDate descending
                    select order;
         }
         public IEnumerable<Models.Order> FilterByDueDate(DateOnly date)
@@ -161,7 +161,7 @@ namespace Blomsterbinderiet.Service
             Console.WriteLine(date);
             
             return from order in Orders
-                   where order.PickUpDate.Date.Equals(date)
+                   where order.PickUpDate.Equals(date)
                    select order;
 
         }
