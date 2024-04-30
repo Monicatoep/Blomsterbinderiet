@@ -9,10 +9,8 @@ namespace Blomsterbinderiet.Service
     public class ProductService : ServiceGeneric<Product>
     {
         public List<Product> Products { get; set; }
-        //private DbGenericService<Product> DbService { get; set; }
         public ProductService(DbGenericService<Product> dbService) : base(dbService)
         {
-            //DbService = dbService;
             Products = dbService.GetObjectsAsync().Result.ToList();
         }
 

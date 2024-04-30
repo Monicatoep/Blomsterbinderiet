@@ -13,11 +13,8 @@ namespace Blomsterbinderiet.Service
     {
         public List<User> Users { get; set; }
 
-        //private DbGenericService<User> DbService { get; set; }
         public UserService(DbGenericService<User> dbService) : base(dbService)
         {
-            //DbService = dbService;
-        ;
             Users = dbService.GetObjectsAsync().Result.ToList();
         }
 
