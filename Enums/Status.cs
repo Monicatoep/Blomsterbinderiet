@@ -1,4 +1,4 @@
-﻿namespace Blomsterbinderiet.Enum
+﻿namespace Blomsterbinderiet.Enums
 {
     public enum Status
     {

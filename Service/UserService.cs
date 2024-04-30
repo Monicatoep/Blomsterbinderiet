@@ -112,5 +112,12 @@ namespace Blomsterbinderiet.Service
             user.State = "Deaktiveret";
             await UpdateUserAsync(user);
         }
+        public async Task<IEnumerable<User>> GetEmployees()
+        {
+
+            return from user in Users
+                   where user.Role == "Employee"
+                   select user;
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Blomsterbinderiet.Pages.Customer;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Blomsterbinderiet.Enum;
+using Blomsterbinderiet.Enums;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Blomsterbinderiet.Models
