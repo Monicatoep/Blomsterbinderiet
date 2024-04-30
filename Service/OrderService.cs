@@ -2,6 +2,7 @@
 using Blomsterbinderiet.EFDbContext;
 using Blomsterbinderiet.Enum;
 using Blomsterbinderiet.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
@@ -133,5 +134,7 @@ namespace Blomsterbinderiet.Service
                 await AddOrderLineAsync(new OrderLine(order, line.Product, line.Amount));
             }
         }
+
+        
     }
 }

@@ -1,5 +1,9 @@
 ﻿using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
 namespace Blomsterbinderiet.Service
 {
     public class ProductService
@@ -42,6 +46,17 @@ namespace Blomsterbinderiet.Service
             Product productToBeDisabled = DbService.GetObjectByIdAsync(id).Result;
             productToBeDisabled.Disabled = true;
             await DbService.UpdateObjectAsync(productToBeDisabled);
+        }
+
+        public async Task<IEnumerable<Product>> GetAllDataAsync(IEnumerable<Func<Product, bool>> conditions)
+        {
+            IEnumerable<Product> data = (await DbService.GetObjectsAsync());
+            foreach(Func<Product, bool> condition in conditions)
+            {
+                Console.WriteLine(condition);
+                data = data.Where(condition);
+            }
+            return data;
         }
     }
 }
