@@ -78,3 +78,11 @@ body {
 #basket {
     background-color: blue;
 }
+
+input {
+    border: none;
+}
+
+#noborder {
+    border: none;
+}
