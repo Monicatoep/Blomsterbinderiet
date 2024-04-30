@@ -2,152 +2,168 @@
 @model Blomsterbinderiet.Pages.Admin.GetAllOrdersModel
 @{
 }
-<br />
-<h1>Alle ordrer</h1>
-<br />
-<div class="test">
-    <table class="table table-bordered table-hover table-striped" width="60%">
-        <thead>
-            <tr class="btn-secondary active">
-                <th>Ordre ID</th>
-                <th>Kunde ID</th>
-                <th>Håndteret af 
-                    <a data-toggle="tooltip" title="SorterMedarbejder" asp-page-handler="SortByEmployee"><i class="fa fa-sort-up"></i></a>
-                    <a data-toggle="tooltip" title="SorterMedarbejder" asp-page-handler="SortByEmployeeDes"><i class="fa fa-sort-down"></i></a>
-                    <div class="nav-item dropdown">
+<div class="container p-4">
+    <div class="col-md-12">
+        <div class="card mb-3 p-3" id="titlecard">
+            <h1>Alle ordrer</h1>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="test">
+                        <table class="table table-bordered table-hover table-striped" width="60%">
+                            <thead>
+                                <tr class="btn-secondary active">
+                                    <th>Ordre ID</th>
+                                    <th>Kunde ID</th>
+                                    <th>
+                                        Håndteret af
+                                        <a data-toggle="tooltip" title="SorterMedarbejder" asp-page-handler="SortByEmployee"><i class="fa fa-sort-up"></i></a>
+                                        <a data-toggle="tooltip" title="SorterMedarbejder" asp-page-handler="SortByEmployeeDes"><i class="fa fa-sort-down"></i></a>
+                                        <div class="nav-item dropdown">
 
-                        <button type="button"  data-toggle="dropdown">
-                            <i class="fa fa-filter"></i>
-           
-                        </button>
+                                            <button type="button" data-toggle="dropdown">
+                                                <i class="fa fa-filter"></i>
 
-                        <div class="dropdown-menu">
-                            @foreach (Models.User user in Model.Employees)
-                            {
-                            <a title="filtreMedarbejder" asp-page-handler="FilterByEmployee" id="@user.ID">@user.Name</a>
-                            }
-                            
-                        </div>
+                                            </button>
 
+                                            <div class="dropdown-menu">
+                                                @foreach (Models.User user in Model.Employees)
+                                                {
+                                                    <a title="filtreMedarbejder" asp-page-handler="FilterByEmployee" id="@user.ID">@user.Name</a>
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    </th>
+                                    <th>Oprettet d.</th>
+                                    <th>
+                                        Afhentes d.
+                                        <a data-toggle="tooltip" title="SorterAfhentningsdato" asp-page-handler="SortByDueDate"><i class="fa fa-sort-up"></i></a>
+                                        <a data-toggle="tooltip" title="SorterAfhentnignsdato" asp-page-handler="SortByDueDateDes"><i class="fa fa-sort-down"></i></a>
+                                        <div class="nav-item dropdown">
+
+                                            <button type="button" data-toggle="dropdown">
+                                                <i class="fa fa-filter"></i>
+
+                                            </button>
+
+                                            <div>
+
+                                                <div class="dropdown-menu">
+                                                    <label asp-for="Date" class="col-form-label ">Vælg dato</label><a asp-page-handler="FilterByDueDate"><i class="fa fa-check"></i></a>
+                                                    <input asp-for=Date />
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </th>
+                                    <th>Afsluttet d.</th>
+                                    <th>Kommentar</th>
+                                    <th>
+                                        Status
+                                        <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatus"><i class="fa fa-sort-up"></i></a>
+                                        <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatusDes"><i class="fa fa-sort-down"></i></a>
+                                        <div class="nav-item dropdown">
+
+                                            <button type="button" data-toggle="dropdown">
+                                                <i class="fa fa-filter"></i>
+
+                                            </button>
+
+                                            <div class="dropdown-menu">
+                                                @foreach (var status in Model.StatusList)
+                                                {
+                                                    <a title="filtreStatus" asp-page-handler="FilterByStatus" id="@status">@status</a>
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    </th>
+                                    <th>Total pris</th>
+                                    <th>
+                                        <a title="AllOrders" asp-page-handler="SeeAll">Se alle ordrer</a>
+                                        <a title="filterReset" asp-page-handler="Reset">Reset Filter</a>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (@Model.MyOrders != null)
+                                {
+                                    foreach (var order in Model.MyOrders)
+                                    {
+                                        <tr class="btn-secondary">
+                                            <td>
+                                                @order.Id
+                                            </td>
+                                            <td>
+                                                @order.CustomerID
+                                            </td>
+
+                                            <td>
+                                                @if (order.EmployeeID != null)
+                                                {
+                                                    @Model.UserService.GetUserByIdAsync(Convert.ToInt32(order.EmployeeID)).Result.Name
+                                                }
+
+                                            </td>
+                                            <td>
+                                                @order.OrderDate
+                                            </td>
+                                            <td>
+                                                @order.PickUpDate
+                                            </td>
+                                            <td>
+                                                @order.CompletedDate
+                                            </td>
+                                            <td>
+                                                @order.CommentShop
+                                            </td>
+                                            <td>
+                                                @order.OrderStatus
+                                            </td>
+                                            <td>
+                                                Pris
+                                            </td>
+                                            <td>
+                                                @* <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn-success">Bekræft</button></form>
+                                        <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form> *@
+                                                @if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Ny)
+                                                {
+                                                    <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn-success">Bekræft</button></form>
+                                                    <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form>
+                                                }
+                                                else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Bekræftet)
+                                                {
+                                                    <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn-success">Start klargøring</button></form>
+                                                }
+                                                else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Klargøres)
+                                                {
+                                                    <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn-success">Overtag klargøring</button></form>
+                                                    <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn-success">Klar til afhentning</button></form>
+                                                }
+                                                else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Færdig)
+                                                {
+                                                    <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn-success">Udleveret</button></form>
+                                                }
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                </th>
-                <th>Oprettet d.</th>
-                <th>Afhentes d.
-                    <a data-toggle="tooltip"  title="SorterAfhentningsdato" asp-page-handler="SortByDueDate"><i class="fa fa-sort-up"></i></a>
-                    <a data-toggle="tooltip" title="SorterAfhentnignsdato" asp-page-handler="SortByDueDateDes"><i class="fa fa-sort-down"></i></a>
-                    <div class="nav-item dropdown">
 
-                        <button type="button" data-toggle="dropdown">
-                            <i class="fa fa-filter"></i>
-
-                        </button>
-
-                        <div>
-                         
-                            <div class="dropdown-menu">
-                                <label asp-for="Date" class="col-form-label ">Vælg dato</label><a asp-page-handler="FilterByDueDate"><i class="fa fa-check"></i></a>
-                                <input asp-for=Date />
-                            </div>
-                            
-                            
-                        </div>
-
-                    </div>
-                </th>
-                <th>Afsluttet d.</th>
-                <th>Kommentar</th>
-                <th>Status 
-                    <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatus"><i class="fa fa-sort-up"></i></a>
-                    <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatusDes"><i class="fa fa-sort-down"></i></a>
-                    <div class="nav-item dropdown">
-
-                        <button type="button" data-toggle="dropdown">
-                            <i class="fa fa-filter"></i>
-
-                        </button>
-
-                        <div class="dropdown-menu">
-                            @foreach (var status in Model.StatusList)
-                            {
-                                <a title="filtreStatus" asp-page-handler="FilterByStatus" id="@status">@status</a>
-                            }
-
-                        </div>
-
-                    </div>
-                </th>
-                <th>Total pris</th>
-                <th>
-                    <a title="AllOrders" asp-page-handler="SeeAll">Se alle ordrer</a>
-                    <a title="filterReset" asp-page-handler="Reset">Reset Filter</a>
-                </th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            @if (@Model.MyOrders != null)
-            {
-                foreach (var order in Model.MyOrders)
-                {
-                    <tr class="btn-secondary">
-                        <td>
-                            @order.Id
-                        </td>
-                        <td>
-                            @order.CustomerID
-                        </td>
-
-                        <td>
-                            @if (order.EmployeeID != null)
-                            {
-                                @Model.UserService.GetUserByIdAsync(Convert.ToInt32(order.EmployeeID)).Result.Name
-                            }
-                            
-                        </td>
-                        <td>
-                            @order.OrderDate
-                        </td>
-                        <td>
-                            @order.PickUpDate
-                        </td>
-                        <td>
-                            @order.CompletedDate
-                        </td>
-                        <td>
-                            @order.CommentShop
-                        </td>
-                        <td>
-                            @order.OrderStatus
-                        </td>
-                        <td>
-                            Pris
-                        </td>
-                        <td>
-                            @* <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn-success">Bekræft</button></form>
-                            <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form> *@
-                            @if(order.OrderStatus == Blomsterbinderiet.Enums.Status.Ny)
-                            {
-                                <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn-success">Bekræft</button></form>
-                                <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form>
-                            }
-                            else if(order.OrderStatus == Blomsterbinderiet.Enums.Status.Bekræftet)
-                            {
-                                <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn-success">Start klargøring</button></form>
-                            }
-                            else if(order.OrderStatus == Blomsterbinderiet.Enums.Status.Klargøres)
-                            {
-                                <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn-success">Overtag klargøring</button></form>
-                                <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn-success">Klar til afhentning</button></form>
-                            }
-                            else if(order.OrderStatus == Blomsterbinderiet.Enums.Status.Færdig)
-                            {
-                                <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn-success">Udleveret</button></form>
-                            }
-
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+   

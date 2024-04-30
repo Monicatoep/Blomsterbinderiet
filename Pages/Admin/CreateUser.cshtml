@@ -2,51 +2,59 @@
 @model Blomsterbinderiet.Pages.Admin.CreateUserModel
 @{
 }
+<div class="container p-4">
+    <div class="col-md-12">
+        <div class="card mb-3 p-3" id="titlecard">
+            <h1>Opret bruger</h1>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <form method="post">
+                        <div class="form-group">
+                            <label asp-for="@Model.Name" class="control-label">Navn</label>
+                            <input asp-for="@Model.Name" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Email" class="control-label"></label>
+                            <input asp-for="@Model.Email" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Password" class="control-label"></label>
+                            <input asp-for="@Model.Password" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                        </div>
+                        Rolle
+                        <div class="form-group" id="noborder">
+                            <select asp-for="@Model.Role">
+                                <option value="" selected>Vælg en rolle</option>
+                                <option value="Employee">Medarbejder</option>
+                                <option value="Admin">Administrator</option>
+                                <option value="Customer">Kunde</option>
+                                <option value="Undertaker">Bedemand</option>
+                            </select>
+                            <span asp-validation-for="@Model.Role" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Phone" class="control-label"></label>
+                            <input asp-for="@Model.Phone" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Address" class="control-label"></label>
+                            <input asp-for="@Model.Address" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                        </div>
 
-<h1>Opret ny bruger</h1>
+                        <div class="form-group pt-4">
+                            <input type="submit" value="Opret" class="btn btn-primary" id="btnyellow" />
+                        </div>
+                    </form>
 
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div class="form-group">
-                <label asp-for="@Model.Name" class="control-label"></label>
-                <input asp-for="@Model.Name" class="form-control" />
-                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="@Model.Email" class="control-label"></label>
-                <input asp-for="@Model.Email" class="form-control" />
-                <span asp-validation-for="@Model.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Password" class="control-label"></label>
-                <input asp-for="@Model.Password" class="form-control" />
-                <span asp-validation-for="@Model.Password" class="text-danger"></span>
-            </div>
-            <p>Rolle</p>
-            <div class="form-group">
-                <select asp-for="@Model.Role">
-                    <option value="" selected>Vælg en rolle</option>
-                    <option value="Employee">Medarbejder</option>
-                    <option value="Admin">Administrator</option>
-                    <option value="Customer">Kunde</option>
-                </select>
-                <span asp-validation-for="@Model.Role" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Phone" class="control-label"></label>
-                <input asp-for="@Model.Phone" class="form-control" />
-                <span asp-validation-for="@Model.Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Address" class="control-label"></label>
-                <input asp-for="@Model.Address" class="form-control" />
-                <span asp-validation-for="@Model.Address" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Opret" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>

@@ -24,6 +24,8 @@ namespace Blomsterbinderiet.Pages.Product
         public int? Price1 { get; set; }
         [BindProperty]
         public int? Price2 { get; set; }
+        [BindProperty]
+        public int MyProperty { get; set; }
 
         public GetAllProductsModel(ProductService Service)
         {
@@ -35,7 +37,7 @@ namespace Blomsterbinderiet.Pages.Product
 		public async Task OnGetAsync()
         {
             Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
-            List<Func<Models.Product, bool>> conditions = new() { p=>p.Keywords.Where(k=> k.Name =="Rød").Count() != 0};
+            List<Func<Models.Product, bool>> conditions = new() { };
             foreach (var product in await ProductService.GetAllDataAsync(conditions,new List<string>() { nameof(Models.Product.Keywords)}))
             {
                 foreach(Keyword tag in product.Keywords)
@@ -59,27 +61,7 @@ namespace Blomsterbinderiet.Pages.Product
                 conditions.Add(p => p.Price >= min && p.Price <= maks);
             }
 
-            Products = await ProductService.GetAllDataAsync(conditions);
-
-            switch(SortProperty)
-            {
-                case nameof(Models.Product.Name):
-                    Products = Products.OrderBy(p => p.Name);
-                    break;
-                case nameof(Models.Product.Description):
-                    Products = Products.OrderBy(p => p.Description);
-                    break;
-                case nameof(Models.Product.Colour):
-                    Products = Products.OrderBy(p => p.Colour);
-                    break;
-                case nameof(Models.Product.Price):
-                    Products = Products.OrderBy(p => p.Price);
-                    break;
-            }
-            if(SortDirection)
-            {
-                Products = Products.Reverse();
-            }
+            Products = await ProductService.FilterAndSort(conditions, new List<string>() { nameof(Models.Product.Keywords) }, SortDirection, SortProperty);
 
             return Page();
         }
