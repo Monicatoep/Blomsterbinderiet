@@ -1,25 +1,23 @@
 ﻿using Blomsterbinderiet.DAO;
 using Blomsterbinderiet.EFDbContext;
-using Blomsterbinderiet.Enum;
+using Blomsterbinderiet.Enums;
+using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
 {
-    public class OrderService : ServiceGeneric<Order>
+    public class OrderService : ServiceGeneric<Models.Order>
     {
-        public List<Order> Orders { get; set; }
+        public List<Models.Order> Orders { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
-       //private DbGenericService<Order> DbService { get; set; }
         public DbGenericService<OrderLine> OrderlineService { get; set; }
         public UserService UserService { get; set; }
     
-        public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService, UserService userService) : base(dbService)
-        {
-            //DbService = dbService;
-            
+        public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, UserService userService) : base(dbService)
+        {           
             Orders = dbService.GetObjectsAsync().Result.ToList();
             OrderlineService = orderlineService;
             UserService = userService;
@@ -30,6 +28,15 @@ namespace Blomsterbinderiet.Service
         {
             Orders = DbService.GetObjectsAsync().Result.ToList();
             List<Models.Order> orders = Orders;
+            return orders;
+        }
+        public async Task<List<Models.Order>> GetAllOrdersWeekAsync()
+
+        {
+            Orders = DbService.GetObjectsAsync().Result.ToList();
+            List<Models.Order> orders = (from order in Orders
+                                         where order.PickUpDate.Date < (DateTime.Now.AddDays(7)) && order.PickUpDate >= DateTime.Now
+                                         select order).ToList();
             return orders;
         }
 
@@ -58,7 +65,7 @@ namespace Blomsterbinderiet.Service
             }
             return orderSum;
         }
-        public async Task AddOrderAsync(Order order)
+        public async Task AddOrderAsync(Models.Order order)
         {
             Orders.Add(order);
             await DbService.AddObjectAsync(order);
@@ -71,21 +78,21 @@ namespace Blomsterbinderiet.Service
 
         public async Task DenyOrderAsync(int id)
         {
-            Order order = DbService.GetObjectByIdAsync(id).Result;
+            Models.Order order = DbService.GetObjectByIdAsync(id).Result;
             order.OrderStatus = Status.Afvist;
             await DbService.UpdateObjectAsync(order);
         }
 
         public async Task ConfirmOrderAsync(int id)
         {
-            Order order = DbService.GetObjectByIdAsync(id).Result;
+            Models.Order order = DbService.GetObjectByIdAsync(id).Result;
             order.OrderStatus = Status.Bekræftet;
             await DbService.UpdateObjectAsync(order);
         }
 
         public async Task OrderInProgressAsync(int id, string uId)
         {
-            Order order = DbService.GetObjectByIdAsync(id).Result;
+            Models.Order order = DbService.GetObjectByIdAsync(id).Result;
             order.OrderStatus = Status.Klargøres;
 
             string userId = uId;
@@ -101,7 +108,7 @@ namespace Blomsterbinderiet.Service
 
         public async Task ChangeOrderStatusAsync(int id)
         {
-            Order order = DbService.GetObjectByIdAsync(id).Result;
+            Models.Order order = DbService.GetObjectByIdAsync(id).Result;
             if (order.OrderStatus == Status.Klargøres)
             {
                 order.OrderStatus = Status.Færdig;
@@ -133,6 +140,56 @@ namespace Blomsterbinderiet.Service
             {
                 await AddOrderLineAsync(new OrderLine(order, line.Product, line.Amount));
             }
+        }
+
+        public  IEnumerable<Models.Order> SortByDueDate()
+        {
+               return from order in Orders
+                      orderby order.PickUpDate.Date
+                      select order;
+        }
+        public IEnumerable<Models.Order> SortByDueDateDes()
+        {
+            return from order in Orders
+                   orderby order.PickUpDate.Date descending
+                   select order;
+        }
+        public IEnumerable<Models.Order> FilterByDueDate(DateOnly date)
+        {
+            return Orders;
+        }
+        public IEnumerable<Models.Order> SortByEmployee()
+        {
+            return from order in Orders
+                   orderby order.EmployeeID 
+                   select order;
+
+        }
+        public IEnumerable<Models.Order> SortByEmployeeDes()
+        {
+            return from order in Orders
+                   orderby order.EmployeeID descending
+                   select order;
+        }
+        public IEnumerable<Models.Order> FilterByEmployee(int id)
+        {
+            return Orders;
+        }
+        public IEnumerable<Models.Order> SortByStatus()
+        {
+            return from order in Orders
+                   orderby order.OrderStatus
+                   select order;
+        }
+        public IEnumerable<Models.Order> SortByStatusDes()
+        {
+            return from order in Orders
+                   orderby order.OrderStatus descending
+                   select order;
+        }
+        public IEnumerable<Models.Order> FilterByStatus(int status)
+        {
+            return Orders;
         }
 
         

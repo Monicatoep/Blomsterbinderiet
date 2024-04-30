@@ -13,11 +13,8 @@ namespace Blomsterbinderiet.Service
     {
         public List<User> Users { get; set; }
 
-        //private DbGenericService<User> DbService { get; set; }
         public UserService(DbGenericService<User> dbService) : base(dbService)
         {
-            //DbService = dbService;
-        ;
             Users = dbService.GetObjectsAsync().Result.ToList();
         }
 
@@ -111,6 +108,13 @@ namespace Blomsterbinderiet.Service
             User user = await GetUserByIdAsync(id);
             user.State = "Deaktiveret";
             await UpdateUserAsync(user);
+        }
+        public async Task<IEnumerable<User>> GetEmployees()
+        {
+
+            return from user in Users
+                   where user.Role == "Employee"
+                   select user;
         }
     }
 }
