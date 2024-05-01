@@ -76,55 +76,52 @@
     }
             
 
-    <div class="col-md-10">
-        <div class="card p-3" id="titlecard">
+            <div class="col-md-10">
+            <div class="card p-3" id="titlecard">
 
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Produkt</th>
-                        <th>Stykpris</th>
-                        <th>Antal</th>
-                        <th>Totalpris</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (Models.OrderLine item in Model.OrderLines)
-                    {
-                        <tr>
-                            <td>@item.Product.Name</td>
-                            <td>@item.Product.Price</td>
-                            <td>@item.Amount</td>
-                            <td>@(item.Product.Price * item.Amount)</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Produkt</th>
+                                <th>Stykpris</th>
+                                <th>Antal</th>
+                                <th>Totalpris</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Models.OrderLine item in Model.OrderLines)
+                            {
+                                <tr>
+                                    <td>@item.Product.Name</td>
+                                    <td>@item.Product.Price</td>
+                                    <td>@item.Amount</td>
+                                    <td>@(item.Product.Price * item.Amount)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
-          
-            
-            <u>Totalpris @Model.OrderSum kr</u>
+                    <u>Totalpris @Model.OrderSum kr</u>
 
-            <form method="post">
-                <div class="form-group pt-4 pb-4">
-                    <label asp-for="PickUpDate" class="col-form-label ">Afhentningstidspunkt</label>
-                    <div>
-                        <input asp-for="PickUpDate" />
-                    </div>
-                    <label asp-for="PickUpTime" class="col-form-label ">Afhentningstidspunkt</label>
-                    <div>
-                        <input asp-for="PickUpTime" />
-                    </div>
+
+
+
+                    <form method="post">
+                        <div class="form-group pt-4 pb-4">
+                            <label asp-for="PickUpTime" class="col-form-label ">Afhentningstidspunkt</label>
+                            <div>
+                                <input asp-for="PickUpTime" />
+                            </div>
+                        </div>
+                        <button class="btn btn-danger" id="btnyellow" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft ordre</button>
+                    </form>
+
+
                 </div>
-                <button class="btn btn-danger" id="btnyellow" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft ordre</button>
-            </form>
 
-
-        </div>
-
-    </div>
-
-
-
+            </div>
+            
+     
+   
 </div>
