@@ -24,8 +24,7 @@ namespace Blomsterbinderiet.Models
         public Delivery? Delivery { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime? CompletedDate { get; set; }
-        public DateOnly PickUpDate { get; set; }
-        public TimeOnly PickUpTime { get; set; }
+        public DateTime PickUpDate { get; set; }
 
         public string? CommentShop { get; set; }
         //public ICollection<OrderLine> OrderLines { get; set; }
@@ -33,15 +32,14 @@ namespace Blomsterbinderiet.Models
         
         
 
-        public Order(User customer, DateTime orderDate, DateOnly pickUpDate,TimeOnly pickUpTime)
+        public Order(User customer, DateTime orderDate, DateTime PickUpTime)
         {
             CustomerID = customer.ID;
             EmployeeID = null;
             Employee = null;
             OrderDate = orderDate;
             CommentShop = null;
-            PickUpDate = pickUpDate;
-            PickUpTime  = pickUpTime;
+            PickUpDate = PickUpTime;
             OrderStatus = Status.Ny;
         }   
 

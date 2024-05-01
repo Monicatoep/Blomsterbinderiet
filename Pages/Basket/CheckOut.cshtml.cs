@@ -19,9 +19,7 @@ namespace Blomsterbinderiet.Pages.Basket
         public CookieService CookieService { get; set; }
         public double OrderSum { get; set; }
         [BindProperty]
-        public DateOnly PickUpDate { get; set; }
-        [BindProperty]
-        public TimeOnly PickUpTime { get; set; }
+        public DateTime PickUpTime { get; set; }
 
         [BindProperty]
         public Models.Delivery? Delivery { get; set; }

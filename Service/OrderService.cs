@@ -5,7 +5,6 @@ using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Blomsterbinderiet.Service
 {
@@ -180,9 +179,7 @@ namespace Blomsterbinderiet.Service
         }
         public IEnumerable<Models.Order> FilterByEmployee(int id)
         {
-            return from order in Orders
-                   where order.EmployeeID ==id
-                          select order;
+            return Orders;
         }
         public IEnumerable<Models.Order> SortByStatus()
         {
