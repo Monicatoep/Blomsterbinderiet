@@ -35,7 +35,7 @@ namespace Blomsterbinderiet.Service
         {
             Orders = DbService.GetObjectsAsync().Result.ToList();
             List<Models.Order> orders = (from order in Orders
-                                         where order.PickUpDate < DateOnly.FromDateTime(DateTime.Now.Date).AddDays(7) && order.PickUpDate>=DateOnly.FromDateTime(DateTime.Now.Date)
+                                         where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate>=DateTime.Now
                                          select order).ToList();
             return orders;
         }
@@ -132,9 +132,9 @@ namespace Blomsterbinderiet.Service
             return orders;
         }
 
-        public async Task CreateNewOrder(User user,DateOnly pickUpDate, TimeOnly pickUpTime, List<OrderLine> orderLines)
+        public async Task CreateNewOrder(User user, DateTime pickUpDate, List<OrderLine> orderLines)
         {
-            Models.Order order = new(user, DateTime.Now,pickUpDate, pickUpTime);
+            Models.Order order = new(user, DateTime.Now, pickUpDate);
             await AddOrderAsync(order);
             foreach (OrderLine line in orderLines)
             {
