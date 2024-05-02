@@ -22,14 +22,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
-
+                        <li class="nav-item">
+                            <a class="nav-link" id="textcolor" asp-area="" asp-page="/Product/GetAllProducts">Se alle produkter</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Blomster
                             </a>
+                        
+                        
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item text-white" asp-area="" asp-page="/Product/GetAllProducts">GetAllProducts</a>
-                                <a class="dropdown-item text-white" asp-area="" asp-page="/">Blomster 2</a>
+                                <a class="dropdown-item text-white" asp-area="" asp-page="/Product/GetAllProducts" asp-page-handler="Keyword" asp-route-keywordName="Buket">Buketter</a>
+                                <a class="dropdown-item text-white" asp-area="" asp-page="/Product/GetAllProducts" asp-page-handler="Keyword" asp-route-keywordName="Samplant">Samplantninger</a>
                             </div>
                         </li>
 
@@ -85,7 +89,7 @@
                                 
 
                                 <div class="dropdown-menu">
-                                    <a class="btn text-white" asp-area="" asp-page="/">Profil</a>
+                                    <a class="btn text-white" asp-area="" asp-page="/UserPages/ProfilePage">Profil</a>
                                     <a class="btn text-white" asp-area="" asp-page="/Admin/CreateUser">Opret bruger</a>
                                     <a class="btn text-white" asp-area="" asp-page="/Admin/GetAllUsers">Se alle brugere</a>
                                     <a class="btn text-white" asp-area="" asp-page="/Admin/GetAllOrders">Se alle ordrer</a>

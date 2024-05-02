@@ -132,7 +132,7 @@ namespace Blomsterbinderiet.Service
             return orders;
         }
 
-        public async Task CreateNewOrder(User user, DateTime pickUpDate, List<OrderLine> orderLines)
+        public async Task CreateNewOrderAsync(User user, DateTime pickUpDate, List<OrderLine> orderLines)
         {
             Models.Order order = new(user, DateTime.Now, pickUpDate);
             await AddOrderAsync(order);

@@ -50,7 +50,7 @@ namespace Blomsterbinderiet.Pages.Product
             Products = (await ProductService.GetProductsAsync()).OrderByDescending(p => p.Disabled);
         }
 
-        public async Task OnGetKeywordAsync(string keywordName)
+        public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
         {
             List<string> includeProperties = new()
             {
@@ -64,6 +64,18 @@ namespace Blomsterbinderiet.Pages.Product
             KeywordNameSearch = keywordName;
             Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
             Products = Products.OrderBy(p => p.Name);
+            return Page();
+        }
+
+        public async Task<IActionResult> OnGetResetAsync()
+        {
+            SortProperty = null;
+            SortDirection = false;
+            Colour = null;
+            Price1 = null;
+            Price2 = null;
+            Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
+            return Page();
         }
 
         public async Task OnGetSearchStringAsync(string searchString)
@@ -71,12 +83,12 @@ namespace Blomsterbinderiet.Pages.Product
             throw new NotImplementedException();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             List<Func<Models.Product, bool>> conditions = new();
             if(Colour != null)
             {
-                conditions.Add(p => p.Colour.Contains(Colour));
+                conditions.Add(p => p.Colour.ToLower().Contains(Colour.ToLower()));
             }
             if(Price1 != null || Price2 != null)
             {
