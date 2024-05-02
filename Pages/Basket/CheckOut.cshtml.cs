@@ -21,6 +21,9 @@ namespace Blomsterbinderiet.Pages.Basket
         [BindProperty]
         public DateTime PickUpTime { get; set; }
 
+        [BindProperty]
+        public Models.Delivery? Delivery { get; set; }
+
         public CheckOutModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
         {
             UserService = userService;
@@ -45,7 +48,7 @@ namespace Blomsterbinderiet.Pages.Basket
             IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
-            await OrderService.CreateNewOrder(User, PickUpTime, OrderLines);
+            await OrderService.CreateNewOrder(User, PickUpDate, PickUpTime, OrderLines);
           
             await CookieService.SaveCookieAsync(Response.Cookies, null);
             return RedirectToPage("/Basket/Confirmation");
