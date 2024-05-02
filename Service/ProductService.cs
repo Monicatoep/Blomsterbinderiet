@@ -46,7 +46,14 @@ namespace Blomsterbinderiet.Service
             await DbService.UpdateObjectAsync(productToBeDisabled);
         }
 
-        public async Task<IEnumerable<Product>> FilterAndSort(IEnumerable<Func<Product,bool>> conditions, IEnumerable<string> includeProperties, bool largeToSmall, string sortProperty)
+		public async Task ReenableProductAsync(int id)
+		{
+			Product productToBeReenabled = DbService.GetObjectByIdAsync(id).Result;
+			productToBeReenabled.Disabled = false;
+			await DbService.UpdateObjectAsync(productToBeReenabled);
+		}
+
+		public async Task<IEnumerable<Product>> FilterAndSort(IEnumerable<Func<Product,bool>> conditions, IEnumerable<string> includeProperties, bool largeToSmall, string sortProperty)
         {
             IEnumerable<Product> data = await GetAllDataAsync(conditions, includeProperties);
             switch (sortProperty)

@@ -47,7 +47,13 @@
                         {
                             <a class="btn btn-danger btn-sm " type="button" title="Disable" asp-page="DisableProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-trash"></i></a>
                         }
+                        else if (Model.Product.Disabled == true)
+                        {
+                            <a class="btn btn-danger btn-sm " type="button" title="Enable" asp-page="ReenableProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-check"></i></a>
+                        }
                     }
+
+
                 </div>
             </div>
 

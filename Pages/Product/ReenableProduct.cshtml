@@ -1,11 +1,11 @@
 ﻿@page
-@model DisableProductModel
+@model Blomsterbinderiet.Pages.Product.ReenableProductModel
 @{
 }
 
-<h1>Deaktivering</h1>
+<h1>Genaktivering</h1>
 <div class="alert alert-danger">
-	<h5>Er du sikker på at du vil deaktivere dette produkt - @Model.Product.Name</h5>
+	<h5>Er du sikker på at du vil genaktivere dette produkt - @Model.Product.Name</h5>
 	<form method="post">
 		<button type="submit" class="btn btn-danger">Ja</button>
 		<a class="btn btn-primary" asp-page="/Product/GetAllProducts">Nej</a>
