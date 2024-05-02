@@ -32,6 +32,7 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Søg på produkt attribut")]
         public string? KeywordNameSearch { get; set; }
         [BindProperty]
+        [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
 
         public GetAllProductsModel(ProductService productService, ServiceGeneric<Keyword> keywordService)
@@ -42,14 +43,13 @@ namespace Blomsterbinderiet.Pages.Product
 
         public IEnumerable<Models.Product> Products { get; private set; }
 
-		public void OnGet()
+		public async Task OnGetAsync()
         {
-            Products =  ProductService.GetNotDisabledProducts();
-        }
-
-        public async Task OnPostShowDisabledAsync()
-        {
-            Products = (await ProductService.GetProductsAsync()).OrderByDescending(p => p.Disabled);
+            List<Func<Models.Product, bool>> conditions = new()
+            {
+                p => p.Disabled == false
+            };
+            Products = await ProductService.GetAllDataAsync(conditions: conditions);
         }
 
         public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
@@ -61,7 +61,8 @@ namespace Blomsterbinderiet.Pages.Product
 
             List<Func<Models.Product, bool>> conditions = new()
             {
-                p => p.Keywords.Any(k=>k.Name.Contains(keywordName))
+                p => p.Keywords.Any(k=>k.Name.Contains(keywordName)),
+                p => p.Disabled == false
             };
             KeywordNameSearch = keywordName;
             Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
@@ -109,8 +110,6 @@ namespace Blomsterbinderiet.Pages.Product
                 conditions.Add(p => p.Keywords.Any(k=>k.Name.ToLower().Contains(KeywordNameSearch.ToLower())));
             }
 
-
-
             List<string> includeProperties = new()
             {
                 nameof(Models.Product.Keywords)
@@ -121,6 +120,7 @@ namespace Blomsterbinderiet.Pages.Product
 
             Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
             Products = await ProductService.OrderBy(Products, SortProperty, SortDirection);
+            Products = Products.OrderByDescending(p => p.Disabled);
 
             return Page();
         }
