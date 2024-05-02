@@ -14,6 +14,11 @@ namespace Blomsterbinderiet.Service
             DbService = dbService;
         }
 
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await DbService.GetObjectByIdAsync(id);
+        }
+
         public async Task<IEnumerable<T>> GetAllDataAsync(IEnumerable<string>? includeProperties = null, IEnumerable<Func<T, bool>>? conditions = null)
         {
             return await DbService.GetObjectsAsync(includeProperties, conditions);
