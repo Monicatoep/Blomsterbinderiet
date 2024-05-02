@@ -56,7 +56,8 @@
             
             @if ((HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee")))
             {
-                <form method="get" asp-page-handler="ShowDisabled"><button class="btn-success">Vis deaktiverede produkter</button></form>
+                <form method="post" asp-page-handler="ShowDisabled"><button class="btn-success">Vis deaktiverede produkter</button></form>
+                    <a asp-page="/Product/GetAllProducts" class="btn btn-success">Vis kun aktive produkter</a>
             }
 
         </div>
@@ -78,7 +79,10 @@
                             @for (int i = 0; i < length; i++)
                         {
                             var product = Model.Products.ElementAt(i);
-                            <div class="card card-body" id="productcard">
+                                string cardClass = product.Disabled ? "card card-body disabled-product" : "card card-body";
+
+
+                                <div class="@cardClass" id="productcard">
 
                                 <h5 class="card-title">@product.Name</h5>
                                 @{

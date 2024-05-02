@@ -24,6 +24,14 @@ namespace Blomsterbinderiet.Service
             return await DbService.GetObjectsAsync();
         }
 
+        public IEnumerable<Product> GetNotDisabledProducts()
+        {
+            return from product in Products
+                   orderby product.Name descending
+                   where product.Disabled == false
+                   select product;
+        }
+
         public async Task UpdateProductAsync(Product product)
         {
             await DbService.UpdateObjectAsync(product);
@@ -44,6 +52,7 @@ namespace Blomsterbinderiet.Service
             Product productToBeDisabled = DbService.GetObjectByIdAsync(id).Result;
             productToBeDisabled.Disabled = true;
             await DbService.UpdateObjectAsync(productToBeDisabled);
+            Products = (await GetProductsAsync()).ToList();
         }
 
 		public async Task ReenableProductAsync(int id)
@@ -51,6 +60,7 @@ namespace Blomsterbinderiet.Service
 			Product productToBeReenabled = DbService.GetObjectByIdAsync(id).Result;
 			productToBeReenabled.Disabled = false;
 			await DbService.UpdateObjectAsync(productToBeReenabled);
-		}
+            Products = (await GetProductsAsync()).ToList();
+        }
     }
 }

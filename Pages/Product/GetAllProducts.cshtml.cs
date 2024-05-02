@@ -5,6 +5,8 @@ using Blomsterbinderiet.MockData;
 using Blomsterbinderiet.Service;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using Blomsterbinderiet.Migrations;
+using System;
 
 namespace Blomsterbinderiet.Pages.Product
 {
@@ -38,9 +40,14 @@ namespace Blomsterbinderiet.Pages.Product
 
         public IEnumerable<Models.Product> Products { get; private set; }
 
-		public async Task OnGetAsync()
+		public void OnGet()
         {
-            Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
+            Products =  ProductService.GetNotDisabledProducts();
+        }
+
+        public async Task OnPostShowDisabledAsync()
+        {
+            Products = (await ProductService.GetProductsAsync()).OrderByDescending(p => p.Disabled);
         }
 
         public async Task OnGetKeywordAsync(string keywordName)
@@ -95,10 +102,5 @@ namespace Blomsterbinderiet.Pages.Product
 
             return Page();
         }
-
-        //public async Task OnGetShowDisabledAsync()
-        //{
-        //    Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
-        //}
     }
 }

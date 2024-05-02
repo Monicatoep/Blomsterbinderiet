@@ -100,3 +100,9 @@ input {
 #noborder {
     border: none;
 }
+
+.disabled-product {
+    background-color: #f0f0f0;
+    color: black;
+    opacity: 0.6; 
+}
