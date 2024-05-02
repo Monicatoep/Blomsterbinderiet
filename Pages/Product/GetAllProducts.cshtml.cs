@@ -25,9 +25,9 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Farve")]
         public string? Colour { get; set; }
         [BindProperty]
-        public int? Price1 { get; set; }
+        public double? Price1 { get; set; }
         [BindProperty]
-        public int? Price2 { get; set; }
+        public double? Price2 { get; set; }
         [BindProperty]
         [DisplayName("Søg på produkt attribut")]
         public string? KeywordNameSearch { get; set; }
@@ -35,6 +35,7 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
         public CookieService CookieService { get; set; }
+        public IEnumerable<Models.Product> Products { get; private set; }
 
         public GetAllProductsModel(ProductService productService, ServiceGeneric<Keyword> keywordService, CookieService cookieService)
         {
@@ -43,7 +44,7 @@ namespace Blomsterbinderiet.Pages.Product
             CookieService = cookieService;
         }
 
-        public IEnumerable<Models.Product> Products { get; private set; }
+        
 
 		public async Task OnGetAsync()
         {
@@ -80,7 +81,7 @@ namespace Blomsterbinderiet.Pages.Product
             Price1 = null;
             Price2 = null;
             ShowDisabled = false;
-            Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
+            Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name).Where(p => p.Disabled == false);
             return Page();
         }
 

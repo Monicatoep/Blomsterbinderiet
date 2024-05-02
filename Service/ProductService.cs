@@ -24,14 +24,6 @@ namespace Blomsterbinderiet.Service
             return await DbService.GetObjectsAsync();
         }
 
-        public IEnumerable<Product> GetNotDisabledProducts()
-        {
-            return from product in Products
-                   orderby product.Name descending
-                   where product.Disabled == false
-                   select product;
-        }
-
         public async Task UpdateProductAsync(Product product)
         {
             await DbService.UpdateObjectAsync(product);
