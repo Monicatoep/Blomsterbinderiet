@@ -31,11 +31,13 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         [DisplayName("Søg på produkt attribut")]
         public string? KeywordNameSearch { get; set; }
+        public CookieService CookieService { get; set; }
 
-        public GetAllProductsModel(ProductService productService, ServiceGeneric<Keyword> keywordService)
+        public GetAllProductsModel(ProductService productService, ServiceGeneric<Keyword> keywordService, CookieService cookieService)
         {
             ProductService = productService;
             KeywordService = keywordService;
+            CookieService = cookieService;
         }
 
         public IEnumerable<Models.Product> Products { get; private set; }
@@ -112,6 +114,14 @@ namespace Blomsterbinderiet.Pages.Product
             Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
             Products = await ProductService.OrderBy(Products, SortProperty, SortDirection);
 
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAddToBasket(int id)
+        {
+            await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
+
+            Products = ProductService.GetNotDisabledProducts();
             return Page();
         }
     }
