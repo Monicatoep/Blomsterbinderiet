@@ -31,6 +31,8 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         [DisplayName("Søg på produkt attribut")]
         public string? KeywordNameSearch { get; set; }
+        [BindProperty]
+        public bool ShowDisabled { get; set; }
 
         public GetAllProductsModel(ProductService productService, ServiceGeneric<Keyword> keywordService)
         {
@@ -74,6 +76,7 @@ namespace Blomsterbinderiet.Pages.Product
             Colour = null;
             Price1 = null;
             Price2 = null;
+            ShowDisabled = false;
             Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
             return Page();
         }
@@ -86,7 +89,12 @@ namespace Blomsterbinderiet.Pages.Product
         public async Task<IActionResult> OnPostAsync()
         {
             List<Func<Models.Product, bool>> conditions = new();
-            if(Colour != null)
+            if(!ShowDisabled)
+            {
+                conditions.Add(p => p.Disabled == false);
+            }
+
+            if (Colour != null)
             {
                 conditions.Add(p => p.Colour.ToLower().Contains(Colour.ToLower()));
             }
@@ -100,6 +108,8 @@ namespace Blomsterbinderiet.Pages.Product
             {
                 conditions.Add(p => p.Keywords.Any(k=>k.Name.ToLower().Contains(KeywordNameSearch.ToLower())));
             }
+
+
 
             List<string> includeProperties = new()
             {
