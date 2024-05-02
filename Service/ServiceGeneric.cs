@@ -19,26 +19,19 @@ namespace Blomsterbinderiet.Service
             return await DbService.GetObjectByIdAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAllDataAsync(IEnumerable<string>? includeProperties = null, IEnumerable<Func<T, bool>>? conditions = null)
+        public async Task<IEnumerable<T>> GetAllDataAsync()
         {
-            return await DbService.GetObjectsAsync(includeProperties, conditions);
+            return await DbService.GetObjectsAsync();
         }
 
-        public async Task<IEnumerable<T>> OrderBy(IEnumerable<T> listToBeSorted, string sortProperty, bool largeToSmall = false)
+        public async Task<IEnumerable<T>> GetAllDataAsync(string includeProperty)
         {
-            PropertyInfo property = typeof(T).GetProperty(sortProperty);
-            if (property == null)
-            {
-                return listToBeSorted;
-            }
-            if(largeToSmall)
-            {
-                listToBeSorted = listToBeSorted.OrderByDescending(p => property.GetValue(p, null));
-            } else
-            {
-                listToBeSorted = listToBeSorted.OrderBy(p => property.GetValue(p, null));
-            }
-            return listToBeSorted;
+            return await DbService.GetObjectsAsync(includeProperty);
+        }
+
+        public async Task<IEnumerable<T>> GetAllDataAsync(IEnumerable<string>? includeProperties)
+        {
+            return await DbService.GetObjectsAsync(includeProperties);
         }
     }
 }

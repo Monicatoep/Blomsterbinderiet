@@ -44,32 +44,23 @@ namespace Blomsterbinderiet.Pages.Product
             CookieService = cookieService;
         }
 
-        
-
 		public async Task OnGetAsync()
         {
-            List<Func<Models.Product, bool>> conditions = new()
-            {
-                p => p.Disabled == false
-            };
-            Products = await ProductService.GetAllDataAsync(conditions: conditions);
+            Products = await ProductService.GetAllDataAsync();
+
+            Products = Products.Where(p => p.Disabled == false);
         }
 
         public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
         {
-            List<string> includeProperties = new()
-            {
-                nameof(Models.Product.Keywords)
-            };
+            Products = await ProductService.GetAllDataAsync(nameof(Models.Product.Keywords));
 
-            List<Func<Models.Product, bool>> conditions = new()
-            {
-                p => p.Keywords.Any(k=>k.Name.Contains(keywordName)),
-                p => p.Disabled == false
-            };
-            KeywordNameSearch = keywordName;
-            Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
+            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains(keywordName)));
+            Products = Products.Where(p => p.Disabled == false);
             Products = Products.OrderBy(p => p.Name);
+
+            KeywordNameSearch = keywordName;
+            
             return Page();
         }
 
@@ -81,7 +72,7 @@ namespace Blomsterbinderiet.Pages.Product
             Price1 = null;
             Price2 = null;
             ShowDisabled = false;
-            Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name).Where(p => p.Disabled == false);
+            Products = (await ProductService.GetProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
             return Page();
         }
 
@@ -92,37 +83,29 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAsync()
         {
-            List<Func<Models.Product, bool>> conditions = new();
+            Products = await ProductService.GetAllDataAsync(nameof(Models.Product.Keywords));
+
             if(!ShowDisabled)
             {
-                conditions.Add(p => p.Disabled == false);
+                Products = Products.Where(p => p.Disabled == false);
             }
 
             if (Colour != null)
             {
-                conditions.Add(p => p.Colour.ToLower().Contains(Colour.ToLower()));
+                Products = Products.Where(p => p.Colour.ToLower().Contains(Colour.ToLower()));
             }
             if(Price1 != null || Price2 != null)
             {
                 int min = Math.Min(Convert.ToInt32(Price1), Convert.ToInt32(Price2));
                 int maks = Math.Max(Convert.ToInt32(Price1), Convert.ToInt32(Price2));
-                conditions.Add(p => p.Price >= min && p.Price <= maks);
+                Products = Products.Where(p => p.Price >= min && p.Price <= maks);
             }
             if (KeywordNameSearch != null)
             {
-                conditions.Add(p => p.Keywords.Any(k=>k.Name.ToLower().Contains(KeywordNameSearch.ToLower())));
+                Products = Products.Where(p => p.Keywords.Any(k=>k.Name.ToLower().Contains(KeywordNameSearch.ToLower())));
             }
-
-            List<string> includeProperties = new()
-            {
-                nameof(Models.Product.Keywords)
-            };
-
-            //the commented piece of code throws an exception because notracking cycle of object instantiation
-            //includeProperties.Add($"{nameof(Models.Product.Keywords)}.{nameof(Models.Keyword.Products)}");
-
-            Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
-            Products = await ProductService.OrderBy(Products, SortProperty, SortDirection);
+            
+            Products = ProductService.Sort(Products, SortProperty, SortDirection);
             Products = Products.OrderByDescending(p => p.Disabled);
 
             return Page();
@@ -132,7 +115,7 @@ namespace Blomsterbinderiet.Pages.Product
         {
             await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
 
-            Products = ProductService.GetNotDisabledProducts();
+            Products = (await ProductService.GetAllDataAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
             return Page();
         }
     }
