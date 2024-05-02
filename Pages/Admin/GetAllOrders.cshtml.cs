@@ -19,6 +19,7 @@ namespace Blomsterbinderiet.Pages.Admin
         public List<Models.Order> MyOrders { get; set; }
         public List<User> Employees { get; set; }
         public Status[] StatusList{ get; set; }
+        [BindProperty]
         public DateOnly Date { get; set; }
       
 
@@ -58,9 +59,16 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.SortByDueDateDes().ToList();
             return Page();
         }
-        public IActionResult OnGetFilterByDueDate()
+        public IActionResult OnPostFilterByDueDate()
         {
+            
             MyOrders = OrderService.FilterByDueDate(Date).ToList();
+            return Page();
+        }
+        public IActionResult OnPostFilterByDueDateToday()
+        {
+            
+            MyOrders = OrderService.FilterByDueDateToday().ToList();
             return Page();
         }
         public IActionResult OnGetSortByEmployee()
@@ -74,9 +82,14 @@ namespace Blomsterbinderiet.Pages.Admin
             return Page();
 
         }
-        public IActionResult OnGetFilterByEmployeeAsync(int id)
+        public IActionResult OnGetFilterByEmployee(int id)
         {
             MyOrders = OrderService.FilterByEmployee(id).ToList();
+            return Page();
+        }
+        public IActionResult OnGetFilterByEmployeeNull()
+        {
+            MyOrders = OrderService.FilterByEmployeeNull().ToList();
             return Page();
         }
         public IActionResult OnGetSortByStatus()
@@ -89,20 +102,20 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.SortByStatusDes().ToList();
             return Page();
         }
-        public IActionResult OnGetFilterByStatus(int status)
+        public IActionResult OnGetFilterByStatus(Status status)
         {
             MyOrders = OrderService.FilterByStatus(status).ToList();
             return Page();
         }
     public async Task<IActionResult> OnPostDenyAsync(int id)
         {
-            OrderService.DenyOrderAsync(id);
+            await OrderService.DenyOrderAsync(id);
             MyOrders = await OrderService.GetAllOrdersAsync();
             return Page();
         }
         public async Task<IActionResult> OnPostConfirmAsync(int id)
         {
-            OrderService.ConfirmOrderAsync(id);
+            await OrderService.ConfirmOrderAsync(id);
             MyOrders = await OrderService.GetAllOrdersAsync();
             return Page();
         }
@@ -116,7 +129,7 @@ namespace Blomsterbinderiet.Pages.Admin
 
         public async Task<IActionResult> OnPostChangeStatusAsync(int id)
         {
-            OrderService.ChangeOrderStatusAsync(id);
+            await OrderService.ChangeOrderStatusAsync(id);
             MyOrders = await OrderService.GetAllOrdersAsync();
             return Page(); 
         }

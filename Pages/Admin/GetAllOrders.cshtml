@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="test">
-                        <table class="table table-bordered" width="60%">
+                        <table class="table table-bordered  overflow-visible" width="60%">
                             <thead>
                                 <tr class="btn-secondary active">
                                     <th>Ordre ID</th>
@@ -30,8 +30,9 @@
                                             <div class="dropdown-menu">
                                                 @foreach (Models.User user in Model.Employees)
                                                 {
-                                                    <a title="filtreMedarbejder" asp-page-handler="FilterByEmployee" id="@user.ID">@user.Name</a>
+                                                    <a title="filtreMedarbejder" asp-page-handler="FilterByEmployee" asp-route-id="@user.ID">@user.Name</a>
                                                 }
+                                                <a title="filtreMedarbejder" asp-page-handler="FilterByEmployeeNull">Ingen medarbejder</a>
 
                                             </div>
 
@@ -51,11 +52,22 @@
 
                                             <div>
 
-                                                <div class="dropdown-menu">
-                                                    <label asp-for="Date" class="col-form-label ">Vælg dato</label><a asp-page-handler="FilterByDueDate"><i class="fa fa-check"></i></a>
-                                                    <input asp-for=Date />
-                                                </div>
-
+                                                @*< div class="dropdown-menu">
+                                                    <label asp-for="@Model.Date" class="col-form-label ">Vælg dato</label><a asp-page-handler="FilterByDueDate"><i class="fa fa-check"></i></a>
+                                                    <input asp-for=@Model.Date />
+                                                    </div> *@
+                                                <form method="post">
+                                                    <div class="form-group dropdown-menu pt-4 pb-4">
+                                                        <label asp-for="Date" class="col-form-label ">Vælg dato</label>
+                                                        <button type="submit" title="Bekræft" asp-page-handler="FilterByDueDate"><i class="fa fa-check"></i></button>
+                                                        <button title="I dag" asp-page-handler="FilterByDueDateToday">I dag</button>
+                                                        <div>
+                                                            <input asp-for="Date" value="@DateOnly.FromDateTime(DateTime.Now).AddDays(1)" />
+                                                        </div>
+                                                        
+                                                    </div>
+                                                  
+                                                </form>
 
                                             </div>
 
@@ -77,7 +89,7 @@
                                             <div class="dropdown-menu">
                                                 @foreach (var status in Model.StatusList)
                                                 {
-                                                    <a title="filtreStatus" asp-page-handler="FilterByStatus" id="@status">@status</a>
+                                                    <a title="filtreStatus" asp-page-handler="FilterByStatus" asp-route-status="@status">@status</a>
                                                 }
 
                                             </div>
@@ -168,4 +180,3 @@
     </div>
 </div>
 
-   

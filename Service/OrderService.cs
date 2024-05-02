@@ -156,11 +156,23 @@ namespace Blomsterbinderiet.Service
         }
         public IEnumerable<Models.Order> FilterByDueDate(DateOnly date)
         {
-
-            Console.WriteLine(date);
-            
+            TimeOnly time = TimeOnly.MinValue;
+            DateTime dateTime = date.ToDateTime(time);
+            Console.WriteLine(dateTime);
             return from order in Orders
-                   where order.PickUpDate.Equals(date)
+                   where order.PickUpDate.Date.Equals(dateTime)
+                   select order;
+
+        }
+        public IEnumerable<Models.Order> FilterByDueDateToday()
+        {
+            DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);
+            TimeOnly time = TimeOnly.MinValue;
+            DateTime dateTime = dateNow.ToDateTime(time);
+           
+            Console.WriteLine(dateTime);
+            return from order in Orders
+                   where order.PickUpDate.Date.Equals(dateTime)
                    select order;
 
         }
@@ -179,7 +191,15 @@ namespace Blomsterbinderiet.Service
         }
         public IEnumerable<Models.Order> FilterByEmployee(int id)
         {
-            return Orders;
+            return from order in Orders
+                   where order.EmployeeID == id
+                   select order;
+        }
+        public IEnumerable<Models.Order> FilterByEmployeeNull()
+        {
+            return from order in Orders
+                   where order.EmployeeID == null
+                   select order;
         }
         public IEnumerable<Models.Order> SortByStatus()
         {
@@ -193,9 +213,11 @@ namespace Blomsterbinderiet.Service
                    orderby order.OrderStatus descending
                    select order;
         }
-        public IEnumerable<Models.Order> FilterByStatus(int status)
+        public IEnumerable<Models.Order> FilterByStatus(Status status)
         {
-            return Orders;
+            return from order in Orders
+                   where order.OrderStatus==status
+                   select order;
         }
 
         
