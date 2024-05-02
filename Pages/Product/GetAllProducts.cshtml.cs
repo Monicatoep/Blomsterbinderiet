@@ -65,5 +65,10 @@ namespace Blomsterbinderiet.Pages.Product
 
             return Page();
         }
+
+        //public async Task OnGetShowDisabledAsync()
+        //{
+        //    Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
+        //}
     }
 }

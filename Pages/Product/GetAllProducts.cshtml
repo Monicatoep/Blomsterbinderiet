@@ -47,6 +47,12 @@
                 
                 <button type="submit" class="btn btn-success">Bekræft</button>
             </form>
+            
+            @if ((HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee")))
+            {
+                <form method="get" asp-page-handler="ShowDisabled"><button class="btn-success">Vis deaktiverede produkter</button></form>
+            }
+
         </div>
     </div>
 
