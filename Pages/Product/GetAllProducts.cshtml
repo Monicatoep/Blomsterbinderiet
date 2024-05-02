@@ -53,30 +53,15 @@
                     
                     @if ((HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee")))
                     {
-
                         <div>
                             <label asp-for="@Model.ShowDisabled"></label>
                             <input asp-for="@Model.ShowDisabled" class="form-check-input" />
                             <span asp-validation-for="@Model.ShowDisabled" class="text-danger"></span>
                         </div>
-
-                        <div>
-                            <form method="post" asp-page-handler="ShowDisabled"><button class=" btn btn-success m-2 mt-4" id="btnlight">Vis deaktiverede produkter</button></form>
-                            <a asp-page="/Product/GetAllProducts" class="btn btn-success m-2" id="btnlight">Vis kun aktive produkter</a>
-                        </div>
-                        
                     }
-
-
-                <div>
-                        <button type="submit" class="btn btn-success" id="btnyellow">Bekræft</button>
-                        <a class="btn btn-primary" id="" asp-page-handler="Reset">Nulstil</a>
-
-                </div>
+                <button type="submit" class="btn btn-success">Bekræft</button>
+                    <a class="btn btn-success" asp-page-handler="Reset">Nulstil</a>
             </form>
-            
-            
-
         </div>
     </div>
 
