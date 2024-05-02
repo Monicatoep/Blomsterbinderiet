@@ -38,12 +38,13 @@ namespace Blomsterbinderiet.Pages.Product
 
         public IEnumerable<Models.Product> Products { get; private set; }
 
-		public async Task OnGetAsync()
+		public async Task<IActionResult> OnGetAsync()
         {
             Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
+            return Page();
         }
 
-        public async Task OnGetKeywordAsync(string keywordName)
+        public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
         {
             List<string> includeProperties = new()
             {
@@ -57,9 +58,10 @@ namespace Blomsterbinderiet.Pages.Product
             KeywordNameSearch = keywordName;
             Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
             Products = Products.OrderBy(p => p.Name);
+            return Page();
         }
 
-        public async Task OnGetReset()
+        public async Task<IActionResult> OnGetResetAsync()
         {
             SortProperty = null;
             SortDirection = false;
@@ -67,6 +69,7 @@ namespace Blomsterbinderiet.Pages.Product
             Price1 = null;
             Price2 = null;
             Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
+            return Page();
         }
 
         public async Task OnGetSearchStringAsync(string searchString)
@@ -74,7 +77,7 @@ namespace Blomsterbinderiet.Pages.Product
             throw new NotImplementedException();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             List<Func<Models.Product, bool>> conditions = new();
             if(Colour != null)
