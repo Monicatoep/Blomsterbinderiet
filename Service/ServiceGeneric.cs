@@ -1,4 +1,7 @@
 ﻿using Blomsterbinderiet.Models;
+using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Reflection;
 
 namespace Blomsterbinderiet.Service
 {
@@ -11,29 +14,26 @@ namespace Blomsterbinderiet.Service
             DbService = dbService;
         }
 
-        public async Task<IEnumerable<T>> GetAllDataAsync(IEnumerable<Func<T, bool>> conditions)
+        public async Task<IEnumerable<T>> GetAllDataAsync(IEnumerable<string>? includeProperties = null, IEnumerable<Func<T, bool>>? conditions = null)
         {
-            IEnumerable<T> data = (await DbService.GetObjectsAsync());
-            foreach (Func<T, bool> condition in conditions)
-            {
-                data = data.Where(condition);
-            }
-            return data;
+            return await DbService.GetObjectsAsync(includeProperties, conditions);
         }
 
-        public async Task<IEnumerable<T>> GetAllDataAsync(IEnumerable<Func<T, bool>> conditions, IEnumerable<string> includeProperties)
+        public async Task<IEnumerable<T>> OrderBy(IEnumerable<T> listToBeSorted, string sortProperty, bool largeToSmall = false)
         {
-            IEnumerable<T> data = (await DbService.GetObjectsAsync(includeProperties));
-            foreach (Func<T, bool> condition in conditions)
+            PropertyInfo property = typeof(T).GetProperty(sortProperty);
+            if (property == null)
             {
-                data = data.Where(condition);
+                return listToBeSorted;
             }
-            return data;
-        }
-
-        public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<string> includeProperties)
-        {
-            return await DbService.GetObjectsAsync(includeProperties);
+            if(largeToSmall)
+            {
+                listToBeSorted = listToBeSorted.OrderByDescending(p => property.GetValue(p, null));
+            } else
+            {
+                listToBeSorted = listToBeSorted.OrderBy(p => property.GetValue(p, null));
+            }
+            return listToBeSorted;
         }
     }
 }

@@ -52,30 +52,5 @@ namespace Blomsterbinderiet.Service
 			productToBeReenabled.Disabled = false;
 			await DbService.UpdateObjectAsync(productToBeReenabled);
 		}
-
-		public async Task<IEnumerable<Product>> FilterAndSort(IEnumerable<Func<Product,bool>> conditions, IEnumerable<string> includeProperties, bool largeToSmall, string sortProperty)
-        {
-            IEnumerable<Product> data = await GetAllDataAsync(conditions, includeProperties);
-            switch (sortProperty)
-            {
-                case nameof(Models.Product.Name):
-                    data = data.OrderBy(p => p.Name);
-                    break;
-                case nameof(Models.Product.Description):
-                    data = data.OrderBy(p => p.Description);
-                    break;
-                case nameof(Models.Product.Colour):
-                    data = data.OrderBy(p => p.Colour);
-                    break;
-                case nameof(Models.Product.Price):
-                    data = data.OrderBy(p => p.Price);
-                    break;
-            }
-            if (largeToSmall)
-            {
-                data = data.Reverse();
-            }
-            return data;
-        }
     }
 }
