@@ -52,6 +52,7 @@
                     </div>
 
                 <button type="submit" class="btn btn-success">Bekræft</button>
+                    <a class="btn btn-success" asp-page-handler="Reset">Nulstil</a>
             </form>
             
             @if ((HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee")))

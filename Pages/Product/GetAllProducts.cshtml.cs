@@ -59,6 +59,16 @@ namespace Blomsterbinderiet.Pages.Product
             Products = Products.OrderBy(p => p.Name);
         }
 
+        public async Task OnGetReset()
+        {
+            SortProperty = null;
+            SortDirection = false;
+            Colour = null;
+            Price1 = null;
+            Price2 = null;
+            Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
+        }
+
         public async Task OnGetSearchStringAsync(string searchString)
         {
             throw new NotImplementedException();
@@ -69,7 +79,7 @@ namespace Blomsterbinderiet.Pages.Product
             List<Func<Models.Product, bool>> conditions = new();
             if(Colour != null)
             {
-                conditions.Add(p => p.Colour.Contains(Colour));
+                conditions.Add(p => p.Colour.ToLower().Contains(Colour.ToLower()));
             }
             if(Price1 != null || Price2 != null)
             {
