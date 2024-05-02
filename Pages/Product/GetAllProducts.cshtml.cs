@@ -11,6 +11,7 @@ namespace Blomsterbinderiet.Pages.Product
     public class GetAllProductsModel : PageModel
     {
         private ProductService ProductService { get; set; }
+        public ServiceGeneric<Keyword> KeywordService { get; set; }
 
         [BindProperty]
         [DisplayName("Sorter efter")]
@@ -26,11 +27,13 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         public int? Price2 { get; set; }
         [BindProperty]
-        public int MyProperty { get; set; }
+        [DisplayName("Søg på produkt attribut")]
+        public string? KeywordNameSearch { get; set; }
 
-        public GetAllProductsModel(ProductService Service)
+        public GetAllProductsModel(ProductService productService, ServiceGeneric<Keyword> keywordService)
         {
-            ProductService = Service;
+            ProductService = productService;
+            KeywordService = keywordService;
         }
 
         public IEnumerable<Models.Product> Products { get; private set; }
@@ -40,9 +43,30 @@ namespace Blomsterbinderiet.Pages.Product
             Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
         }
 
+        public async Task OnGetKeywordAsync(string keywordName)
+        {
+            List<string> includeProperties = new()
+            {
+                nameof(Models.Product.Keywords)
+            };
+
+            List<Func<Models.Product, bool>> conditions = new()
+            {
+                p => p.Keywords.Any(k=>k.Name.Contains(keywordName))
+            };
+            KeywordNameSearch = keywordName;
+            Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
+            Products = Products.OrderBy(p => p.Name);
+        }
+
+        public async Task OnGetSearchStringAsync(string searchString)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IActionResult> OnPost()
         {
-            List< Expression<Func<Models.Product, bool>>> conditions = new();
+            List<Func<Models.Product, bool>> conditions = new();
             if(Colour != null)
             {
                 conditions.Add(p => p.Colour.Contains(Colour));
@@ -53,8 +77,20 @@ namespace Blomsterbinderiet.Pages.Product
                 int maks = Math.Max(Convert.ToInt32(Price1), Convert.ToInt32(Price2));
                 conditions.Add(p => p.Price >= min && p.Price <= maks);
             }
+            if (KeywordNameSearch != null)
+            {
+                conditions.Add(p => p.Keywords.Any(k=>k.Name.ToLower().Contains(KeywordNameSearch.ToLower())));
+            }
 
-            Products = await ProductService.GetAllDataAsync(conditions);
+            List<string> includeProperties = new()
+            {
+                nameof(Models.Product.Keywords)
+            };
+
+            //the commented piece of code throws an exception because notracking cycle of object instantiation
+            //includeProperties.Add($"{nameof(Models.Product.Keywords)}.{nameof(Models.Keyword.Products)}");
+
+            Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
             Products = await ProductService.OrderBy(Products, SortProperty, SortDirection);
 
             return Page();

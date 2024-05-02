@@ -1,5 +1,6 @@
 ﻿using Blomsterbinderiet.EFDbContext;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Blomsterbinderiet.Service
@@ -83,33 +84,34 @@ namespace Blomsterbinderiet.Service
 
         //https://stackoverflow.com/questions/66692883/is-using-ef-core-include-method-inside-a-foreach-can-be-a-performance-issue
 
-
-        public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<Expression<Func<T, bool>>>? conditions = null, IEnumerable<string>? includes = null)
+        //includes via join in the query sent to the database and the where is performed server side not on the database
+        public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<string>? includes, IEnumerable<Func<T, bool>>? conditions)
         {
             using (var context = new BlomstDbContext())
             {
-                var query = context.Set<T>().AsNoTracking().AsQueryable();
+                var query = context.Set<T>().AsNoTracking();
 
-                if(includes != null)
+                if (includes != null)
                 {
-                    foreach (string property in includes)
+                    foreach(string property in includes)
                     {
                         query = query.Include(property);
                     }
                 }
 
+                IEnumerable<T> data = await query.ToListAsync();
+
                 if (conditions != null)
                 {
-                    foreach (Expression<Func<T, bool>> condition in conditions)
+                    foreach (Func<T, bool> condition in conditions)
                     {
-                        query = query.Where(condition);
+                        data = data.Where(condition);
                     }
                 }
 
-                return query.ToList();
+                return data;
             }
         }
-
 
     }
 }

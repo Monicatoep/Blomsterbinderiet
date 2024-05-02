@@ -14,37 +14,10 @@ namespace Blomsterbinderiet.Service
             DbService = dbService;
         }
 
-        #region GetAllDataAsync + overloads
-        public async Task<IEnumerable<T>> GetAllDataAsync(IEnumerable<Expression<Func<T, bool>>> conditions)
+        public async Task<IEnumerable<T>> GetAllDataAsync(IEnumerable<string>? includeProperties = null, IEnumerable<Func<T, bool>>? conditions = null)
         {
-            return await DbService.GetObjectsAsync(conditions);
+            return await DbService.GetObjectsAsync(includeProperties, conditions);
         }
-
-        public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<string> includeProperties)
-        {
-            return await DbService.GetObjectsAsync(includes: includeProperties);
-        }
-
-        public async Task<IEnumerable<T>> GetAllDataAsync(IEnumerable<Expression<Func<T, bool>>> conditions, IEnumerable<string> includeProperties)
-        {
-            return await DbService.GetObjectsAsync(conditions,includeProperties);
-        }
-
-        public async Task<IEnumerable<T>> GetAllDataAsync(Expression<Func<T, bool>> condition)
-        {
-            return await DbService.GetObjectsAsync(new List<Expression<Func<T, bool>>>() { condition });
-        }
-
-        public async Task<IEnumerable<T>> GetAllDataAsync(string includeProperty)
-        {
-            return await DbService.GetObjectsAsync(includes: new List<string>() { includeProperty });
-        }
-
-        public async Task<IEnumerable<T>> GetAllDataAsync(Expression<Func<T, bool>> condition, string includeProperty)
-        {
-            return await DbService.GetObjectsAsync(new List<Expression<Func<T, bool>>>() { condition }, new List<string>() { includeProperty });
-        }
-        #endregion
 
         public async Task<IEnumerable<T>> OrderBy(IEnumerable<T> listToBeSorted, string sortProperty, bool largeToSmall = false)
         {
