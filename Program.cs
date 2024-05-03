@@ -16,7 +16,6 @@ builder.Services.AddTransient<DbGenericService<Keyword>, DbGenericService<Keywor
 builder.Services.AddTransient<DbGenericService<Order>, DbGenericService<Order>>();
 builder.Services.AddTransient<DbGenericService<Delivery>, DbGenericService<Delivery>>();
 builder.Services.AddTransient<DbGenericService<OrderLine>, DbGenericService <OrderLine>>();
-builder.Services.AddSingleton<KeywordService>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<OrderService>();
 builder.Services.AddSingleton<ProductService>();
