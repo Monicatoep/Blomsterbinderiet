@@ -6,11 +6,13 @@ using System.Linq;
 using System.Reflection;
 namespace Blomsterbinderiet.Service
 {
-    public class ProductService : ServiceGeneric<Product>
+    public class ProductService
     {
         public List<Product> Products { get; set; }
-        public ProductService(DbGenericService<Product> dbService) : base(dbService)
+        private DbGenericService<Models.Product> DbService { get; set; }
+        public ProductService(DbGenericService<Product> dbService)
         {
+            DbService = dbService;
             Products = dbService.GetObjectsAsync().Result.ToList();
         }
 
@@ -19,7 +21,7 @@ namespace Blomsterbinderiet.Service
             return DbService.GetObjectByIdAsync(id).Result;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
             return await DbService.GetObjectsAsync();
         }
@@ -44,7 +46,7 @@ namespace Blomsterbinderiet.Service
             Product productToBeDisabled = DbService.GetObjectByIdAsync(id).Result;
             productToBeDisabled.Disabled = true;
             await DbService.UpdateObjectAsync(productToBeDisabled);
-            Products = (await GetProductsAsync()).ToList();
+            Products = (await GetAllProductsAsync()).ToList();
         }
 
 		public async Task ReenableProductAsync(int id)
@@ -52,7 +54,7 @@ namespace Blomsterbinderiet.Service
 			Product productToBeReenabled = DbService.GetObjectByIdAsync(id).Result;
 			productToBeReenabled.Disabled = false;
 			await DbService.UpdateObjectAsync(productToBeReenabled);
-            Products = (await GetProductsAsync()).ToList();
+            Products = (await GetAllProductsAsync()).ToList();
         }
 
         public IEnumerable<Product> Sort(IEnumerable<Product> dataToBeSorted,string property, bool largeToSmall=false)
@@ -77,6 +79,11 @@ namespace Blomsterbinderiet.Service
                 dataToBeSorted = dataToBeSorted.Reverse();
             }
             return dataToBeSorted;
+        }
+
+        public async Task<IEnumerable<Models.Product>> GetAllProductsIncludeKeywordsAsync()
+        {
+            return await DbService.GetObjectsAsync(nameof(Models.Product.Keywords));
         }
     }
 }

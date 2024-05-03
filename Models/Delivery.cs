@@ -8,8 +8,14 @@ namespace Blomsterbinderiet.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
+
+        [Required(ErrorMessage = "Der skal angives afdødes navn")]
         public string DeseasedName { get; set; }
+
+        [Required(ErrorMessage = "Der skal angives begravelses start")]
         public DateTime CeremonyStart { get; set; }
+
+        [Required(ErrorMessage = "Der skal angives en leveringsadresse")]
         public string Address { get; set; }
 
         public Delivery(string deseasedName, DateTime ceremonyStart, string address)

@@ -13,7 +13,7 @@ namespace Blomsterbinderiet.Pages.Product
     public class GetAllProductsModel : PageModel
     {
         private ProductService ProductService { get; set; }
-        public ServiceGeneric<Keyword> KeywordService { get; set; }
+        public KeywordService KeywordService { get; set; }
 
         [BindProperty]
         [DisplayName("Sorter efter")]
@@ -37,7 +37,7 @@ namespace Blomsterbinderiet.Pages.Product
         public CookieService CookieService { get; set; }
         public IEnumerable<Models.Product> Products { get; private set; }
 
-        public GetAllProductsModel(ProductService productService, ServiceGeneric<Keyword> keywordService, CookieService cookieService)
+        public GetAllProductsModel(ProductService productService, KeywordService keywordService, CookieService cookieService)
         {
             ProductService = productService;
             KeywordService = keywordService;
@@ -46,14 +46,14 @@ namespace Blomsterbinderiet.Pages.Product
 
 		public async Task OnGetAsync()
         {
-            Products = await ProductService.GetAllDataAsync();
+            Products = await ProductService.GetAllProductsAsync();
 
             Products = Products.Where(p => p.Disabled == false);
         }
 
         public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
         {
-            Products = await ProductService.GetAllDataAsync(nameof(Models.Product.Keywords));
+            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
 
             Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains(keywordName)));
             Products = Products.Where(p => p.Disabled == false);
@@ -72,7 +72,7 @@ namespace Blomsterbinderiet.Pages.Product
             Price1 = null;
             Price2 = null;
             ShowDisabled = false;
-            Products = (await ProductService.GetProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
+            Products = (await ProductService.GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
             return Page();
         }
 
@@ -83,11 +83,13 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Products = await ProductService.GetAllDataAsync(nameof(Models.Product.Keywords));
+            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
 
             if(!ShowDisabled)
-            {
-                Products = Products.Where(p => p.Disabled == false);
+            {  
+                Products = from product in Products 
+                           where product.Disabled == false 
+                           select product;
             }
 
             if (Colour != null)
@@ -115,7 +117,7 @@ namespace Blomsterbinderiet.Pages.Product
         {
             await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
 
-            Products = (await ProductService.GetAllDataAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
+            Products = (await ProductService.GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
             return Page();
         }
     }
