@@ -61,12 +61,14 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public async Task<IActionResult> OnPostAsync()
         {
+            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
             if (!ModelState.IsValid)
             {
+                User = await UserService.GetUserByHttpContextAsync(HttpContext);
+                OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
                 return Page();
             }
             User = await UserService.GetUserByHttpContextAsync(HttpContext);
-            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
             await OrderService.CreateNewOrderAsync(User, PickUpDate, OrderLines);
@@ -78,12 +80,14 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public async Task<IActionResult> OnPostWithDeliveryAsync()
         {
+            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
             if (!ModelState.IsValid)
             {
+                User = await UserService.GetUserByHttpContextAsync(HttpContext);
+                OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
                 return Page();
             }
             User = await UserService.GetUserByHttpContextAsync(HttpContext);
-            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
             await OrderService.CreateNewOrderWithDeliveryAsync(User, PickUpDate, OrderLines, new Models.Delivery(DeseasedName, CeremonyStart, Address));
