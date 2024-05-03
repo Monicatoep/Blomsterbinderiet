@@ -16,7 +16,7 @@ namespace Blomsterbinderiet.Pages.Admin
     {
         public OrderService OrderService { get; set; }
         public UserService UserService { get; set; }
-        public List<Models.Order> MyOrders { get; set; }
+        public List<Order> MyOrders { get; set; }
         public List<User> Employees { get; set; }
         public Status[] StatusList{ get; set; }
         [BindProperty]
