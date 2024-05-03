@@ -23,6 +23,7 @@ namespace Blomsterbinderiet.Pages.Admin
             return Page();
         }
 
+        #region Name sorting
         public IActionResult OnGetSortByName()
         {
             Users = UserService.SortByName().ToList();
@@ -34,6 +35,9 @@ namespace Blomsterbinderiet.Pages.Admin
             Users = UserService.SortByNameDescending().ToList();
             return Page();
         }
+        #endregion
+
+        #region Role sorting
         public IActionResult OnGetSortByRole()
         {
             Users = UserService.SortByRole().ToList();
@@ -45,5 +49,6 @@ namespace Blomsterbinderiet.Pages.Admin
             Users = UserService.SortByRoleDescending().ToList();
             return Page();
         }
+        #endregion
     }
 }

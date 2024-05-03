@@ -22,8 +22,6 @@ namespace Blomsterbinderiet.Pages.Admin
         [BindProperty]
         public DateOnly Date { get; set; }
       
-
-
         public GetAllOrdersModel(OrderService orderService, UserService userService)
         {
             OrderService = orderService;
@@ -48,8 +46,10 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders =  await OrderService.GetAllOrdersWeekAsync();
 
             return Page();
-    }
-    public IActionResult OnGetSortByDueDate()
+        }
+
+        #region Due date filter and sort
+        public IActionResult OnGetSortByDueDate()
         {
             MyOrders = OrderService.SortByDueDate().ToList();
             return Page();
@@ -71,6 +71,9 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.FilterByDueDateToday().ToList();
             return Page();
         }
+        #endregion
+
+        #region Employee filter and sort
         public IActionResult OnGetSortByEmployee()
         {
             MyOrders = OrderService.SortByEmployee().ToList();
@@ -92,6 +95,9 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.FilterByEmployeeNull().ToList();
             return Page();
         }
+        #endregion
+
+        #region Status filter and sort
         public IActionResult OnGetSortByStatus()
         {
             MyOrders = OrderService.SortByStatus().ToList();
@@ -107,7 +113,10 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.FilterByStatus(status).ToList();
             return Page();
         }
-    public async Task<IActionResult> OnPostDenyAsync(int id)
+        #endregion
+
+        #region Status onpost change
+        public async Task<IActionResult> OnPostDenyAsync(int id)
         {
             await OrderService.DenyOrderAsync(id);
             MyOrders = await OrderService.GetAllOrdersAsync();
@@ -133,5 +142,6 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = await OrderService.GetAllOrdersAsync();
             return Page(); 
         }
+        #endregion
     }
 }
