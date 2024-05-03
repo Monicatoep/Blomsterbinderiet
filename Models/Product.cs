@@ -21,7 +21,7 @@ namespace Blomsterbinderiet.Models
 
 		[DisplayName("Pris")]
 		[Required(ErrorMessage = "Der skal angives en pris")]
-		[Range(1, int.MaxValue, ErrorMessage = "Pris skal være 0kr eller mere")]
+		[Range(1, double.MaxValue, ErrorMessage = "Pris skal være 0kr eller mere")]
         public double Price { get; set; }
 
 		[NotMapped]

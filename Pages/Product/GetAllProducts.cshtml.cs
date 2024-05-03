@@ -25,45 +25,42 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Farve")]
         public string? Colour { get; set; }
         [BindProperty]
-        public int? Price1 { get; set; }
+        public double? Price1 { get; set; }
         [BindProperty]
-        public int? Price2 { get; set; }
+        public double? Price2 { get; set; }
         [BindProperty]
         [DisplayName("Søg på produkt attribut")]
         public string? KeywordNameSearch { get; set; }
+        [BindProperty]
+        [DisplayName("Vis deaktiverede produkter")]
+        public bool ShowDisabled { get; set; }
+        public CookieService CookieService { get; set; }
+        public IEnumerable<Models.Product> Products { get; private set; }
 
-        public GetAllProductsModel(ProductService productService, ServiceGeneric<Keyword> keywordService)
+        public GetAllProductsModel(ProductService productService, ServiceGeneric<Keyword> keywordService, CookieService cookieService)
         {
             ProductService = productService;
             KeywordService = keywordService;
+            CookieService = cookieService;
         }
 
-        public IEnumerable<Models.Product> Products { get; private set; }
-
-		public void OnGet()
+		public async Task OnGetAsync()
         {
-            Products =  ProductService.GetNotDisabledProducts();
-        }
+            Products = await ProductService.GetAllDataAsync();
 
-        public async Task OnPostShowDisabledAsync()
-        {
-            Products = (await ProductService.GetProductsAsync()).OrderByDescending(p => p.Disabled);
+            Products = Products.Where(p => p.Disabled == false);
         }
 
         public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
         {
-            List<string> includeProperties = new()
-            {
-                nameof(Models.Product.Keywords)
-            };
+            Products = await ProductService.GetAllDataAsync(nameof(Models.Product.Keywords));
 
-            List<Func<Models.Product, bool>> conditions = new()
-            {
-                p => p.Keywords.Any(k=>k.Name.Contains(keywordName))
-            };
-            KeywordNameSearch = keywordName;
-            Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
+            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains(keywordName)));
+            Products = Products.Where(p => p.Disabled == false);
             Products = Products.OrderBy(p => p.Name);
+
+            KeywordNameSearch = keywordName;
+            
             return Page();
         }
 
@@ -74,7 +71,8 @@ namespace Blomsterbinderiet.Pages.Product
             Colour = null;
             Price1 = null;
             Price2 = null;
-            Products = (await ProductService.GetProductsAsync()).OrderBy(p => p.Name);
+            ShowDisabled = false;
+            Products = (await ProductService.GetProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
             return Page();
         }
 
@@ -85,33 +83,39 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAsync()
         {
-            List<Func<Models.Product, bool>> conditions = new();
-            if(Colour != null)
+            Products = await ProductService.GetAllDataAsync(nameof(Models.Product.Keywords));
+
+            if(!ShowDisabled)
             {
-                conditions.Add(p => p.Colour.ToLower().Contains(Colour.ToLower()));
+                Products = Products.Where(p => p.Disabled == false);
+            }
+
+            if (Colour != null)
+            {
+                Products = Products.Where(p => p.Colour.ToLower().Contains(Colour.ToLower()));
             }
             if(Price1 != null || Price2 != null)
             {
                 int min = Math.Min(Convert.ToInt32(Price1), Convert.ToInt32(Price2));
                 int maks = Math.Max(Convert.ToInt32(Price1), Convert.ToInt32(Price2));
-                conditions.Add(p => p.Price >= min && p.Price <= maks);
+                Products = Products.Where(p => p.Price >= min && p.Price <= maks);
             }
             if (KeywordNameSearch != null)
             {
-                conditions.Add(p => p.Keywords.Any(k=>k.Name.ToLower().Contains(KeywordNameSearch.ToLower())));
+                Products = Products.Where(p => p.Keywords.Any(k=>k.Name.ToLower().Contains(KeywordNameSearch.ToLower())));
             }
+            
+            Products = ProductService.Sort(Products, SortProperty, SortDirection);
+            Products = Products.OrderByDescending(p => p.Disabled);
 
-            List<string> includeProperties = new()
-            {
-                nameof(Models.Product.Keywords)
-            };
+            return Page();
+        }
 
-            //the commented piece of code throws an exception because notracking cycle of object instantiation
-            //includeProperties.Add($"{nameof(Models.Product.Keywords)}.{nameof(Models.Keyword.Products)}");
+        public async Task<IActionResult> OnPostAddToBasket(int id)
+        {
+            await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
 
-            Products = await ProductService.GetAllDataAsync(includeProperties, conditions);
-            Products = await ProductService.OrderBy(Products, SortProperty, SortDirection);
-
+            Products = (await ProductService.GetAllDataAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
             return Page();
         }
     }

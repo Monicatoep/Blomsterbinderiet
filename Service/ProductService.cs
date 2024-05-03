@@ -24,14 +24,6 @@ namespace Blomsterbinderiet.Service
             return await DbService.GetObjectsAsync();
         }
 
-        public IEnumerable<Product> GetNotDisabledProducts()
-        {
-            return from product in Products
-                   orderby product.Name descending
-                   where product.Disabled == false
-                   select product;
-        }
-
         public async Task UpdateProductAsync(Product product)
         {
             await DbService.UpdateObjectAsync(product);
@@ -61,6 +53,30 @@ namespace Blomsterbinderiet.Service
 			productToBeReenabled.Disabled = false;
 			await DbService.UpdateObjectAsync(productToBeReenabled);
             Products = (await GetProductsAsync()).ToList();
+        }
+
+        public IEnumerable<Product> Sort(IEnumerable<Product> dataToBeSorted,string property, bool largeToSmall=false)
+        {
+            switch(property)
+            {
+                case nameof(Product.Name):
+                    dataToBeSorted.OrderBy(p => p.Name);
+                    break;
+                case nameof(Product.Price):
+                    dataToBeSorted.OrderBy(p => p.Price);
+                    break;
+                case nameof(Product.Colour):
+                    dataToBeSorted.OrderBy(p => p.Colour);
+                    break;
+                case nameof(Product.Description):
+                    dataToBeSorted.OrderBy(p => p.Description);
+                    break;
+            }
+            if(largeToSmall)
+            {
+                dataToBeSorted = dataToBeSorted.Reverse();
+            }
+            return dataToBeSorted;
         }
     }
 }
