@@ -11,13 +11,13 @@ namespace Blomsterbinderiet.Pages.Product
         public InputModels.UpdateProduct Product { get; set; }
         public string Confirmation { get; set; }
         public ProductService ProductService { get; set; }
-        public ServiceGeneric<Models.Keyword> KeywordService { get; set; }
+        public KeywordService KeywordService { get; set; }
         public ImageService Tools { get; set; }
         public List<Models.Keyword> ProductKeywords{ get; set; }
         [BindProperty]
         public IEnumerable<Models.Keyword> AvaibleKeywords { get; set; }
 
-        public CreateProductModel(ProductService productService, ServiceGeneric<Keyword> keywordService, ImageService tools)
+        public CreateProductModel(ProductService productService, KeywordService keywordService, ImageService tools)
         {
             ProductService = productService;
             KeywordService = keywordService;
@@ -26,23 +26,43 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnGetAsync()
         {
-            AvaibleKeywords = await KeywordService.GetAllDataAsync();
+            try
+            {
+                AvaibleKeywords = (await KeywordService.GetAllDataAsync()).Except(ProductKeywords);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnGetAddKeywordAsync(int id)
         {
-            ProductKeywords.Add(await KeywordService.GetByIdAsync(id));
+            try
+            {
+                ProductKeywords.Remove(await KeywordService.GetDataByIDAsync(id));
 
-            AvaibleKeywords = (await KeywordService.GetAllDataAsync()).Except(ProductKeywords);
+                AvaibleKeywords = (await KeywordService.GetAllDataAsync()).Except(ProductKeywords);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnGetRemoveKeywordAsync(int id)
         {
-            ProductKeywords.Remove(await KeywordService.GetByIdAsync(id));
+            try
+            {
+                ProductKeywords.Remove(await KeywordService.GetDataByIDAsync(id));
 
-            AvaibleKeywords = (await KeywordService.GetAllDataAsync()).Except(ProductKeywords);
+                AvaibleKeywords = (await KeywordService.GetAllDataAsync()).Except(ProductKeywords);
+            } catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
             return Page();
         }
 

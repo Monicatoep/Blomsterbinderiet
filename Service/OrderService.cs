@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
 {
-    public class OrderService : ServiceGeneric<Models.Order>
+    public class OrderService
     {
         public List<Models.Order> Orders { get; set; }
         public List<Models.Delivery> Deliveries { get; set; }
@@ -20,6 +20,12 @@ namespace Blomsterbinderiet.Service
     
         public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, DbGenericService<Models.Delivery> deliveryDbService,UserService userService) : base(dbService)
         {           
+        private DbGenericService<Models.Order> DbService { get; set; }
+
+
+        public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, UserService userService)
+        {
+            DbService = dbService;
             Orders = dbService.GetObjectsAsync().Result.ToList();
             Deliveries = deliveryDbService.GetObjectsAsync().Result.ToList();
             OrderlineService = orderlineService;
