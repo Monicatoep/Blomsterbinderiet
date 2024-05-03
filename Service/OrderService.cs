@@ -145,12 +145,14 @@ namespace Blomsterbinderiet.Service
         public  IEnumerable<Models.Order> SortByDueDate()
         {
                return from order in Orders
+                      where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                       orderby order.PickUpDate
                       select order;
         }
         public IEnumerable<Models.Order> SortByDueDateDes()
         {
             return from order in Orders
+                   where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    orderby order.PickUpDate descending
                    select order;
         }
@@ -179,6 +181,7 @@ namespace Blomsterbinderiet.Service
         public IEnumerable<Models.Order> SortByEmployee()
         {
             return from order in Orders
+                   where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    orderby order.EmployeeID 
                    select order;
 
@@ -186,36 +189,42 @@ namespace Blomsterbinderiet.Service
         public IEnumerable<Models.Order> SortByEmployeeDes()
         {
             return from order in Orders
+                   where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    orderby order.EmployeeID descending
                    select order;
         }
         public IEnumerable<Models.Order> FilterByEmployee(int id)
         {
             return from order in Orders
+                   where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    where order.EmployeeID == id
                    select order;
         }
         public IEnumerable<Models.Order> FilterByEmployeeNull()
         {
             return from order in Orders
+                   where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    where order.EmployeeID == null
                    select order;
         }
         public IEnumerable<Models.Order> SortByStatus()
         {
             return from order in Orders
+                   where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    orderby order.OrderStatus
                    select order;
         }
         public IEnumerable<Models.Order> SortByStatusDes()
         {
             return from order in Orders
+                   where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    orderby order.OrderStatus descending
                    select order;
         }
         public IEnumerable<Models.Order> FilterByStatus(Status status)
         {
             return from order in Orders
+                   where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    where order.OrderStatus==status
                    select order;
         }
