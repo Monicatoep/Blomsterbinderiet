@@ -17,13 +17,11 @@ namespace Blomsterbinderiet.Service
         public DbGenericService<OrderLine> OrderlineService { get; set; }
         public DbGenericService<Models.Delivery> DeliveryDbService { get; set; }
         public UserService UserService { get; set; }
-    
-        public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, DbGenericService<Models.Delivery> deliveryDbService,UserService userService) : base(dbService)
-        {           
+            
         private DbGenericService<Models.Order> DbService { get; set; }
 
 
-        public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, UserService userService)
+        public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, DbGenericService<Models.Delivery> deliveryDbService, UserService userService)
         {
             DbService = dbService;
             Orders = dbService.GetObjectsAsync().Result.ToList();
