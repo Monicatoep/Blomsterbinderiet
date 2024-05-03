@@ -11,16 +11,20 @@ namespace Blomsterbinderiet.Service
     public class OrderService : ServiceGeneric<Models.Order>
     {
         public List<Models.Order> Orders { get; set; }
+        public List<Models.Delivery> Deliveries { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
         public DbGenericService<OrderLine> OrderlineService { get; set; }
+        public DbGenericService<Models.Delivery> DeliveryDbService { get; set; }
         public UserService UserService { get; set; }
     
-        public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, UserService userService) : base(dbService)
+        public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, DbGenericService<Models.Delivery> deliveryDbService,UserService userService) : base(dbService)
         {           
             Orders = dbService.GetObjectsAsync().Result.ToList();
+            Deliveries = deliveryDbService.GetObjectsAsync().Result.ToList();
             OrderlineService = orderlineService;
             UserService = userService;
+            DeliveryDbService = deliveryDbService;
         }
 
         public async Task<List<Models.Order>> GetAllOrdersAsync()
@@ -70,10 +74,17 @@ namespace Blomsterbinderiet.Service
             Orders.Add(order);
             await DbService.AddObjectAsync(order);
         }
+
         public async Task AddOrderLineAsync(OrderLine orderLine)
         {
             OrderLines.Add(orderLine);
             await OrderlineService.AddObjectAsync(orderLine);
+        }
+
+        public async Task AddDeliveryAsync(Models.Delivery delivery)
+        {
+            Deliveries.Add(delivery);
+            await DeliveryDbService.AddObjectAsync(delivery);
         }
 
         public async Task DenyOrderAsync(int id)
@@ -136,6 +147,21 @@ namespace Blomsterbinderiet.Service
         {
             Models.Order order = new(user, DateTime.Now, pickUpDate);
             await AddOrderAsync(order);
+            foreach (OrderLine line in orderLines)
+            {
+                await AddOrderLineAsync(new OrderLine(order, line.Product, line.Amount));
+            }
+        }
+
+        public async Task CreateNewOrderWithDeliveryAsync(User user, DateTime pickUpDate, List<OrderLine> orderLines, Models.Delivery delivery)
+        {
+            Models.Delivery newDelivery = new Models.Delivery(delivery.DeseasedName, delivery.CeremonyStart, delivery.Address);
+            await AddDeliveryAsync(newDelivery);
+
+            Models.Order order = new(user, DateTime.Now, pickUpDate);
+            order.DeliveryId = newDelivery.ID;
+            await AddOrderAsync(order);
+
             foreach (OrderLine line in orderLines)
             {
                 await AddOrderLineAsync(new OrderLine(order, line.Product, line.Amount));

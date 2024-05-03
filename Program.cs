@@ -3,6 +3,7 @@ using Blomsterbinderiet.EFDbContext;
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddTransient<DbGenericService<User>, DbGenericService<User>>();
 builder.Services.AddTransient<DbGenericService<Product>, DbGenericService<Product>>();
 builder.Services.AddTransient<DbGenericService<Keyword>, DbGenericService<Keyword>>();
 builder.Services.AddTransient<DbGenericService<Order>, DbGenericService<Order>>();
+builder.Services.AddTransient<DbGenericService<Delivery>, DbGenericService<Delivery>>();
 builder.Services.AddTransient<DbGenericService<OrderLine>, DbGenericService <OrderLine>>();
 builder.Services.AddTransient<ServiceGeneric<Keyword>, ServiceGeneric<Keyword>>();
 builder.Services.AddSingleton<UserService>();
