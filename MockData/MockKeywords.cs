@@ -6,13 +6,13 @@ namespace Blomsterbinderiet.MockData
 	{
 		public static List<Keyword> keywords = new List<Keyword>()
 		{
-			new Keyword("Bryllup", "Perfekt til bryllup", new List<Product>()),
-			new Keyword("Valentine", "Perfekt til valentine", new List<Product>()),
-			new Keyword("Konfirmation", "Perfekt til konfirmation", new List<Product>()),
-			new Keyword("Bryllup", "Perfekt til bryllup", new List<Product>()),
-			new Keyword("Romantik", "Perfekt til romantikken", new List<Product>()),
-			new Keyword("Bryllup", "Perfekt til bryllup", new List<Product>()),
-			new Keyword("Arbejde", "Perfekt til arbejdet", new List<Product>())
+			new Keyword("Bryllup",  new List<Product>()),
+			new Keyword("Valentine", new List<Product>()),
+			new Keyword("Konfirmation",  new List<Product>()),
+			new Keyword("Bryllup",  new List<Product>()),
+			new Keyword("Romantik",  new List<Product>()),
+			new Keyword("Bryllup",  new List<Product>()),
+			new Keyword("Arbejde",  new List<Product>())
 		};
 
 		public static List<Keyword> GetMockKeywords()
