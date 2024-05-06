@@ -16,11 +16,13 @@ builder.Services.AddTransient<DbGenericService<Keyword>, DbGenericService<Keywor
 builder.Services.AddTransient<DbGenericService<Order>, DbGenericService<Order>>();
 builder.Services.AddTransient<DbGenericService<Delivery>, DbGenericService<Delivery>>();
 builder.Services.AddTransient<DbGenericService<OrderLine>, DbGenericService <OrderLine>>();
+builder.Services.AddTransient<DbGenericService<Keyword>, DbGenericService<Keyword>>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<OrderService>();
 builder.Services.AddSingleton<ProductService>();
 builder.Services.AddSingleton<CookieService>();
 builder.Services.AddSingleton<ImageService>();
+builder.Services.AddSingleton<KeywordService>();
 
 
 

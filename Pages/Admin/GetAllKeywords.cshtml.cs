@@ -9,16 +9,17 @@ namespace Blomsterbinderiet.Pages.Admin
     [Authorize(Roles = "Admin")]
     public class GetAllKeywordsModel : PageModel
     { 
-        public ProductService ProductService { get; set; }
+        public KeywordService KeywordService { get; set; }
         public IEnumerable<Keyword> Keywords { get; set; }
 
-        public GetAllKeywordsModel(ProductService productService)
+        public GetAllKeywordsModel(KeywordService keywordService)
         {
-            ProductService = productService;
+            KeywordService = keywordService;
         }
 
         public void OnGet()
         {
+            Keywords = KeywordService.GetAllKeywordsAsync().Result.ToList();
         }
     }
 }
