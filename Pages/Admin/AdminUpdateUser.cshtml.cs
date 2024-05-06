@@ -1,10 +1,12 @@
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Blomsterbinderiet.Pages.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class AdminUpdateUserModel : PageModel
     {
         public UserService UserService { get; set; }

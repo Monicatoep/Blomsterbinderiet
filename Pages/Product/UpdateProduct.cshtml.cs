@@ -5,9 +5,11 @@ using Blomsterbinderiet.Service;
 using Blomsterbinderiet.Migrations;
 using Microsoft.AspNetCore.Hosting;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blomsterbinderiet.Pages.Product
 {
+    [Authorize(Roles = "Admin, Employee")]
     public class UpdateProductModel : PageModel
     {
         [BindProperty]
