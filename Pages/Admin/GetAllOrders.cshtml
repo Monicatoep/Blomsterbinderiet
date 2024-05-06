@@ -153,7 +153,7 @@
                                                 @if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Ny)
                                                 {
                                                     <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Bekræft</button></form>
-                                                    <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class=" btn btn-primary" id="btnred">Afvis</button></form>
+                                                    <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class=" btn btn-primary mt-2" id="btnred">Afvis</button></form>
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Bekræftet)
                                                 {
@@ -162,7 +162,7 @@
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Klargøres)
                                                 {
                                                     <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn btn-info">Overtag klargøring</button></form>
-                                                    <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Klar til afhentning</button></form>
+                                                    <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn btn-primary mt-2" id="btngreen">Klar til afhentning</button></form>
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Færdig)
                                                 {
