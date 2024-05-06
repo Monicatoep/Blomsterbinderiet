@@ -2,6 +2,7 @@
 using Blomsterbinderiet.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 namespace Blomsterbinderiet.Service
@@ -31,10 +32,10 @@ namespace Blomsterbinderiet.Service
             await DbService.UpdateObjectAsync(product);
         }
 
-        public async Task UpdateProductAsync(Product product, IEnumerable<string> updatedProperties)
-        {
-            await DbService.UpdateObjectAsync(product, updatedProperties);
-        }
+        //public async Task UpdateProductAsync(Product product, IEnumerable<string> updatedProperties)
+        //{
+        //    await DbService.UpdateObjectAsync(product, updatedProperties);
+        //}
         public async Task AddProductAsync(Product product)
         {
             Products.Add(product);
@@ -76,7 +77,7 @@ namespace Blomsterbinderiet.Service
             }
             if(largeToSmall)
             {
-                dataToBeSorted = dataToBeSorted.Reverse();
+                dataToBeSorted.Reverse();
             }
             return dataToBeSorted;
         }
@@ -84,6 +85,45 @@ namespace Blomsterbinderiet.Service
         public async Task<IEnumerable<Models.Product>> GetAllProductsIncludeKeywordsAsync()
         {
             return await DbService.GetObjectsAsync(nameof(Models.Product.Keywords));
+        }
+
+        public async Task<IEnumerable<Models.Product>> GetAllProductsFilteredAndSorted(string colour, double? price1, double? price2, string keywordNameSearch, bool showDisabled, string sortProperty, bool largeToSmall)
+        {
+
+            IEnumerable<Models.Product> Products = await GetAllProductsIncludeKeywordsAsync();
+
+            if (colour != null)
+            {
+                Products = Products.Where(p => p.Colour.ToLower().Contains(colour.ToLower()));
+            }
+
+            if (price1 != null || price2 != null)
+            {
+                int min = Math.Min(Convert.ToInt32(price1), Convert.ToInt32(price2));
+                int maks = Math.Max(Convert.ToInt32(price1), Convert.ToInt32(price2));
+                Products = Products.Where(p => p.Price >= min && p.Price <= maks);
+            }
+
+            if (keywordNameSearch != null)
+            {
+                Products = Products.Where(p => p.Keywords.Any(k => k.Name.ToLower().Contains(keywordNameSearch.ToLower())));
+            }
+
+            if (!showDisabled)
+            {
+                Products = from product in Products
+                           where product.Disabled == false
+                           select product;
+            }
+
+            Sort(Products, sortProperty, largeToSmall);
+            Products.OrderByDescending(p => p.Disabled);
+            return Products;
+        }
+
+        public async Task<IEnumerable<Models.Product>> GetAllProductsStandardFilterAndSort()
+        {
+            return (await GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
         }
     }
 }

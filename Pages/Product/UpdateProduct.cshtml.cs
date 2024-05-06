@@ -5,21 +5,23 @@ using Blomsterbinderiet.Service;
 using Blomsterbinderiet.Migrations;
 using Microsoft.AspNetCore.Hosting;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blomsterbinderiet.Pages.Product
 {
+    [Authorize(Roles = "Admin, Employee")]
     public class UpdateProductModel : PageModel
     {
         [BindProperty]
         public InputModels.UpdateProduct InputProduct { get; set; }
         public string Confirmation { get; set; }
         public ProductService ProductService { get; set; }
-        public ImageService tools { get; set; }
+        public ImageService ImageService { get; set; }
 
         public UpdateProductModel(ProductService productService, ImageService tools)
         {
             ProductService = productService;
-            this.tools = tools;
+            this.ImageService = tools;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)

@@ -13,7 +13,6 @@ namespace Blomsterbinderiet.Pages.Product
     public class GetAllProductsModel : PageModel
     {
         private ProductService ProductService { get; set; }
-        public KeywordService KeywordService { get; set; }
 
         [BindProperty]
         [DisplayName("Sorter efter")]
@@ -37,18 +36,15 @@ namespace Blomsterbinderiet.Pages.Product
         public CookieService CookieService { get; set; }
         public IEnumerable<Models.Product> Products { get; private set; }
 
-        public GetAllProductsModel(ProductService productService, KeywordService keywordService, CookieService cookieService)
+        public GetAllProductsModel(ProductService productService, CookieService cookieService)
         {
             ProductService = productService;
-            KeywordService = keywordService;
             CookieService = cookieService;
         }
 
 		public async Task OnGetAsync()
         {
-            Products = await ProductService.GetAllProductsAsync();
-
-            Products = Products.Where(p => p.Disabled == false);
+            Products = await ProductService.GetAllProductsStandardFilterAndSort();
         }
 
         public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
@@ -72,7 +68,7 @@ namespace Blomsterbinderiet.Pages.Product
             Price1 = null;
             Price2 = null;
             ShowDisabled = false;
-            Products = (await ProductService.GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
+            Products = await ProductService.GetAllProductsStandardFilterAndSort();
             return Page();
         }
 
@@ -83,32 +79,7 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
-
-            if(!ShowDisabled)
-            {  
-                Products = from product in Products 
-                           where product.Disabled == false 
-                           select product;
-            }
-
-            if (Colour != null)
-            {
-                Products = Products.Where(p => p.Colour.ToLower().Contains(Colour.ToLower()));
-            }
-            if(Price1 != null || Price2 != null)
-            {
-                int min = Math.Min(Convert.ToInt32(Price1), Convert.ToInt32(Price2));
-                int maks = Math.Max(Convert.ToInt32(Price1), Convert.ToInt32(Price2));
-                Products = Products.Where(p => p.Price >= min && p.Price <= maks);
-            }
-            if (KeywordNameSearch != null)
-            {
-                Products = Products.Where(p => p.Keywords.Any(k=>k.Name.ToLower().Contains(KeywordNameSearch.ToLower())));
-            }
-            
-            Products = ProductService.Sort(Products, SortProperty, SortDirection);
-            Products = Products.OrderByDescending(p => p.Disabled);
+            Products = await ProductService.GetAllProductsFilteredAndSorted(Colour,Price1,Price2,KeywordNameSearch,ShowDisabled,SortProperty,SortDirection);
 
             return Page();
         }
@@ -117,7 +88,7 @@ namespace Blomsterbinderiet.Pages.Product
         {
             await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
 
-            Products = (await ProductService.GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
+            Products = await ProductService.GetAllProductsStandardFilterAndSort();
             return Page();
         }
     }

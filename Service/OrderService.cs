@@ -190,7 +190,7 @@ namespace Blomsterbinderiet.Service
         {
             TimeOnly time = TimeOnly.MinValue;
             DateTime dateTime = date.ToDateTime(time);
-            Console.WriteLine(dateTime);
+            
             return from order in Orders
                    where order.PickUpDate.Date.Equals(dateTime)
                    select order;
@@ -202,7 +202,6 @@ namespace Blomsterbinderiet.Service
             TimeOnly time = TimeOnly.MinValue;
             DateTime dateTime = dateNow.ToDateTime(time);
            
-            Console.WriteLine(dateTime);
             return from order in Orders
                    where order.PickUpDate.Date.Equals(dateTime)
                    select order;

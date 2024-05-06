@@ -9,34 +9,23 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Blomsterbinderiet.Pages.Customer
 {
+    [ModelMetadataType(typeof(Models.User))]
     public class CustomerSignUpModel : PageModel
     {
         [BindProperty]
-        [Required(ErrorMessage = "Du skal indtaste et navn")]
         public string Name { get; set; }
 
         [BindProperty]
-        [Required (ErrorMessage = "Du skal indtaste en e-mailadresse")]
         public string Email { get; set; }
 
-        [BindProperty, DataType(DataType.Password)]
-        [Required(ErrorMessage = "Du skal indtaste et password")]
+        [BindProperty]
         public string Password { get; set; }
-
-        
-        public string Role { get; set; }
        
         [BindProperty]
-        [MinLength(8, ErrorMessage = "Telefonnummer skal minimum være 8 tegn")]
-        [MaxLength(12, ErrorMessage = "Telefonnummer skal maksimalt være 12 tegn")]
-        [Required(ErrorMessage = "Du skal indtaste et telefonnummer")]
         public string Phone { get; set; }
 
         [BindProperty]
-        [Required(ErrorMessage = "Du skal indtaste en adresse")]
         public string Address { get; set; }
-
-        public string State { get; set; }
 
 
         private UserService _userService;

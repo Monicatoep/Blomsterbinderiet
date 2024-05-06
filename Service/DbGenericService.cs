@@ -99,22 +99,22 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<string>? includes)
-        {
-            using (var context = new BlomstDbContext())
-            {
-                var query = context.Set<T>().AsNoTracking();
+        //public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<string>? includes)
+        //{
+        //    using (var context = new BlomstDbContext())
+        //    {
+        //        var query = context.Set<T>().AsNoTracking();
 
-                if (includes != null)
-                {
-                    foreach (string property in includes)
-                    {
-                        query = query.Include(property);
-                    }
-                }
-                return await query.ToListAsync();
-            }
-        }
+        //        if (includes != null)
+        //        {
+        //            foreach (string property in includes)
+        //            {
+        //                query = query.Include(property);
+        //            }
+        //        }
+        //        return await query.ToListAsync();
+        //    }
+        //}
 
     }
 }

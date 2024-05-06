@@ -16,19 +16,17 @@ namespace Blomsterbinderiet.Pages.Admin
     {
         public OrderService OrderService { get; set; }
         public UserService UserService { get; set; }
-        public List<Models.Order> MyOrders { get; set; }
+        public List<Order> MyOrders { get; set; }
         public List<User> Employees { get; set; }
         public Status[] StatusList{ get; set; }
         [BindProperty]
         public DateOnly Date { get; set; }
       
-
-
         public GetAllOrdersModel(OrderService orderService, UserService userService)
         {
             OrderService = orderService;
             UserService = userService;
-            Employees = userService.GetEmployees().Result.ToList();
+            Employees = userService.GetEmployeesAsync().Result.ToList();
             StatusList = (Status[])Enum.GetValues(typeof(Status));
         }
         public async Task<IActionResult> OnGetAsync()
@@ -48,8 +46,10 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders =  await OrderService.GetAllOrdersWeekAsync();
 
             return Page();
-    }
-    public IActionResult OnGetSortByDueDate()
+        }
+
+        #region Due date filter and sort
+        public IActionResult OnGetSortByDueDate()
         {
             MyOrders = OrderService.SortByDueDate().ToList();
             return Page();
@@ -71,6 +71,9 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.FilterByDueDateToday().ToList();
             return Page();
         }
+        #endregion
+
+        #region Employee filter and sort
         public IActionResult OnGetSortByEmployee()
         {
             MyOrders = OrderService.SortByEmployee().ToList();
@@ -92,6 +95,9 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.FilterByEmployeeNull().ToList();
             return Page();
         }
+        #endregion
+
+        #region Status filter and sort
         public IActionResult OnGetSortByStatus()
         {
             MyOrders = OrderService.SortByStatus().ToList();
@@ -107,7 +113,10 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.FilterByStatus(status).ToList();
             return Page();
         }
-    public async Task<IActionResult> OnPostDenyAsync(int id)
+        #endregion
+
+        #region Status onpost change
+        public async Task<IActionResult> OnPostDenyAsync(int id)
         {
             await OrderService.DenyOrderAsync(id);
             MyOrders = await OrderService.GetAllOrdersAsync();
@@ -133,5 +142,6 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = await OrderService.GetAllOrdersAsync();
             return Page(); 
         }
+        #endregion
     }
 }
