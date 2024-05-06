@@ -62,7 +62,7 @@
         <div class="card p-3" id="titlecard">
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr class="table-success">
                         <th>Produkt</th>
                         <th>Stykpris</th>
                         <th>Antal</th>
@@ -72,7 +72,7 @@
                 <tbody>
                     @foreach (Models.OrderLine item in Model.OrderLines)
                     {
-                        <tr>
+                        <tr class="table-warning">
                             <td>@item.Product.Name</td>
                             <td>@item.Product.Price</td>
                             <td>@item.Amount</td>
@@ -123,7 +123,7 @@
                 }
                 @if (Model.User.Role == "Undertaker")
                 {
-                    <button class="btn btn-danger" id="btnyellow" type="submit" title="Bekræft" asp-page-handler="WithDelivery">Bekræft ordre undertaker</button>
+                    <button class="btn btn-danger" id="btnyellow" type="submit" title="Bekræft" asp-page-handler="WithDelivery">Bekræft ordre</button>
                 }
             </form>
         </div>

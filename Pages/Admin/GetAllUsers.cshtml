@@ -11,9 +11,9 @@
             <div class="card-body">
                 <div class="row">
                     <div class="test">
-                        <table class="table table-bordered table-hover table-striped" width="60%">
+                        <table class="table text-muted table-hover" width="60%">
                             <thead>
-                                <tr class="btn-secondary active">
+                                <tr class="btn-secondary table-success active">
                                     <th>ID</th>
                                     <th>
                                         Navn
@@ -41,7 +41,7 @@
                                 {
                                     foreach (var user in Model.Users)
                                     {
-                                        <tr class="btn-secondary">
+                                        <tr class="btn-secondary table-warning">
                                             <td>
                                                 @user.ID
                                             </td>

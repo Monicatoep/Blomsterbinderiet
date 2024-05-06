@@ -11,7 +11,7 @@
             <div class="card-body">
                 <table class="table">
                     <thead>
-                        <tr>
+                        <tr class="table-success">
                             <th>ID</th>
                             <th>Bestillings dato</th>
                             <th>Mængde</th>
@@ -21,7 +21,7 @@
                     <tbody>
                         @foreach (var order in Model.Orders)
                         {
-                            <tr>
+                            <tr class="table-warning">
                                 <td>@order.Order.Id</td>
                                 <td>@order.Order.OrderDate</td>
                                 <td>@order.Amount</td>

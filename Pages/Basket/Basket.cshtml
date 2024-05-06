@@ -12,7 +12,7 @@
             <div class="card-body">
                 <table class="table">
                     <thead>
-                        <tr>
+                        <tr class="table-success">
                             <th>Produkt</th>
                             <th>Stykpris</th>
                             <th>Antal</th>
@@ -22,7 +22,7 @@
                     <tbody>
                         @foreach (Models.OrderLine item in Model.OrderLines)
                         {
-                            <tr>
+                            <tr class="table-warning">
                                 <td>@item.Product.Name</td>
                                 <td>@item.Product.Price</td>
                                 <td>
