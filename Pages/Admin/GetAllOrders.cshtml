@@ -11,15 +11,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="test">
-                        <table class="table table-bordered  overflow-visible" width="60%">
+                        <table class="table table-hover overflow-visible" width="60%">
                             <thead>
-                                <tr class="btn-secondary active">
+                                <tr class="btn-secondary table-success active">
                                     <th>Ordre ID</th>
                                     <th>Kunde ID</th>
                                     <th>
-                                        Håndteret af
-                                        <a data-toggle="tooltip" title="SorterMedarbejder" asp-page-handler="SortByEmployee"><i class="fa fa-sort-up"></i></a>
-                                        <a data-toggle="tooltip" title="SorterMedarbejder" asp-page-handler="SortByEmployeeDes"><i class="fa fa-sort-down"></i></a>
                                         <div class="nav-item dropdown">
 
                                             <button type="button" data-toggle="dropdown">
@@ -35,14 +32,15 @@
                                                 <a title="filtreMedarbejder" asp-page-handler="FilterByEmployeeNull">Ingen medarbejder</a>
 
                                             </div>
-
                                         </div>
+                                        Håndteret af
+
+                                        <a data-toggle="tooltip" title="SorterMedarbejder" asp-page-handler="SortByEmployee"><i class="fa fa-sort-up"></i></a>
+                                        <a data-toggle="tooltip" title="SorterMedarbejder" asp-page-handler="SortByEmployeeDes"><i class="fa fa-sort-down"></i></a>
+                                        
                                     </th>
                                     <th>Oprettet d.</th>
                                     <th>
-                                        Afhentes d.
-                                        <a data-toggle="tooltip" title="SorterAfhentningsdato" asp-page-handler="SortByDueDate"><i class="fa fa-sort-up"></i></a>
-                                        <a data-toggle="tooltip" title="SorterAfhentnignsdato" asp-page-handler="SortByDueDateDes"><i class="fa fa-sort-down"></i></a>
                                         <div class="nav-item dropdown">
 
                                             <button type="button" data-toggle="dropdown">
@@ -53,9 +51,9 @@
                                             <div>
 
                                                 @*< div class="dropdown-menu">
-                                                    <label asp-for="@Model.Date" class="col-form-label ">Vælg dato</label><a asp-page-handler="FilterByDueDate"><i class="fa fa-check"></i></a>
-                                                    <input asp-for=@Model.Date />
-                                                    </div> *@
+                                                <label asp-for="@Model.Date" class="col-form-label ">Vælg dato</label><a asp-page-handler="FilterByDueDate"><i class="fa fa-check"></i></a>
+                                                <input asp-for=@Model.Date />
+                                                </div> *@
                                                 <form method="post">
                                                     <div class="form-group dropdown-menu pt-4 pb-4">
                                                         <label asp-for="Date" class="col-form-label ">Vælg dato</label>
@@ -64,21 +62,22 @@
                                                         <div>
                                                             <input asp-for="Date" value="@DateOnly.FromDateTime(DateTime.Now).AddDays(1)" />
                                                         </div>
-                                                        
+
                                                     </div>
-                                                  
+
                                                 </form>
 
                                             </div>
 
                                         </div>
+                                        Afhentes d.
+                                        <a data-toggle="tooltip" title="SorterAfhentningsdato" asp-page-handler="SortByDueDate"><i class="fa fa-sort-up"></i></a>
+                                        <a data-toggle="tooltip" title="SorterAfhentnignsdato" asp-page-handler="SortByDueDateDes"><i class="fa fa-sort-down"></i></a>
+                                        
                                     </th>
                                     <th>Afsluttet d.</th>
                                     <th>Kommentar</th>
                                     <th>
-                                        Status
-                                        <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatus"><i class="fa fa-sort-up"></i></a>
-                                        <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatusDes"><i class="fa fa-sort-down"></i></a>
                                         <div class="nav-item dropdown">
 
                                             <button type="button" data-toggle="dropdown">
@@ -95,11 +94,15 @@
                                             </div>
 
                                         </div>
+                                        Status
+                                        <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatus"><i class="fa fa-sort-up"></i></a>
+                                        <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatusDes"><i class="fa fa-sort-down"></i></a>
+                                        
                                     </th>
                                     <th>Total pris</th>
                                     <th>
-                                        <a title="AllOrders" asp-page-handler="SeeAll">Se alle ordrer</a>
-                                        <a title="filterReset" asp-page-handler="Reset">Reset Filter</a>
+                                        <a class="btn" id="btngrey" title="AllOrders" asp-page-handler="SeeAll">Se alle ordrer</a>
+                                        <a class="btn" id="btngrey" title="filterReset" asp-page-handler="Reset">Reset Filter</a>
                                     </th>
 
                                 </tr>
@@ -110,7 +113,7 @@
                                     foreach (var order in Model.MyOrders)
                                     {
                                         @* ændrer farven på hele rækken hvis ordren er ny *@
-                                        var rowStyle = (order.OrderStatus == Enums.Status.Ny) ? "table-success" : "";
+                                        var rowStyle = (order.OrderStatus == Enums.Status.Ny) ? "table-success" : "table-warning";
                                         <tr class="btn-secondary @rowStyle">
                                             <td>
                                                 @order.Id
@@ -149,21 +152,21 @@
                                         <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form> *@
                                                 @if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Ny)
                                                 {
-                                                    <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn-success">Bekræft</button></form>
-                                                    <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class="btn-danger">Afvis</button></form>
+                                                    <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Bekræft</button></form>
+                                                    <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class=" btn btn-primary" id="btnred">Afvis</button></form>
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Bekræftet)
                                                 {
-                                                    <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn-success">Start klargøring</button></form>
+                                                    <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Start klargøring</button></form>
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Klargøres)
                                                 {
-                                                    <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn-success">Overtag klargøring</button></form>
-                                                    <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn-success">Klar til afhentning</button></form>
+                                                    <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn btn-info">Overtag klargøring</button></form>
+                                                    <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Klar til afhentning</button></form>
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Færdig)
                                                 {
-                                                    <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn-success">Udleveret</button></form>
+                                                    <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Udleveret</button></form>
                                                 }
 
                                             </td>
