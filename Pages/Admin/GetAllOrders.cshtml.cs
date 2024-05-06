@@ -26,7 +26,7 @@ namespace Blomsterbinderiet.Pages.Admin
         {
             OrderService = orderService;
             UserService = userService;
-            Employees = userService.GetEmployees().Result.ToList();
+            Employees = userService.GetEmployeesAsync().Result.ToList();
             StatusList = (Status[])Enum.GetValues(typeof(Status));
         }
         public async Task<IActionResult> OnGetAsync()

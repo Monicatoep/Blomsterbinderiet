@@ -12,7 +12,7 @@ namespace Blomsterbinderiet.Service
     public class UserService
     {
         public List<User> Users { get; set; }
-        protected DbGenericService<User> DbService { get; set; }
+        private DbGenericService<User> DbService { get; set; }
 
         public UserService(DbGenericService<User> dbService)
         {
@@ -111,7 +111,7 @@ namespace Blomsterbinderiet.Service
             user.State = "Deaktiveret";
             await UpdateUserAsync(user);
         }
-        public async Task<IEnumerable<User>> GetEmployees()
+        public async Task<IEnumerable<User>> GetEmployeesAsync()
         {
 
             return from user in Users

@@ -11,31 +11,29 @@ namespace Blomsterbinderiet.Pages.Product
         public InputModels.UpdateProduct Product { get; set; }
         public string Confirmation { get; set; }
         public ProductService ProductService { get; set; }
-        public ImageService Tools { get; set; }
+        public ImageService ImageService { get; set; }
         public List<Models.Keyword> ProductKeywords{ get; set; }
-        [BindProperty]
-        public IEnumerable<Models.Keyword> AvaibleKeywords { get; set; }
 
         public CreateProductModel(ProductService productService, ImageService tools)
         {
             ProductService = productService;
-            Tools = tools;
+            ImageService = tools;
         }
 
-        public async Task<IActionResult> OnGetAsync()
-        {
-            return Page();
-        }
+        //public async Task<IActionResult> OnGetAsync()
+        //{
+        //    return Page();
+        //}
 
-        public async Task<IActionResult> OnGetAddKeywordAsync(int id)
-        {
-            return Page();
-        }
+        //public async Task<IActionResult> OnGetAddKeywordAsync(int id)
+        //{
+        //    return Page();
+        //}
 
-        public async Task<IActionResult> OnGetRemoveKeywordAsync(int id)
-        {
-            return Page();
-        }
+        //public async Task<IActionResult> OnGetRemoveKeywordAsync(int id)
+        //{
+        //    return Page();
+        //}
 
         public async Task<IActionResult> OnPostAsync()
         {
