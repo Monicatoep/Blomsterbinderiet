@@ -53,6 +53,16 @@ body {
     border: none;
 }
 
+#btnred {
+    background-color: #fe7d89;
+    border: none;
+}
+
+#btngrey {
+    background-color: #f7f7f7;
+    border: solid;
+}
+
 
 #btnlight {
     background-color: #F4EBE8;
@@ -118,3 +128,5 @@ input {
         max-width: 100%;
         height: auto;
     }
+
+
