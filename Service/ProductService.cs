@@ -32,10 +32,10 @@ namespace Blomsterbinderiet.Service
             await DbService.UpdateObjectAsync(product);
         }
 
-        public async Task UpdateProductAsync(Product product, IEnumerable<string> updatedProperties)
-        {
-            await DbService.UpdateObjectAsync(product, updatedProperties);
-        }
+        //public async Task UpdateProductAsync(Product product, IEnumerable<string> updatedProperties)
+        //{
+        //    await DbService.UpdateObjectAsync(product, updatedProperties);
+        //}
         public async Task AddProductAsync(Product product)
         {
             Products.Add(product);

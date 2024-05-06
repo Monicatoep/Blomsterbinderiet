@@ -14,12 +14,12 @@ namespace Blomsterbinderiet.Pages.Product
         public InputModels.UpdateProduct InputProduct { get; set; }
         public string Confirmation { get; set; }
         public ProductService ProductService { get; set; }
-        public ImageService tools { get; set; }
+        public ImageService ImageService { get; set; }
 
         public UpdateProductModel(ProductService productService, ImageService tools)
         {
             ProductService = productService;
-            this.tools = tools;
+            this.ImageService = tools;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
