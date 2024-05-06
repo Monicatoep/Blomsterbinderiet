@@ -12,6 +12,9 @@ namespace Blomsterbinderiet.Pages.Admin
         public KeywordService KeywordService { get; set; }
         public IEnumerable<Keyword> Keywords { get; set; }
 
+        [BindProperty]
+        public string Name { get; set; }
+
         public GetAllKeywordsModel(KeywordService keywordService)
         {
             KeywordService = keywordService;
@@ -21,5 +24,15 @@ namespace Blomsterbinderiet.Pages.Admin
         {
             Keywords = KeywordService.GetAllKeywordsAsync().Result.ToList();
         }
+
+        //public async Task<IActionResult> OnPostAddKeywordAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
+        //    await KeywordService.AddKeywordAsync(new Keyword(Name));
+        //}
+
     }
 }

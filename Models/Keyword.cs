@@ -15,7 +15,12 @@ namespace Blomsterbinderiet.Models
 		{
 		}
 
-		public Keyword(string name, ICollection<Product> products)
+        public Keyword(string name)
+        {
+            Name = name;
+        }
+
+        public Keyword(string name, ICollection<Product> products)
 		{
 			Name = name;
 			Products = products;

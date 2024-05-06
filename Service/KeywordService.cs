@@ -17,5 +17,11 @@ namespace Blomsterbinderiet.Service
         {
             return await KeywordsDbService.GetObjectsAsync();
         }
+
+        public async Task AddKeywordAsync(Keyword keyword)
+        {
+            Keywords.Add(keyword);
+            await KeywordsDbService.AddObjectAsync(keyword);
+        }
     }
 }

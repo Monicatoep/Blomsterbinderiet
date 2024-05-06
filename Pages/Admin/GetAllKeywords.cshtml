@@ -3,7 +3,38 @@
 @{
 }
 
-    <div class="card mt-5" id="outercard">
-        <div class="container">
-            <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+<div class="container p-4">
+    <div class="col-md-12">
+        <div class="card mb-3 p-3" id="titlecard">
+            <h1>Alle nøgleord</h1>
+        </div>
+        <div class="card mt-4" id="outercard">
+            <div class="container">
 
+               
+                    <form method="post">
+                        <div class="form-group mt-2">
+                            <label asp-for="@Model.Name" class="control-label">Navn</label>
+                            <input asp-for="@Model.Name" class="form-control" id="noborder" style="max-width: 15rem" />
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                        </div>
+                    <input type="submit" value="Opret" class="btn btn-primary mt-2" id="btnyellow" />
+                     </form>
+                
+
+                <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-6">
+
+                    @foreach (var keyword in Model.Keywords)
+                    {
+                        <div class="card mt-5" id="productcard">
+
+                            <h4>@keyword.Name</h4>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
