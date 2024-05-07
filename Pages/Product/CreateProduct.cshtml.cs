@@ -9,11 +9,11 @@ namespace Blomsterbinderiet.Pages.Product
     [Authorize(Roles = "Admin, Employee")]
     public class CreateProductModel : PageModel
     {
+        public ProductService ProductService { get; set; }
+        public ImageService ImageService { get; set; }
         [BindProperty]
         public InputModels.UpdateProduct Product { get; set; }
         public string Confirmation { get; set; }
-        public ProductService ProductService { get; set; }
-        public ImageService ImageService { get; set; }
         public List<Models.Keyword> ProductKeywords{ get; set; }
 
         public CreateProductModel(ProductService productService, ImageService tools)
@@ -51,6 +51,4 @@ namespace Blomsterbinderiet.Pages.Product
             return Page();
         }
     }
-
-
 }

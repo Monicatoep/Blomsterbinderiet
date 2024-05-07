@@ -10,14 +10,13 @@ namespace Blomsterbinderiet.Pages.Admin
     public class DeactivateUserModel : PageModel
     {
 		private UserService _userService;
+        [BindProperty]
+        public User User { get; set; }
 
-		public DeactivateUserModel(UserService userService)
+        public DeactivateUserModel(UserService userService)
 		{
 			_userService = userService;
 		}
-
-		[BindProperty]
-		public User User { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{

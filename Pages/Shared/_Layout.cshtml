@@ -30,14 +30,11 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Blomster
                             </a>
-                        
-                        
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item text-white" asp-area="" asp-page="/Product/GetAllProducts" asp-page-handler="Keyword" asp-route-keywordName="Buket">Buketter</a>
                                 <a class="dropdown-item text-white" asp-area="" asp-page="/Product/GetAllProducts" asp-page-handler="Keyword" asp-route-keywordName="Samplant">Samplantninger</a>
                             </div>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" id="textcolor" asp-page="/Product/Wedding">Bryllup</a>
                         </li>
@@ -62,8 +59,6 @@
                         </li>
                         @if (Context.User.IsInRole("Customer") || Context.User.IsInRole("Undertaker")) //Hvis logget ind som bruger eller bedemand
                         {
-
-
                             <li class="nav-item dropdown">
 
                                 <button type="button" class="nav-link text-white dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -76,19 +71,16 @@
                                     <a class="btn text-white" asp-area="" asp-page="/UserPages/MyOrders">Mine ordrer</a>
                                     <a class="btn text-white" asp-area="" asp-page="/UserPages/Logout">Log ud</a>
                                 </div>
-
                             </li>
                         }
 
                         else if (Context.User.IsInRole("Admin")) //Hvis logget ind som admin
-                        {                           
+                        {
                             <li class="nav-item dropdown">
                                 <button type="button" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-user" id="textcolor"></i>
                                     <span class="sr-only">Toggle Dropleft</span>
                                 </button>
-                                
-
                                 <div class="dropdown-menu">
                                     <a class="btn text-white" asp-area="" asp-page="/UserPages/ProfilePage">Profil</a>
                                     <a class="btn text-white" asp-area="" asp-page="/Admin/CreateUser">Opret bruger</a>
@@ -100,15 +92,13 @@
                                 </div>
                             </li>
                         }
-                        else if (Context.User.IsInRole("Employee")) //Hvis logget ind som medarbejder 
+                        else if (Context.User.IsInRole("Employee")) //Hvis logget ind som medarbejder
                         {
-                            <li class="nav-item dropdown">
-
+                            <li class="nav-item dropdown"
                                 <button type="button" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-user" id="textcolor"></i>
                                     <span class="sr-only">Toggle Dropleft</span>
                                 </button>
-
                                 <div class="dropdown-menu">
                                     <a class="btn text-white" asp-area="" asp-page="/">Profil</a>
                                     <a class="btn text-white" asp-area="" asp-page="/Admin/GetAllOrders">Se alle ordrer</a>
@@ -125,7 +115,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" id="textcolor" asp-area="" asp-page="/Customer/CustomerSignUp">Opret bruger</a>
                             </li>
-                        }  
+                        }
                     </ul>
                 </div>
             </div>
@@ -136,7 +126,6 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="site-footer border-top text-muted pb-5 mb-0" style="margin-bottom:-40px">
         @* footer *@
         <div class="container pb-0 mb-0" style="margin-bottom:-40px">
@@ -162,7 +151,7 @@
                 </div>
                 <div class="col">
                     <a id="textcolor">Facebook</a> <br />
-                    <a id ="textcolor">Instagram</a> <br />
+                    <a id="textcolor">Instagram</a> <br />
                     <a id="textcolor" asp-page="/Static/FAQ">Ofte stillede spørgsmål</a> <br />
                     <a id="textcolor" asp-page="/Static/TermsOfService">Handelsbetingelser</a> <br />
                 </div>

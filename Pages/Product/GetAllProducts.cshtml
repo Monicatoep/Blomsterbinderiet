@@ -4,53 +4,48 @@
 }
 
 <div class="card" id="titlecard">
-<h1 class="pb-5 pt-5 text-center">Vores Produkter</h1>
-<div class="row">
-    <div class="col-3">
-        <div class="card-body">
-            <h5 class="card-title">Filter</h5>
-            <form method="post">
-                <div>
-                    <label asp-for="@Model.SortProperty"></label>
-                    <select asp-for="@Model.SortProperty" class="form-select" id="noborder">
-                        <option value="@nameof(Models.Product.Name)">Navn</option>
-                        <option value="@nameof(Models.Product.Description)">Beskrivelse</option>
-                        <option value="@nameof(Models.Product.Price)">Pris</option>
-                        <option value="@nameof(Models.Product.Colour)">Farve</option>
-                    </select>
-                    <span asp-validation-for="@Model.SortProperty" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="@Model.SortDirection"></label>
-                    <input asp-for="@Model.SortDirection" class="form-check-input" id="noborder"/>
-                    <span asp-validation-for="@Model.SortDirection" class="text-danger"></span>
-                </div>
-                <div>
-                    <label asp-for="@Model.Colour"></label>
-                    <input asp-for="@Model.Colour" class="form-control" id="noborder" />
-                    <span asp-validation-for="@Model.Colour" class="text-danger"></span>
-                </div>
-                
-
-                <div class="row">
-                    <label>Pris klasse</label>
-                    <div class="col">
-                        <input asp-for="@Model.Price1" class="form-control" id="noborder" />
-                        <span asp-validation-for="@Model.Price1" class="text-danger"></span>
+    <h1 class="pb-5 pt-5 text-center">Vores Produkter</h1>
+    <div class="row">
+        <div class="col-3">
+            <div class="card-body">
+                <h5 class="card-title">Filter</h5>
+                <form method="post">
+                    <div>
+                        <label asp-for="@Model.SortProperty"></label>
+                        <select asp-for="@Model.SortProperty" class="form-select" id="noborder">
+                            <option value="@nameof(Models.Product.Name)">Navn</option>
+                            <option value="@nameof(Models.Product.Description)">Beskrivelse</option>
+                            <option value="@nameof(Models.Product.Price)">Pris</option>
+                            <option value="@nameof(Models.Product.Colour)">Farve</option>
+                        </select>
+                        <span asp-validation-for="@Model.SortProperty" class="text-danger"></span>
                     </div>
-                    
-                    <div class="col">
-                        <input asp-for="@Model.Price2" class="form-control" id="noborder"/>
-                        <span asp-validation-for="@Model.Price2" class="text-danger"></span>
+                    <div>
+                        <label asp-for="@Model.SortDirection"></label>
+                        <input asp-for="@Model.SortDirection" class="form-check-input" id="noborder" />
+                        <span asp-validation-for="@Model.SortDirection" class="text-danger"></span>
                     </div>
-                </div>
-
+                    <div>
+                        <label asp-for="@Model.Colour"></label>
+                        <input asp-for="@Model.Colour" class="form-control" id="noborder" />
+                        <span asp-validation-for="@Model.Colour" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <label>Pris klasse</label>
+                        <div class="col">
+                            <input asp-for="@Model.Price1" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.Price1" class="text-danger"></span>
+                        </div>
+                        <div class="col">
+                            <input asp-for="@Model.Price2" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.Price2" class="text-danger"></span>
+                        </div>
+                    </div>
                     <div>
                         <label asp-for="@Model.KeywordNameSearch"></label>
                         <input asp-for="@Model.KeywordNameSearch" class="form-control" id="noborder" />
                         <span asp-validation-for="@Model.KeywordNameSearch" class="text-danger"></span>
                     </div>
-                    
                     @if ((HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee")))
                     {
                         <div>
@@ -59,74 +54,66 @@
                             <span asp-validation-for="@Model.ShowDisabled" class="text-danger"></span>
                         </div>
                     }
-                <button type="submit" class="btn btn-success">Bekræft</button>
+                    <button type="submit" class="btn btn-success">Bekræft</button>
                     <a class="btn btn-success" asp-page-handler="Reset">Nulstil</a>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-
-    <div class="col-9">
-        <div class="card mt-5" id="outercard">
-            <div class="container">
-                <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
-                    @if (Model.Products != null)
-                    {
+        <div class="col-9">
+            <div class="card mt-5" id="outercard">
+                <div class="container">
+                    <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+                        @if (Model.Products != null)
+                        {
                             int length = 0;
-                            if(Model.Products != null)
+                            if (Model.Products != null)
                             {
                                 length = Model.Products.Count();
                                 if (length >= 24) length = 24;
                             }
-
                             @for (int i = 0; i < length; i++)
-                        {
-                            var product = Model.Products.ElementAt(i);
+                            {
+                                var product = Model.Products.ElementAt(i);
                                 string cardClass = product.Disabled ? "card card-body disabled-product" : "card card-body";
-
-
                                 <div class="@cardClass" id="productcard">
-
-                                <h5 class="card-title">@product.Name</h5>
-                                @{
-                                    if (product.Image != null)
-                                    {
-                                        var base64 = Convert.ToBase64String(product.Image);
-                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                        <img src="@imgSrc" class="img-thumbnail col-12 mb-3" />
+                                    <h5 class="card-title">@product.Name</h5>
+                                    @{
+                                        if (product.Image != null)
+                                        {
+                                            var base64 = Convert.ToBase64String(product.Image);
+                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                            <img src="@imgSrc" class="img-thumbnail col-12 mb-3" />
+                                        }
+                                        else
+                                        {
+                                            <img class="img-thumbnail col-12 mb-3" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" />
+                                        }
                                     }
-                                    else
-                                    {
-                                        <img class="img-thumbnail col-12 mb-3" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" />
+                                    @{
+                                        string description = product.Description;
+                                        if (description.Length > 60)
+                                        {
+                                            description = description.Substring(0, 57) + "...";
+                                        }
+                                        <p class="card-text">@description</p>
                                     }
-                                }
-                                
-                                @{
-                                    string description = product.Description;
-                                    if (description.Length > 60)
-                                    {
-                                        description = description.Substring(0, 57) + "...";
-                                    }
-                                    <p class="card-text">@description</p>
-                                }
-                                <p class="card-text">@product.Price kr</p>
-                                <div class="d-flex justify-content-between">
-                                    <form method="post">
-                                        <button class="btn btn-success" id="btngreen" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
-                                    </form>
-
-                                    <a class="btn" id="btnlight" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@product.ID">Se mere</a>
-                                    @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
-                                    {
-                                        <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
-                                    }
+                                    <p class="card-text">@product.Price kr</p>
+                                    <div class="d-flex justify-content-between">
+                                        <form method="post">
+                                            <button class="btn btn-success" id="btngreen" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
+                                        </form>
+                                        <a class="btn" id="btnlight" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@product.ID">Se mere</a>
+                                        @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
+                                        {
+                                            <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
-                            
-                    }
-                </div>
+                    </div>
                     @{
-                        if(Model.Products != null)
+                        if (Model.Products != null)
                         {
                             int length = Model.Products.Count();
                             if (length >= 24) length = 24;
@@ -135,24 +122,21 @@
                                 <p>Fandt ingen produkter med de givne filtre</p>
                             }
                         }
-                        
-                }
-                    
+                    }
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>

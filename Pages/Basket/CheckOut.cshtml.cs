@@ -11,31 +11,25 @@ namespace Blomsterbinderiet.Pages.Basket
 {
     public class CheckOutModel : PageModel
     {
-        public UserService UserService { get; set; }
-
-        public User User { get; set; }
-        public OrderService OrderService { get; set; }
-
-        public List<OrderLine> OrderLines { get; set; }
         public ProductService ProductService { get; set; }
         public CookieService CookieService { get; set; }
+        public UserService UserService { get; set; }
+        public OrderService OrderService { get; set; }
+        public User User { get; set; }
+        public List<OrderLine> OrderLines { get; set; }
         public double OrderSum { get; set; }
-
         [DisplayName("Afhentningstidspunkt")]
         [Required(ErrorMessage = "Der skal angives et afhentningsstidspunkt")]
         [BindProperty]
         public DateTime PickUpDate { get; set; }
-
         [DisplayName("Afdødes navn")]
         [Required(ErrorMessage = "Der skal angives afdødes navn")]
         [BindProperty]
         public string? DeseasedName { get; set; }
-
         [DisplayName("Begravelses start")]
         [Required(ErrorMessage = "Der skal angives begravelses start")]
         [BindProperty]
         public DateTime CeremonyStart { get; set; }
-
         [DisplayName("Leveringsadresse")]
         [Required(ErrorMessage = "Der skal angives en leveringsadresse")]
         [BindProperty]
@@ -75,7 +69,6 @@ namespace Blomsterbinderiet.Pages.Basket
           
             await CookieService.SaveCookieAsync(Response.Cookies, null);
             return RedirectToPage("/Basket/Confirmation");
-            
         }
 
         public async Task<IActionResult> OnPostWithDeliveryAsync()
@@ -94,7 +87,6 @@ namespace Blomsterbinderiet.Pages.Basket
 
             await CookieService.SaveCookieAsync(Response.Cookies, null);
             return RedirectToPage("/Basket/Confirmation");
-
         }
     }
 }

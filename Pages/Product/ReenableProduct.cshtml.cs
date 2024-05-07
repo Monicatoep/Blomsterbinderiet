@@ -9,14 +9,13 @@ namespace Blomsterbinderiet.Pages.Product
     public class ReenableProductModel : PageModel
     {
 		private ProductService _productService;
+        [BindProperty]
+        public Models.Product Product { get; set; }
 
-		public ReenableProductModel(ProductService productService)
+        public ReenableProductModel(ProductService productService)
 		{
 			_productService = productService;
 		}
-
-		[BindProperty]
-		public Models.Product Product { get; set; }
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{

@@ -12,15 +12,13 @@ namespace Blomsterbinderiet.Pages.Product
 {
     public class ProductDetailsModel : PageModel
     {
+        private ProductService ProductService { get; set; }
+        public CookieService CookieService { get; set; }
         [BindProperty]
         [DisplayName("Mængde")]
         public int Amount { get; set; }
-
         [BindProperty]
         public int ProductID { get; set; }
-
-        private ProductService ProductService { get; set; }
-        public CookieService CookieService { get; set; }
         public Models.Product Product { get; set; }
 
         public ProductDetailsModel(ProductService service, CookieService cookieService)

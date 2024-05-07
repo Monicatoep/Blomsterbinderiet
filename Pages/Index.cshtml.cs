@@ -6,7 +6,6 @@ namespace Blomsterbinderiet.Pages
 {
     public class IndexModel : PageModel
     {
-        
         private readonly ILogger<IndexModel> _logger;
         public ProductService ProductService;
 

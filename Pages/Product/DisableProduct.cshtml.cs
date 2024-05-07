@@ -10,15 +10,13 @@ namespace Blomsterbinderiet.Pages.Product
     public class DisableProductModel : PageModel
     {
         private ProductService _productService;
+        [BindProperty]
+        public Models.Product Product { get; set; }
 
         public DisableProductModel(ProductService productService)
         {
             _productService = productService;
         }
-
-        [BindProperty]
-        public Models.Product Product { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Product = await _productService.GetProductByIdAsync(id);

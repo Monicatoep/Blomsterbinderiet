@@ -10,7 +10,6 @@ namespace Blomsterbinderiet.Pages.Admin
     public class AdminUpdateUserModel : PageModel
     {
         public UserService UserService { get; set; }
-
         [BindProperty]
         public User User { get; set; }
 

@@ -12,11 +12,11 @@ namespace Blomsterbinderiet.Pages.Product
     [Authorize(Roles = "Admin, Employee")]
     public class UpdateProductModel : PageModel
     {
+        public ProductService ProductService { get; set; }
+        public ImageService ImageService { get; set; }
         [BindProperty]
         public InputModels.UpdateProduct InputProduct { get; set; }
         public string Confirmation { get; set; }
-        public ProductService ProductService { get; set; }
-        public ImageService ImageService { get; set; }
 
         public UpdateProductModel(ProductService productService, ImageService tools)
         {
@@ -46,7 +46,5 @@ namespace Blomsterbinderiet.Pages.Product
             Confirmation = "Opdaterede produktet";
             return Page();
         }
-
-
     }
 }

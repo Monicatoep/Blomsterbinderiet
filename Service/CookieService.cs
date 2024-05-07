@@ -11,12 +11,9 @@ namespace Blomsterbinderiet.Service
 {
     public class CookieService
     {
-        //https://www.learnrazorpages.com/razor-pages/cookies
-
-        private string _cookieName = "BlomsterBinderietBasket";
-
         public ProductService ProductService { get; set; }
-
+        //https://www.learnrazorpages.com/razor-pages/cookies
+        private string _cookieName = "BlomsterBinderietBasket";
         public CookieService(ProductService productService)
         {
             ProductService = productService;
@@ -43,7 +40,7 @@ namespace Blomsterbinderiet.Service
 
         public async Task<IEnumerable<OrderLine>> LoadOrderLinesAsync(IEnumerable<BasketItem> basket)
         {
-            if (basket == null )
+            if (basket == null)
             {
                 return null;
             }
@@ -82,7 +79,7 @@ namespace Blomsterbinderiet.Service
                 }
             }
             data = await AddItemAsync(data, id, amount);
-            Found:
+        Found:
             await SaveCookieAsync(output, data);
             return data;
         }
@@ -90,7 +87,7 @@ namespace Blomsterbinderiet.Service
         public async Task<ICollection<BasketItem>> AddItemAsync(ICollection<BasketItem> basketItems, int id, int amount)
         {
             Console.WriteLine("Tilføjer" + id + " " + amount);
-            if(basketItems == null)
+            if (basketItems == null)
             {
                 basketItems = new List<BasketItem>();
             }

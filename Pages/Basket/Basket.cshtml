@@ -38,7 +38,6 @@
                                 <td>@(item.Product.Price * item.Amount)</td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
                 @if (HttpContext.User.Identity.IsAuthenticated)
@@ -51,7 +50,6 @@
                     <div class="pb-3">Totalpris @Model.OrderSum kr</div>
                     <a class="btn btn-primary" id="btnyellow" asp-area="" asp-page="/UserPages/Login">Færdiggør ordre</a>
                 }
-                
             </div>
         </div>
     </div>

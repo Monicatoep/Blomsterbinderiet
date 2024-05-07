@@ -12,25 +12,18 @@ namespace Blomsterbinderiet.Pages.Customer
     [ModelMetadataType(typeof(Models.User))]
     public class CustomerSignUpModel : PageModel
     {
+        private UserService _userService;
+        private PasswordHasher<string> _passwordHasher;
         [BindProperty]
         public string Name { get; set; }
-
         [BindProperty]
         public string Email { get; set; }
-
         [BindProperty]
         public string Password { get; set; }
-       
         [BindProperty]
         public string Phone { get; set; }
-
         [BindProperty]
         public string Address { get; set; }
-
-
-        private UserService _userService;
-
-        private PasswordHasher<string> _passwordHasher;
 
         public CustomerSignUpModel(UserService userService)
         {

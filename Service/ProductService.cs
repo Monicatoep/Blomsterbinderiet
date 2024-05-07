@@ -9,8 +9,9 @@ namespace Blomsterbinderiet.Service
 {
     public class ProductService
     {
-        public List<Product> Products { get; set; }
         private DbGenericService<Models.Product> DbService { get; set; }
+        public List<Product> Products { get; set; }
+
         public ProductService(DbGenericService<Product> dbService)
         {
             DbService = dbService;
@@ -32,10 +33,6 @@ namespace Blomsterbinderiet.Service
             await DbService.UpdateObjectAsync(product);
         }
 
-        //public async Task UpdateProductAsync(Product product, IEnumerable<string> updatedProperties)
-        //{
-        //    await DbService.UpdateObjectAsync(product, updatedProperties);
-        //}
         public async Task AddProductAsync(Product product)
         {
             Products.Add(product);
@@ -89,7 +86,6 @@ namespace Blomsterbinderiet.Service
 
         public async Task<IEnumerable<Models.Product>> GetAllProductsFilteredAndSorted(string colour, double? price1, double? price2, string keywordNameSearch, bool showDisabled, string sortProperty, bool largeToSmall)
         {
-
             IEnumerable<Models.Product> Products = await GetAllProductsIncludeKeywordsAsync();
 
             if (colour != null)

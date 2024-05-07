@@ -13,18 +13,15 @@ namespace Blomsterbinderiet.Pages.Customer
     public class LoginModel : PageModel
     {       
         private UserService _userService;
-
+        public CookieService CookieService { get; set; }
         [BindProperty]
         [Required]
         public string Email { get; set; }
-
         [BindProperty, DataType(DataType.Password)]
         [Required]
         public string Password { get; set; }
         public string Message { get; set; }
-        public string ID { get; set; }
-
-        public CookieService CookieService { get; set; }
+        public string ID { get; set; }        
 
         public LoginModel(UserService userService, CookieService cookieService)
         {
