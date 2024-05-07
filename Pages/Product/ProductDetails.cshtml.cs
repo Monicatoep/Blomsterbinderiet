@@ -13,7 +13,7 @@ namespace Blomsterbinderiet.Pages.Product
     public class ProductDetailsModel : PageModel
     {
         private ProductService ProductService { get; set; }
-        public CookieService CookieService { get; set; }
+        private CookieService CookieService { get; set; }
         [BindProperty]
         [DisplayName("Mængde")]
         public int Amount { get; set; }

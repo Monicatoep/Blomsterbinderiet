@@ -9,18 +9,18 @@ namespace Blomsterbinderiet.Pages.Admin
     [Authorize(Roles = "Admin")]
     public class DeactivateUserModel : PageModel
     {
-		private UserService _userService;
+		private UserService UserService { get; set; }
         [BindProperty]
         public User User { get; set; }
 
         public DeactivateUserModel(UserService userService)
 		{
-			_userService = userService;
+			UserService = userService;
 		}
 
 		public async Task<IActionResult> OnGetAsync(int id)
 		{
-			User = await _userService.GetUserByIdAsync(id);
+			User = await UserService.GetUserByIdAsync(id);
 			if (User == null)
 			{
 				return RedirectToPage("/NotFound");
@@ -30,7 +30,7 @@ namespace Blomsterbinderiet.Pages.Admin
 
 		public async Task<IActionResult> OnPostAsync(int id)
 		{
-			await _userService.DeactivateUserAsync(id);
+			await UserService.DeactivateUserAsync(id);
             return RedirectToPage("/Admin/GetAllUsers");
 		}
     }

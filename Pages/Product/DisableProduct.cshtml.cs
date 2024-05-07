@@ -9,17 +9,17 @@ namespace Blomsterbinderiet.Pages.Product
     [Authorize(Roles = "Admin, Employee")]
     public class DisableProductModel : PageModel
     {
-        private ProductService _productService;
+        private ProductService ProductService { get; set; }
         [BindProperty]
         public Models.Product Product { get; set; }
 
         public DisableProductModel(ProductService productService)
         {
-            _productService = productService;
+            ProductService = productService;
         }
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Product = await _productService.GetProductByIdAsync(id);
+            Product = await ProductService.GetProductByIdAsync(id);
             if (Product == null)
                 return RedirectToPage("/NotFound");
 
@@ -28,7 +28,7 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            await _productService.DisableProductAsync(id);
+            await ProductService.DisableProductAsync(id);
 
             return RedirectToPage("/Product/GetAllProducts");
         }

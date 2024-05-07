@@ -10,9 +10,9 @@ namespace Blomsterbinderiet.Service
 {
     public class OrderService
     {
-        public DbGenericService<OrderLine> OrderlineService { get; set; }
-        public DbGenericService<Models.Delivery> DeliveryDbService { get; set; }
-        public UserService UserService { get; set; }
+        private DbGenericService<OrderLine> OrderlineService { get; set; }
+        private DbGenericService<Models.Delivery> DeliveryDbService { get; set; }
+        private UserService UserService { get; set; }
         private DbGenericService<Models.Order> DbService { get; set; }
         public List<Models.Order> Orders { get; set; }
         public List<Models.Delivery> Deliveries { get; set; }

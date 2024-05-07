@@ -10,7 +10,7 @@ namespace Blomsterbinderiet.Pages.Admin
     [Authorize(Roles = "Admin")]
     public class GetAllUsersModel : PageModel
     {
-        public UserService UserService { get; set; }
+        private UserService UserService { get; set; }
         public IEnumerable<User> Users { get; set; }
 
         public GetAllUsersModel(UserService userService)

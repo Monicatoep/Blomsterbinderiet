@@ -12,8 +12,8 @@ namespace Blomsterbinderiet.Pages.Customer
     [ModelMetadataType(typeof(Models.User))]
     public class CustomerSignUpModel : PageModel
     {
-        private UserService _userService;
-        private PasswordHasher<string> _passwordHasher;
+        private UserService UserService { get; set; }
+        private PasswordHasher<string> PasswordHasher { get; set; }
         [BindProperty]
         public string Name { get; set; }
         [BindProperty]
@@ -27,8 +27,8 @@ namespace Blomsterbinderiet.Pages.Customer
 
         public CustomerSignUpModel(UserService userService)
         {
-            _userService = userService;
-            _passwordHasher = new PasswordHasher<string>();
+            UserService = userService;
+            PasswordHasher = new PasswordHasher<string>();
         }
 
         public void OnGet()
@@ -41,7 +41,7 @@ namespace Blomsterbinderiet.Pages.Customer
             {
                 return Page();
             }
-            await _userService.AddUserAsync(new User(Name, _passwordHasher.HashPassword(null, Password), "Customer", Email, Phone, Address));
+            await UserService.AddUserAsync(new User(Name, PasswordHasher.HashPassword(null, Password), "Customer", Email, Phone, Address));
             return RedirectToPage("/UserPages/RegisterSuccess");
         }
     }

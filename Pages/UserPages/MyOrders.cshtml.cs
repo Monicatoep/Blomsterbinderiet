@@ -9,8 +9,8 @@ namespace Blomsterbinderiet.Pages.UserPages
 {
     public class MyOrdersModel : PageModel
     {
-        public UserService UserService { get; set; }
-        public OrderService OrderService { get; set; }
+        private UserService UserService { get; set; }
+        private OrderService OrderService { get; set; }
         public IEnumerable<MyOrdersDAO> Orders { get; set; }
 
         public MyOrdersModel(UserService userService, OrderService orderService)

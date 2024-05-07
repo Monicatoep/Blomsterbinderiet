@@ -14,7 +14,7 @@ namespace Blomsterbinderiet.Pages.Admin
     [Authorize(Roles = "Admin, Employee")]
     public class GetAllOrdersModel : PageModel
     {
-        public OrderService OrderService { get; set; }
+        private OrderService OrderService { get; set; }
         public UserService UserService { get; set; }
         public List<Order> MyOrders { get; set; }
         public List<User> Employees { get; set; }

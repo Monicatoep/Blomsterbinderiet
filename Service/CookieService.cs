@@ -11,7 +11,7 @@ namespace Blomsterbinderiet.Service
 {
     public class CookieService
     {
-        public ProductService ProductService { get; set; }
+        private ProductService ProductService { get; set; }
         //https://www.learnrazorpages.com/razor-pages/cookies
         private string _cookieName = "BlomsterBinderietBasket";
         public CookieService(ProductService productService)

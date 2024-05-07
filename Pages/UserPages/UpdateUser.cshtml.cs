@@ -8,7 +8,7 @@ namespace Blomsterbinderiet.Pages.UserPages
 {
     public class UpdateUserModel : PageModel
     {
-        public UserService UserService { get; set; }
+        private UserService UserService { get; set; }
         public string Message { get; set; }
         [BindProperty]
         public User User { get; set; }

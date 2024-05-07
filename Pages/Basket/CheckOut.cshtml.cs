@@ -12,9 +12,9 @@ namespace Blomsterbinderiet.Pages.Basket
     public class CheckOutModel : PageModel
     {
         public ProductService ProductService { get; set; }
-        public CookieService CookieService { get; set; }
-        public UserService UserService { get; set; }
-        public OrderService OrderService { get; set; }
+        private CookieService CookieService { get; set; }
+        private UserService UserService { get; set; }
+        private OrderService OrderService { get; set; }
         public User User { get; set; }
         public List<OrderLine> OrderLines { get; set; }
         public double OrderSum { get; set; }

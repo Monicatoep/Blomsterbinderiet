@@ -12,8 +12,8 @@ namespace Blomsterbinderiet.Pages.Admin
     [Authorize(Roles = "Admin")]
     public class CreateUserModel : PageModel
     {
-        private UserService _userService;
-        private PasswordHasher<string> _passwordHasher;
+        private UserService UserService { get; set; }
+        private PasswordHasher<string> PasswordHasher { get; set; }
         [BindProperty]
         [Required(ErrorMessage = "Du skal indtaste et navn")]
         public string Name { get; set; }
@@ -42,8 +42,8 @@ namespace Blomsterbinderiet.Pages.Admin
 
         public CreateUserModel(UserService userService)
         {
-            _userService = userService;
-            this._passwordHasher = new PasswordHasher<string>();
+            UserService = userService;
+            this.PasswordHasher = new PasswordHasher<string>();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -52,7 +52,7 @@ namespace Blomsterbinderiet.Pages.Admin
             {
                 return Page();
             }
-            await _userService.AddUserAsync(new User(Name,_passwordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
+            await UserService.AddUserAsync(new User(Name,PasswordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
             return RedirectToPage("/Admin/CreateUserSuccess");
         }
 

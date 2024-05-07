@@ -12,7 +12,7 @@ namespace Blomsterbinderiet.Pages.Product
     [Authorize(Roles = "Admin, Employee")]
     public class UpdateProductModel : PageModel
     {
-        public ProductService ProductService { get; set; }
+        private ProductService ProductService { get; set; }
         public ImageService ImageService { get; set; }
         [BindProperty]
         public Models.Product Product { get; set; }
