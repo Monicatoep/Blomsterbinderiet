@@ -32,10 +32,10 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task SaveCookieAsync(IResponseCookies input, IEnumerable<BasketItem> listOfItems)
+        public async Task SaveCookieAsync(IResponseCookies output, IEnumerable<BasketItem> listOfItems)
         {
             string jsonString = JsonSerializer.Serialize(listOfItems);
-            input.Append(_cookieName, jsonString);
+            output.Append(_cookieName, jsonString);
         }
 
         public async Task<IEnumerable<OrderLine>> LoadOrderLinesAsync(IEnumerable<BasketItem> basket)
@@ -128,6 +128,23 @@ namespace Blomsterbinderiet.Service
                 }
             }
             return null;
+        }
+
+        public IEnumerable<BasketItem> Remove(IRequestCookieCollection input, IResponseCookies output, int id)
+        {
+            ICollection<BasketItem> basketItems = ReadCookieAsync(input).Result;
+            BasketItem toBeRemoved = null;
+            foreach(BasketItem item in basketItems)
+            {
+                if(item.ProductID == id)
+                {
+                    toBeRemoved = item;
+                    break;
+                }
+            }
+            basketItems.Remove(toBeRemoved);
+            SaveCookieAsync(output, basketItems);
+            return basketItems;
         }
     }
 }

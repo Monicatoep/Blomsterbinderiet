@@ -15,19 +15,19 @@ namespace Blomsterbinderiet.Pages.Product
         public ProductService ProductService { get; set; }
         public ImageService ImageService { get; set; }
         [BindProperty]
-        public InputModels.UpdateProduct InputProduct { get; set; }
+        public Models.Product Product { get; set; }
         public string Confirmation { get; set; }
 
-        public UpdateProductModel(ProductService productService, ImageService tools)
+        public UpdateProductModel(ProductService productService, ImageService imageService)
         {
             ProductService = productService;
-            this.ImageService = tools;
+            this.ImageService = imageService;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Models.Product Product = await ProductService.GetProductByIdAsync(id);
-            InputProduct = new(Product);
+            Product = await ProductService.GetProductByIdAsync(id);
+            
             return Page();
         }
 
@@ -39,9 +39,7 @@ namespace Blomsterbinderiet.Pages.Product
                 return Page();
             }
 
-            Models.Product Product = await ProductService.GetProductByIdAsync(InputProduct.ID);
-
-            ProductService.UpdateProductAsync(InputProduct.UpdateParameterWithNewValues(Product));
+            await ProductService.UpdateProductAsync(Product);
 
             Confirmation = "Opdaterede produktet";
             return Page();
