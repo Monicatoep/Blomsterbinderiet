@@ -15,19 +15,17 @@ namespace Blomsterbinderiet.Service
         /// <summary>
         /// 
         /// </summary>
-        public List<Product> Products { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         private DbGenericService<Models.Product> DbService { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="dbService"></param>
         public List<Product> Products { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbService"></param>
         public ProductService(DbGenericService<Product> dbService)
         {
             DbService = dbService;
