@@ -12,22 +12,22 @@ namespace Blomsterbinderiet.Models
         [Required(ErrorMessage = "Der skal angives afdødes navn")]
         public string DeseasedName { get; set; }
 
-        [Required(ErrorMessage = "Der skal angives begravelses start")]
-        public DateTime CeremonyStart { get; set; }
+        //[Required(ErrorMessage = "Der skal angives begravelses start")]
+        //public DateTime CeremonyStart { get; set; }
 
         [Required(ErrorMessage = "Der skal angives en leveringsadresse")]
         public string Address { get; set; }
 
-        public Delivery(string deseasedName, DateTime ceremonyStart, string address)
+        public Delivery(string deseasedName, /*DateTime ceremonyStart,*/ string address)
         {
             DeseasedName = deseasedName;
-            CeremonyStart = ceremonyStart;
+            //CeremonyStart = ceremonyStart;
             Address = address;
         }
 
         public override string ToString()
         {
-            return $"{{{nameof(ID)}={ID.ToString()}, {nameof(DeseasedName)}={DeseasedName}, {nameof(CeremonyStart)}={CeremonyStart.ToString()}, {nameof(Address)}={Address}}}";
+            return $"{{{nameof(ID)}={ID.ToString()}, {nameof(DeseasedName)}={DeseasedName}, {nameof(Address)}={Address}}}";
         }
     }
 }

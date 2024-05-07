@@ -1,5 +1,5 @@
 ﻿@page
-@model Blomsterbinderiet.Pages.Basket.CheckOutModel
+@model Blomsterbinderiet.Pages.Basket.CheckOutUndertakerModel
 @{
 }
 
@@ -81,16 +81,26 @@
             <u>Totalpris @Model.OrderSum kr</u>
             <form method="post">
                 <hr>
-                <div class="form-group pt-1 pb-2">
-                    <label asp-for="PickUpDate" class="col-form-label ">Afhentningstidspunkt</label>
-                    <div>
-                        <input asp-for="PickUpDate" value="@DateTime.Now.AddDays(1)" />
+                    <hr>
+                    <div class="form-group">
+                        <label asp-for="@Model.DeseasedName" class="control-label"></label>
+                        <input asp-for="@Model.DeseasedName" class="form-control" id="noborder" />
+                        <span asp-validation-for="@Model.DeseasedName" class="text-danger"></span>
                     </div>
-                </div>
-                @if (Model.User.Role == "Customer" || Model.User.Role == "Admin")
-                {
-                    <button class="btn btn-danger" id="btnyellow" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft ordre</button>
-                }
+                    <hr>
+                    <div class="form-group">
+                        <label asp-for="@Model.CeremonyStart" class="control-label"></label>
+                        <input asp-for="@Model.CeremonyStart" class="form-control" id="noborder" />
+                        <span asp-validation-for="@Model.CeremonyStart" class="text-danger"></span>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label asp-for="@Model.Address" class="control-label"></label>
+                        <input asp-for="@Model.Address" class="form-control" id="noborder" />
+                        <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                    </div>
+                    <hr />
+                <button class="btn btn-danger" id="btnyellow" type="submit" title="Bekræft" asp-page-handler="WithDelivery">Bekræft ordre</button>
             </form>
         </div>
     </div>

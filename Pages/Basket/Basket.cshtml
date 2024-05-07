@@ -43,8 +43,16 @@
                 </table>
                 @if (HttpContext.User.Identity.IsAuthenticated)
                 {
-                    <div class="pb-3">Totalpris @Model.OrderSum kr</div>
-                    <a class="btn btn-primary" id="btnyellow" asp-area="" asp-page="/Basket/CheckOut">Færdiggør ordre</a>
+                    @if (HttpContext.User.IsInRole("Customer"))
+                    {
+                        <div class="pb-3">Totalpris @Model.OrderSum kr</div>
+                        <a class="btn btn-primary" id="btnyellow" asp-area="" asp-page="/Basket/CheckOut">Færdiggør ordre</a>
+                    }
+                    else
+                    {
+                        <div class="pb-3">Totalpris @Model.OrderSum kr</div>
+                        <a class="btn btn-primary" id="btnyellow" asp-area="" asp-page="/Basket/CheckOutUndertaker">Færdiggør ordre</a>
+                    }
                 }
                 else
                 {

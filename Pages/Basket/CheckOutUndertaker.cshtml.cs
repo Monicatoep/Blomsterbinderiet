@@ -1,15 +1,13 @@
-using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
+using System.ComponentModel;
 
 namespace Blomsterbinderiet.Pages.Basket
 {
-    public class CheckOutModel : PageModel
+    public class CheckOutUndertakerModel : PageModel
     {
         public ProductService ProductService { get; set; }
         private CookieService CookieService { get; set; }
@@ -18,13 +16,20 @@ namespace Blomsterbinderiet.Pages.Basket
         public User User { get; set; }
         public List<OrderLine> OrderLines { get; set; }
         public double OrderSum { get; set; }
-        [DisplayName("Afhentningstidspunkt")]
-        [Required(ErrorMessage = "Der skal angives et afhentningsstidspunkt")]
+        [DisplayName("Afdødes navn")]
+        [Required(ErrorMessage = "Der skal angives afdødes navn")]
         [BindProperty]
-        public DateTime PickUpDate { get; set; }
+        public string? DeseasedName { get; set; }
+        [DisplayName("Begravelses start")]
+        [Required(ErrorMessage = "Der skal angives begravelses start")]
+        [BindProperty]
+        public DateTime CeremonyStart { get; set; }
+        [DisplayName("Leveringsadresse")]
+        [Required(ErrorMessage = "Der skal angives en leveringsadresse")]
+        [BindProperty]
         public string? Address { get; set; }
 
-        public CheckOutModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
+        public CheckOutUndertakerModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
         {
             UserService = userService;
             this.ProductService = productService;
@@ -35,14 +40,14 @@ namespace Blomsterbinderiet.Pages.Basket
         public async Task<IActionResult> OnGetAsync()
         {
             this.User = await UserService.GetUserByHttpContextAsync(HttpContext);
-          
+
             IEnumerable<BasketItem> basketItems = CookieService.ReadCookieAsync(Request.Cookies).Result;
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
             OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostWithDeliveryAsync()
         {
             IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
             if (!ModelState.IsValid)
@@ -54,10 +59,11 @@ namespace Blomsterbinderiet.Pages.Basket
             User = await UserService.GetUserByHttpContextAsync(HttpContext);
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
-            await OrderService.CreateNewOrderAsync(User, PickUpDate, OrderLines);
-          
+            await OrderService.CreateNewOrderWithDeliveryAsync(User, CeremonyStart, OrderLines, new Models.Delivery(DeseasedName, Address));
+
             await CookieService.SaveCookieAsync(Response.Cookies, null);
             return RedirectToPage("/Basket/Confirmation");
         }
     }
 }
+

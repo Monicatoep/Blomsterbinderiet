@@ -153,12 +153,12 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task CreateNewOrderWithDeliveryAsync(User user, DateTime pickUpDate, List<OrderLine> orderLines, Models.Delivery delivery)
+        public async Task CreateNewOrderWithDeliveryAsync(User user, DateTime pickUpTime, List<OrderLine> orderLines, Models.Delivery delivery)
         {
-            Models.Delivery newDelivery = new Models.Delivery(delivery.DeseasedName, delivery.CeremonyStart, delivery.Address);
+            Models.Delivery newDelivery = new Models.Delivery(delivery.DeseasedName, delivery.Address);
             await AddDeliveryAsync(newDelivery);
 
-            Models.Order order = new(user, DateTime.Now, pickUpDate);
+            Models.Order order = new(user, DateTime.Now, pickUpTime);
             order.DeliveryId = newDelivery.ID;
             await AddOrderAsync(order);
 

@@ -34,7 +34,7 @@ namespace Blomsterbinderiet.Models
             CommentShop = null;
             PickUpDate = PickUpTime;
             OrderStatus = Status.Ny;
-        }   
+        }
 
         public Order()
         {
@@ -42,7 +42,7 @@ namespace Blomsterbinderiet.Models
 
         public override string ToString()
         {
-            return $"{{{nameof(Id)}={Id.ToString()}, {nameof(CustomerID)}={CustomerID.ToString()}, {nameof(Customer)}={Customer}, {nameof(EmployeeID)}={EmployeeID.ToString()}, {nameof(Employee)}={Employee}, {nameof(OrderDate)}={OrderDate.ToString()}, {nameof(CompletedDate)}={CompletedDate.ToString()}, {nameof(CommentShop)}={CommentShop}}}";
+            return $"{{{nameof(Id)}={Id.ToString()}, {nameof(CustomerID)}={CustomerID.ToString()}, {nameof(Customer)}={Customer}, {nameof(EmployeeID)}={EmployeeID.ToString()}, {nameof(Employee)}={Employee}, {nameof(DeliveryId)}={DeliveryId.ToString()}, {nameof(Delivery)}={Delivery}, {nameof(OrderDate)}={OrderDate.ToString()}, {nameof(CompletedDate)}={CompletedDate.ToString()}, {nameof(PickUpDate)}={PickUpDate.ToString()}, {nameof(CommentShop)}={CommentShop}, {nameof(OrderStatus)}={OrderStatus.ToString()}}}";
         }
     }
 }
