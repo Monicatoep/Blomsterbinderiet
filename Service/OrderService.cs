@@ -10,16 +10,13 @@ namespace Blomsterbinderiet.Service
 {
     public class OrderService
     {
+        private DbGenericService<OrderLine> OrderlineService { get; set; }
+        private DbGenericService<Models.Delivery> DeliveryDbService { get; set; }
+        private UserService UserService { get; set; }
+        private DbGenericService<Models.Order> DbService { get; set; }
         public List<Models.Order> Orders { get; set; }
         public List<Models.Delivery> Deliveries { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
-
-        public DbGenericService<OrderLine> OrderlineService { get; set; }
-        public DbGenericService<Models.Delivery> DeliveryDbService { get; set; }
-        public UserService UserService { get; set; }
-            
-        private DbGenericService<Models.Order> DbService { get; set; }
-
 
         public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, DbGenericService<Models.Delivery> deliveryDbService, UserService userService)
         {
@@ -56,10 +53,9 @@ namespace Blomsterbinderiet.Service
         public async Task UpdateOrderAsync(Models.Order order)
         {
             await DbService.UpdateObjectAsync(order);
-           
         }
 
-        public double GetOrderSum(List<OrderLine> orderLines)
+        public double GetOrderSum(IEnumerable<OrderLine> orderLines)
         {
             double orderSum = 0;
             if (orderLines == null)
@@ -179,6 +175,7 @@ namespace Blomsterbinderiet.Service
                       orderby order.PickUpDate
                       select order;
         }
+
         public IEnumerable<Models.Order> SortByDueDateDes()
         {
             return from order in Orders
@@ -186,6 +183,7 @@ namespace Blomsterbinderiet.Service
                    orderby order.PickUpDate descending
                    select order;
         }
+
         public IEnumerable<Models.Order> FilterByDueDate(DateOnly date)
         {
             TimeOnly time = TimeOnly.MinValue;
@@ -196,6 +194,7 @@ namespace Blomsterbinderiet.Service
                    select order;
 
         }
+
         public IEnumerable<Models.Order> FilterByDueDateToday()
         {
             DateOnly dateNow = DateOnly.FromDateTime(DateTime.Now);
@@ -205,16 +204,16 @@ namespace Blomsterbinderiet.Service
             return from order in Orders
                    where order.PickUpDate.Date.Equals(dateTime)
                    select order;
-
         }
+
         public IEnumerable<Models.Order> SortByEmployee()
         {
             return from order in Orders
                    where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    orderby order.EmployeeID 
                    select order;
-
         }
+
         public IEnumerable<Models.Order> SortByEmployeeDes()
         {
             return from order in Orders
@@ -222,6 +221,7 @@ namespace Blomsterbinderiet.Service
                    orderby order.EmployeeID descending
                    select order;
         }
+
         public IEnumerable<Models.Order> FilterByEmployee(int id)
         {
             return from order in Orders
@@ -229,6 +229,7 @@ namespace Blomsterbinderiet.Service
                    where order.EmployeeID == id
                    select order;
         }
+
         public IEnumerable<Models.Order> FilterByEmployeeNull()
         {
             return from order in Orders
@@ -236,6 +237,7 @@ namespace Blomsterbinderiet.Service
                    where order.EmployeeID == null
                    select order;
         }
+
         public IEnumerable<Models.Order> SortByStatus()
         {
             return from order in Orders
@@ -243,6 +245,7 @@ namespace Blomsterbinderiet.Service
                    orderby order.OrderStatus
                    select order;
         }
+
         public IEnumerable<Models.Order> SortByStatusDes()
         {
             return from order in Orders
@@ -250,14 +253,13 @@ namespace Blomsterbinderiet.Service
                    orderby order.OrderStatus descending
                    select order;
         }
+
         public IEnumerable<Models.Order> FilterByStatus(Status status)
         {
             return from order in Orders
                    where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate >= DateTime.Now
                    where order.OrderStatus==status
                    select order;
-        }
-
-        
+        } 
     }
 }

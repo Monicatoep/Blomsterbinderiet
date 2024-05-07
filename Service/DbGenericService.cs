@@ -64,9 +64,6 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        
-
-
         //https://stackoverflow.com/questions/77892880/are-there-any-safer-alternatives-to-hidden-input-fields-for-persisting-propertie
         //https://www.reddit.com/r/dotnet/comments/r1srvo/updating_only_changed_fields/
         public async Task UpdateObjectAsync(T obj, IEnumerable<string> updatedProperties)
@@ -98,23 +95,5 @@ namespace Blomsterbinderiet.Service
                 return await query.ToListAsync();
             }
         }
-
-        //public async Task<IEnumerable<T>> GetObjectsAsync(IEnumerable<string>? includes)
-        //{
-        //    using (var context = new BlomstDbContext())
-        //    {
-        //        var query = context.Set<T>().AsNoTracking();
-
-        //        if (includes != null)
-        //        {
-        //            foreach (string property in includes)
-        //            {
-        //                query = query.Include(property);
-        //            }
-        //        }
-        //        return await query.ToListAsync();
-        //    }
-        //}
-
     }
 }

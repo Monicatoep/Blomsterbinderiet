@@ -11,8 +11,8 @@ namespace Blomsterbinderiet.Service
 {
     public class UserService
     {
-        public List<User> Users { get; set; }
         private DbGenericService<User> DbService { get; set; }
+        public List<User> Users { get; set; }
 
         public UserService(DbGenericService<User> dbService)
         {

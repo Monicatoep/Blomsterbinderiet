@@ -8,7 +8,7 @@ namespace Blomsterbinderiet.Pages.Customer
 {
     public class LogoutModel : PageModel
     {
-        public CookieService CookieService { get; set; }
+        private CookieService CookieService { get; set; }
 
         public LogoutModel(CookieService cookieService)
         {

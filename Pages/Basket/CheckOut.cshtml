@@ -51,12 +51,9 @@
                         <a class="btn btn-danger" id="btngreen" asp-page="/UserPages/UpdateUser">Rediger oplysninger</a>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-
 
     <div class="col-md-10">
         <div class="card p-3" id="titlecard">
@@ -81,9 +78,7 @@
                     }
                 </tbody>
             </table>
-
             <u>Totalpris @Model.OrderSum kr</u>
-
             <form method="post">
                 <hr>
                 <div class="form-group pt-1 pb-2">
@@ -92,10 +87,8 @@
                         <input asp-for="PickUpDate" value="@DateTime.Now.AddDays(1)" />
                     </div>
                 </div>
-
                 @if (Model.User.Role == "Undertaker")
                 {
-
                     <hr>
                     <div class="form-group">
                         <label asp-for="@Model.DeseasedName" class="control-label"></label>
@@ -115,7 +108,6 @@
                         <span asp-validation-for="@Model.Address" class="text-danger"></span>
                     </div>
                     <hr />
-
                 }
                 @if (Model.User.Role == "Customer" || Model.User.Role == "Admin")
                 {

@@ -32,13 +32,13 @@
                                             <i class="px-3"></i>
                                             <button class="btn btn-primary" type="submit" title="Plus en" asp-page-handler="Plus" asp-route-id="@item.Product.ID"><i class="fa fa-plus"></i></button>
                                             <button class="btn btn-primary" type="submit" title="Minus en" asp-page-handler="Minus" asp-route-id="@item.Product.ID"><i class="fa fa-minus"></i></button>
+                                            <button class="btn btn-primary" type="submit" title="Fjern" asp-page-handler="Remove" asp-route-id="@item.Product.ID"><i class="fa fa-trash"></i></button>
                                         </div>
                                     </form>
                                 </td>
                                 <td>@(item.Product.Price * item.Amount)</td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
                 @if (HttpContext.User.Identity.IsAuthenticated)
@@ -51,7 +51,6 @@
                     <div class="pb-3">Totalpris @Model.OrderSum kr</div>
                     <a class="btn btn-primary" id="btnyellow" asp-area="" asp-page="/UserPages/Login">Færdiggør ordre</a>
                 }
-                
             </div>
         </div>
     </div>

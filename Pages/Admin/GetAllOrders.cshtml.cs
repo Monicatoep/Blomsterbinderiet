@@ -14,7 +14,7 @@ namespace Blomsterbinderiet.Pages.Admin
     [Authorize(Roles = "Admin, Employee")]
     public class GetAllOrdersModel : PageModel
     {
-        public OrderService OrderService { get; set; }
+        private OrderService OrderService { get; set; }
         public UserService UserService { get; set; }
         public List<Order> MyOrders { get; set; }
         public List<User> Employees { get; set; }
@@ -29,18 +29,21 @@ namespace Blomsterbinderiet.Pages.Admin
             Employees = userService.GetEmployeesAsync().Result.ToList();
             StatusList = (Status[])Enum.GetValues(typeof(Status));
         }
+
         public async Task<IActionResult> OnGetAsync()
         {
             MyOrders =  await OrderService.GetAllOrdersWeekAsync();
 
             return Page();
         }
+
         public async Task<IActionResult> OnGetSeeAllAsync()
         {
             MyOrders = await OrderService.GetAllOrdersAsync();
 
             return Page();
         }
+
         public async Task<IActionResult> OnGetResetAsync()
         {
             MyOrders =  await OrderService.GetAllOrdersWeekAsync();
@@ -54,17 +57,19 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.SortByDueDate().ToList();
             return Page();
         }
+
         public IActionResult OnGetSortByDueDateDes()
         {
             MyOrders = OrderService.SortByDueDateDes().ToList();
             return Page();
         }
+
         public IActionResult OnPostFilterByDueDate()
         {
-            
             MyOrders = OrderService.FilterByDueDate(Date).ToList();
             return Page();
         }
+
         public IActionResult OnPostFilterByDueDateToday()
         {
             
@@ -80,16 +85,17 @@ namespace Blomsterbinderiet.Pages.Admin
             return Page();
         }
         public IActionResult OnGetSortByEmployeeDes()
-            {
+        {
             MyOrders = OrderService.SortByEmployeeDes().ToList();
             return Page();
-
         }
+
         public IActionResult OnGetFilterByEmployee(int id)
         {
             MyOrders = OrderService.FilterByEmployee(id).ToList();
             return Page();
         }
+
         public IActionResult OnGetFilterByEmployeeNull()
         {
             MyOrders = OrderService.FilterByEmployeeNull().ToList();
@@ -103,11 +109,13 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.SortByStatus().ToList();
             return Page();
         }
+
         public IActionResult OnGetSortByStatusDes()
         {
             MyOrders = OrderService.SortByStatusDes().ToList();
             return Page();
         }
+
         public IActionResult OnGetFilterByStatus(Status status)
         {
             MyOrders = OrderService.FilterByStatus(status).ToList();
@@ -122,12 +130,14 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = await OrderService.GetAllOrdersWeekAsync();
             return Page();
         }
+
         public async Task<IActionResult> OnPostConfirmAsync(int id)
         {
             await OrderService.ConfirmOrderAsync(id);
             MyOrders = await OrderService.GetAllOrdersWeekAsync();
             return Page();
         }
+
         public async Task<IActionResult> OnPostInProgressAsync(int id)
         {
             string userId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;

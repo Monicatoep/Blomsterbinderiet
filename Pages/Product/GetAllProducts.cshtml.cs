@@ -13,7 +13,7 @@ namespace Blomsterbinderiet.Pages.Product
     public class GetAllProductsModel : PageModel
     {
         private ProductService ProductService { get; set; }
-
+        private CookieService CookieService { get; set; }
         [BindProperty]
         [DisplayName("Sorter efter")]
         public string? SortProperty { get; set; }
@@ -33,7 +33,6 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
-        public CookieService CookieService { get; set; }
         public IEnumerable<Models.Product> Products { get; private set; }
 
         public GetAllProductsModel(ProductService productService, CookieService cookieService)

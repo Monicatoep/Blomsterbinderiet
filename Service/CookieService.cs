@@ -11,12 +11,9 @@ namespace Blomsterbinderiet.Service
 {
     public class CookieService
     {
+        private ProductService ProductService { get; set; }
         //https://www.learnrazorpages.com/razor-pages/cookies
-
         private string _cookieName = "BlomsterBinderietBasket";
-
-        public ProductService ProductService { get; set; }
-
         public CookieService(ProductService productService)
         {
             ProductService = productService;
@@ -35,15 +32,15 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task SaveCookieAsync(IResponseCookies input, IEnumerable<BasketItem> listOfItems)
+        public async Task SaveCookieAsync(IResponseCookies output, IEnumerable<BasketItem> listOfItems)
         {
             string jsonString = JsonSerializer.Serialize(listOfItems);
-            input.Append(_cookieName, jsonString);
+            output.Append(_cookieName, jsonString);
         }
 
         public async Task<IEnumerable<OrderLine>> LoadOrderLinesAsync(IEnumerable<BasketItem> basket)
         {
-            if (basket == null )
+            if (basket == null)
             {
                 return null;
             }
@@ -82,7 +79,7 @@ namespace Blomsterbinderiet.Service
                 }
             }
             data = await AddItemAsync(data, id, amount);
-            Found:
+        Found:
             await SaveCookieAsync(output, data);
             return data;
         }
@@ -90,7 +87,7 @@ namespace Blomsterbinderiet.Service
         public async Task<ICollection<BasketItem>> AddItemAsync(ICollection<BasketItem> basketItems, int id, int amount)
         {
             Console.WriteLine("Tilføjer" + id + " " + amount);
-            if(basketItems == null)
+            if (basketItems == null)
             {
                 basketItems = new List<BasketItem>();
             }
@@ -131,6 +128,23 @@ namespace Blomsterbinderiet.Service
                 }
             }
             return null;
+        }
+
+        public IEnumerable<BasketItem> Remove(IRequestCookieCollection input, IResponseCookies output, int id)
+        {
+            ICollection<BasketItem> basketItems = ReadCookieAsync(input).Result;
+            BasketItem toBeRemoved = null;
+            foreach(BasketItem item in basketItems)
+            {
+                if(item.ProductID == id)
+                {
+                    toBeRemoved = item;
+                    break;
+                }
+            }
+            basketItems.Remove(toBeRemoved);
+            SaveCookieAsync(output, basketItems);
+            return basketItems;
         }
     }
 }
