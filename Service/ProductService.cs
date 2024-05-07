@@ -16,6 +16,7 @@ namespace Blomsterbinderiet.Service
         /// A reference to the DbGenericService object handling CRUD methods to the database for the Product objects 
         /// </summary>
         private DbGenericService<Models.Product> DbService { get; set; }
+        public List<Product> Products { get; set; }
 
         /// <summary>
         /// Constructor for ProductService it must be dependency injected an object of type DbGenericService<Product></Product>
