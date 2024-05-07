@@ -12,7 +12,7 @@
         <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
             @for (int i = 0; i < 4; i++) @* Rettet, så det starter på 0 *@
             {
-                var product = Model.ProductService.Products.ElementAt(i);
+                var product = Model.ProductService.GetAllProductsAsync().Result.ElementAt(i);
                 <div class="pb-3 px-3">
                     <div class="col card p-3">
                         @{
