@@ -1,0 +1,25 @@
+﻿@page
+@model Blomsterbinderiet.Pages.Admin.UpdateKeywordModel
+@{
+}
+
+<form method="post" enctype="multipart/form-data">
+    <input asp-for="@Model.Keyword.ID" class="form-control" hidden />
+    <div>
+        <label asp-for="@Model.Keyword.Name"></label>
+        <input asp-for="@Model.Keyword.Name" class="form-control" />
+        <span asp-validation-for="@Model.Keyword.Name" class="text-danger"></span>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success">Opdater</button>
+    @if (Model.Confirmation != null)
+    {
+        <p>@Model.Confirmation</p>
+        <a asp-page="GetAllKeywords" class="btn btn-primary" id="btnlight">Tilbage til nøgleord liste</a>
+    }
+    
+    else
+    {
+        <a asp-page="GetAllKeywords" class="btn btn-danger">Fortryd</a>
+    }    
+</form>
