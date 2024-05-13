@@ -4,6 +4,9 @@
 }
 
 <div class="container p-4">
+
+@if (Model.User.Role == "Customer")
+{
     <div class="col-md-10">
         <div class="card mb-3 p-3" id="titlecard">
             <h1>Ordreoplysninger</h1>
@@ -49,6 +52,157 @@
             </div>
         </div>
     </div>
+}
+else if(Model.User.Role == "Undertaker")
+{
+        <div class="col-md-10">
+            <div class="card mb-3 p-3" id="titlecard">
+                <h1>Ordreoplysninger</h1>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0" id="textcolor">Afdødes navn</h6>
+                        </div>
+                        <div class="col-sm-9" id="textcolor">
+                            @Model.OrderService.GetDeliveryByOrderIdAsync(Convert.ToInt32(Model.Order.DeliveryId)).Result.DeseasedName
+                            
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Leveringsadresse</h6>
+                        </div>
+                        <div class="col-sm-9" id="textcolor">
+                            @Model.OrderService.GetDeliveryByOrderIdAsync(Convert.ToInt32(Model.Order.DeliveryId)).Result.Address
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Leveringstidspunkt</h6>
+                        </div>
+                        <div class="col-sm-9" id="textcolor">
+                            @Model.Order.PickUpDate
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Telefon</h6>
+                        </div>
+                        <div class="col-sm-9" id="textcolor">
+                            @Model.User.Phone
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    }
+
+    else if (Model.User.Role == "Admin" || Model.User.Role == "Employee")
+    {
+        if(Model.Order.DeliveryId == null)
+        {
+            <div class="col-md-10">
+                <div class="card mb-3 p-3" id="titlecard">
+                    <h1>Ordreoplysninger</h1>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0" id="textcolor">Navn</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                @Model.User.Name
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                @Model.User.Email
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Telefon</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                @Model.User.Phone
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Adresse</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                @Model.User.Address
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        }
+        else if(Model.Order.DeliveryId != null)
+        {
+            <div class="col-md-10">
+                <div class="card mb-3 p-3" id="titlecard">
+                    <h1>Ordreoplysninger</h1>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0" id="textcolor">Afdødes navn</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                @Model.OrderService.GetDeliveryByOrderIdAsync(Convert.ToInt32(Model.Order.DeliveryId)).Result.DeseasedName
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Leveringsadresse</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                @Model.OrderService.GetDeliveryByOrderIdAsync(Convert.ToInt32(Model.Order.DeliveryId)).Result.Address
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Leveringstidspunkt</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                @Model.Order.PickUpDate
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Telefon</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                @Model.User.Phone
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        }             
+    }
 
     <div class="col-md-10">
         <div class="card p-3" id="titlecard">
