@@ -7,6 +7,7 @@ using Blomsterbinderiet.Service;
 using Blomsterbinderiet.Models;
 using System.Text.Json;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blomsterbinderiet.Pages.Product
 {

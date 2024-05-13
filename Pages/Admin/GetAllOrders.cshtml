@@ -127,7 +127,7 @@
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Bekræftet)
                                                 {
-                                                    <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Start klargøring</button></form>
+                                                    <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Start produktion</button></form>
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Klargøres)
                                                 {
