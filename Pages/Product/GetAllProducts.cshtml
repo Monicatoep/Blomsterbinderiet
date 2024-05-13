@@ -33,12 +33,14 @@
                     <div class="row">
                         <label>Pris klasse</label>
                         <div class="col">
-                            <input asp-for="@Model.Price1" class="form-control" id="noborder" />
-                            <span asp-validation-for="@Model.Price1" class="text-danger"></span>
+                            <label asp-for="@Model.MinimumPrice"></label>
+                            <input asp-for="@Model.MinimumPrice" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.MinimumPrice" class="text-danger"></span>
                         </div>
                         <div class="col">
-                            <input asp-for="@Model.Price2" class="form-control" id="noborder" />
-                            <span asp-validation-for="@Model.Price2" class="text-danger"></span>
+                            <label asp-for="@Model.MaksimumPrice"></label>
+                            <input asp-for="@Model.MaksimumPrice" class="form-control" id="noborder" />
+                            <span asp-validation-for="@Model.MaksimumPrice" class="text-danger"></span>
                         </div>
                     </div>
                     <div>

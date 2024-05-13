@@ -119,21 +119,21 @@ namespace Blomsterbinderiet.Service
             switch(property)
             {
                 case nameof(Product.Name):
-                    dataToBeSorted.OrderBy(p => p.Name);
+                    dataToBeSorted = dataToBeSorted.OrderBy(p => p.Name);
                     break;
                 case nameof(Product.Price):
-                    dataToBeSorted.OrderBy(p => p.Price);
+                    dataToBeSorted = dataToBeSorted.OrderBy(p => p.Price);
                     break;
                 case nameof(Product.Colour):
-                    dataToBeSorted.OrderBy(p => p.Colour);
+                    dataToBeSorted = dataToBeSorted.OrderBy(p => p.Colour);
                     break;
                 case nameof(Product.Description):
-                    dataToBeSorted.OrderBy(p => p.Description);
+                    dataToBeSorted = dataToBeSorted.OrderBy(p => p.Description);
                     break;
             }
             if(largeToSmall)
             {
-                dataToBeSorted.Reverse();
+                dataToBeSorted = dataToBeSorted.Reverse();
             }
             return dataToBeSorted;
         }
@@ -154,12 +154,10 @@ namespace Blomsterbinderiet.Service
         /// <para>Except for the price filter which is only skipped when both price1 and price2 is null</para>
         /// </summary>
         /// <param name="colour">Colour which the <see cref="Product.Colour"/> property must be</param>
-        /// <param name="price1"></param>
-        /// <param name="price2"></param>
+        /// <param name="minPrice"></param>
+        /// <param name="maxPrice"></param>
         /// <param name="keywordNameSearch"></param>
         /// <param name="showDisabled"></param>
-        /// <param name="sortProperty"></param>
-        /// <param name="largeToSmall"></param>
         /// <returns>
         /// An IEnumerable of Products including the Keyword navigation property 
         /// which has been filtered and sorted according to the given parameters.
@@ -169,7 +167,7 @@ namespace Blomsterbinderiet.Service
         /// if they are equal to either or between price1 and price2 if price1 is 
         /// null but price2 isn't then price1 will act as 0.
         /// </remarks>
-        public async Task<IEnumerable<Models.Product>> GetAllProductsFilteredAndSorted(string colour, double? price1, double? price2, string keywordNameSearch, bool showDisabled, string sortProperty, bool largeToSmall)
+        public async Task<IEnumerable<Models.Product>> GetAllProductsFiltered(string colour, double? minPrice, double? maxPrice, string keywordNameSearch, bool showDisabled)
         {
             IEnumerable<Models.Product> Products = await GetAllProductsIncludeKeywordsAsync();
 
@@ -178,11 +176,15 @@ namespace Blomsterbinderiet.Service
                 Products = Products.Where(p => p.Colour.ToLower().Contains(colour.ToLower()));
             }
 
-            if (price1 != null || price2 != null)
+            if (minPrice != null && maxPrice != null)
             {
-                double min = Math.Min(Convert.ToDouble(price1), Convert.ToDouble(price2));
-                double maks = Math.Max(Convert.ToDouble(price1), Convert.ToDouble(price2));
-                Products = Products.Where(p => p.Price >= min && p.Price <= maks);
+                Products = Products.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
+            } else if(minPrice != null) 
+            {
+                Products = Products.Where(p => p.Price >= minPrice);
+            } else if(maxPrice != null) 
+            {
+                Products = Products.Where(p => p.Price <= maxPrice);
             }
 
             if (keywordNameSearch != null)
@@ -196,9 +198,6 @@ namespace Blomsterbinderiet.Service
                            where product.Disabled == false
                            select product;
             }
-
-            Sort(Products, sortProperty, largeToSmall);
-            Products.OrderByDescending(p => p.Disabled);
             return Products;
         }
 
