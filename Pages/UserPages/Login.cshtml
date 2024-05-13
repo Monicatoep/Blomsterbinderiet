@@ -6,9 +6,6 @@
     <div class="col-md-2">
         <div class="card mb-3 p-3" id="titlecard">
             <div class="card-body p-2 d-flex align-items-center justify-content-center">
-                <div>
-                    @Model.Message
-                </div>
                 <form method="post">
                     <div class="form-group">
                         <label asp-for="Email" class="col-form-label "></label>
@@ -26,7 +23,11 @@
                         <button class="btn btn-primary" id="btnyellow">Log in</button>
                     </div>
                 </form>
+                
                 </>
+            </div>
+            <div class="text-center">
+                @Model.Message
             </div>
         </div>
     </div>

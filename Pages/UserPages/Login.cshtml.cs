@@ -37,7 +37,7 @@ namespace Blomsterbinderiet.Pages.Customer
         {
             if (Email == null || Password == null)
             {
-                Message = "Invalid attempt";
+                Message = "Login fejlede";
                 return Page(); 
             }
             
@@ -47,7 +47,7 @@ namespace Blomsterbinderiet.Pages.Customer
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
                 return RedirectToPage("/index");
             }
-            Message = "Invalid attempt";
+            Message = "Login fejlede";
             return Page();
         }
     }
