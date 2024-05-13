@@ -74,7 +74,7 @@
                                         <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatus"><i class="fa fa-sort-up"></i></a>
                                         <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatusDes"><i class="fa fa-sort-down"></i></a>
                                     </th>
-                                    <th>Total pris</th>
+                                    
                                     <th>
                                         <a class="btn" id="btngrey" title="AllOrders" asp-page-handler="SeeAll">Se alle ordrer</a>
                                         <a class="btn" id="btngrey" title="filterReset" asp-page-handler="Reset">Reset Filter</a>
@@ -118,9 +118,6 @@
                                             </td>
                                             <td>
                                                 @order.OrderStatus
-                                            </td>
-                                            <td>
-                                                Pris
                                             </td>
                                             <td>
                                                 @if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Ny)
