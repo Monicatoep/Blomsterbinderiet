@@ -1,12 +1,99 @@
+using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel;
 
 namespace Blomsterbinderiet.Pages.Product
 {
     public class FuneralModel : PageModel
     {
-        public void OnGet()
+
+        private ProductService ProductService { get; set; }
+        private CookieService CookieService { get; set; }
+        [BindProperty]
+        [DisplayName("Sorter efter")]
+        public string? SortProperty { get; set; }
+        [BindProperty]
+        [DisplayName("Størst til mindst?")]
+        public bool SortDirection { get; set; }
+        [BindProperty]
+        [DisplayName("Farve")]
+        public string? Colour { get; set; }
+        [BindProperty]
+        [DisplayName("Minimum")]
+        public double? MinimumPrice { get; set; }
+        [BindProperty]
+        [DisplayName("Maksimum")]
+        public double? MaksimumPrice { get; set; }
+        [BindProperty]
+        [DisplayName("Søg på produkt attribut")]
+        public string? KeywordNameSearch { get; set; }
+        [BindProperty]
+        [DisplayName("Vis deaktiverede produkter")]
+        public bool ShowDisabled { get; set; }
+        public IEnumerable<Models.Product> Products { get; private set; }
+
+        public FuneralModel(ProductService productService, CookieService cookieService)
         {
+            ProductService = productService;
+            CookieService = cookieService;
+        }
+
+        public async Task OnGetAsync()
+        {
+            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
+            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
+            Products = Products.Where(p => p.Disabled == false);
+            Products = Products.OrderBy(p => p.Name);
+        }
+
+        public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
+        {
+            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
+
+            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains(keywordName)));
+            Products = Products.Where(p => p.Disabled == false);
+            Products = Products.OrderBy(p => p.Name);
+
+            KeywordNameSearch = keywordName;
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnGetResetAsync()
+        {
+            SortProperty = null;
+            SortDirection = false;
+            Colour = null;
+            MinimumPrice = null;
+            MaksimumPrice = null;
+            ShowDisabled = false;
+            Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            return Page();
+        }
+
+        public async Task OnGetSearchStringAsync(string searchString)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            Products = await ProductService.GetAllProductsFiltered(Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
+            Products = ProductService.Sort(Products, SortProperty, SortDirection);
+            //Products.OrderBy(p => p.Disabled);
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAddToBasket(int id)
+        {
+            await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
+
+            Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            return Page();
         }
     }
 }
+
+
