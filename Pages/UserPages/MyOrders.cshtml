@@ -13,7 +13,8 @@
                     <thead>
                         <tr class="table-success">
                             <th>ID</th>
-                            <th>Bestillings dato</th>
+                            <th>Bestillingsdato</th>
+                            <th>Afhentningsdato</th>
                             <th>Mængde</th>
                             <th>Status</th>
                             <th></th>
@@ -25,6 +26,7 @@
                             <tr class="table-warning">
                                 <td>@order.Order.Id</td>
                                 <td>@order.Order.OrderDate</td>
+                                <td>@order.Order.PickUpDate</td>
                                 <td>@order.Amount</td>
                                 <td>@order.Order.OrderStatus</td>
                                 <td><a class="btn btn-primary" id="btngreen" asp-page="/UserPages/OrderDetails" asp-route-id="@order.Order.Id">Se detaljer</a></td>

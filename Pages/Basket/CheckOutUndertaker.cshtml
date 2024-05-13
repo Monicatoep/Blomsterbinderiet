@@ -90,7 +90,7 @@
                     <hr>
                     <div class="form-group">
                         <label asp-for="@Model.CeremonyStart" class="control-label"></label>
-                        <input asp-for="@Model.CeremonyStart" class="form-control" id="noborder" />
+                        <input asp-for="@Model.CeremonyStart" class="form-control" id="noborder" value="@DateTime.Now.AddDays(1)"/>
                         <span asp-validation-for="@Model.CeremonyStart" class="text-danger"></span>
                     </div>
                     <hr>
