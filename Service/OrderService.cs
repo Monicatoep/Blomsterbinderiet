@@ -52,6 +52,12 @@ namespace Blomsterbinderiet.Service
            Models.Order order = await DbService.GetObjectByIdAsync(id);
             return order;
         }
+
+        public async Task<Models.Delivery> GetDeliveryByOrderIdAsync(int id)
+        {
+            return await DeliveryDbService.GetObjectByIdAsync(id);
+        }
+
         public async Task UpdateOrderAsync(Models.Order order)
         {
             await DbService.UpdateObjectAsync(order);

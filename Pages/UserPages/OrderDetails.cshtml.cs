@@ -7,7 +7,7 @@ namespace Blomsterbinderiet.Pages.UserPages
 {
     public class OrderDetailsModel : PageModel
     {
-        private OrderService OrderService { get; set; }
+        public OrderService OrderService { get; set; }
         private UserService UserService { get; set; }
         public ProductService ProductService { get; set; }
         public Order Order { get; set; }
