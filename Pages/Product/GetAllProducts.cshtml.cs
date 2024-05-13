@@ -24,9 +24,11 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Farve")]
         public string? Colour { get; set; }
         [BindProperty]
-        public double? Price1 { get; set; }
+        [DisplayName("Minimum")]
+        public double? MinimumPrice { get; set; }
         [BindProperty]
-        public double? Price2 { get; set; }
+        [DisplayName("Maksimum")]
+        public double? MaksimumPrice { get; set; }
         [BindProperty]
         [DisplayName("Søg på produkt attribut")]
         public string? KeywordNameSearch { get; set; }
@@ -64,8 +66,8 @@ namespace Blomsterbinderiet.Pages.Product
             SortProperty = null;
             SortDirection = false;
             Colour = null;
-            Price1 = null;
-            Price2 = null;
+            MinimumPrice = null;
+            MaksimumPrice = null;
             ShowDisabled = false;
             Products = await ProductService.GetAllProductsStandardFilterAndSort();
             return Page();
@@ -78,7 +80,9 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Products = await ProductService.GetAllProductsFilteredAndSorted(Colour,Price1,Price2,KeywordNameSearch,ShowDisabled,SortProperty,SortDirection);
+            Products = await ProductService.GetAllProductsFiltered(Colour,MinimumPrice,MaksimumPrice,KeywordNameSearch,ShowDisabled);
+            Products = ProductService.Sort(Products, SortProperty, SortDirection);
+            //Products.OrderBy(p => p.Disabled);
 
             return Page();
         }

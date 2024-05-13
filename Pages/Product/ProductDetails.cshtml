@@ -25,15 +25,18 @@
                     <div class="col-5">
                         <h1>@Model.Product.Name</h1>
                         <p>@Model.Product.Description</p>
-                        <form method="post" class="form">
-                            <input asp-for="@Model.ProductID" class="form-control" value="@Model.Product.ID" hidden />
-                            <div class="form-group col mb-2">
-                                <label asp-for="@Model.Amount"></label>
-                                <input asp-for="@Model.Amount" class="form-control mt-2" id="noborder" value="1" style="max-width: 3rem; color: #A0BF91" />
-                                <span asp-validation-for="@Model.Amount" class="text-danger"></span>
-                            </div>
-                            <button type="submit" class="btn btn-primary mb-2 mt-2" id="btnyellow">Tilføj til kurv</button>
-                        </form>
+                        @if (!HttpContext.User.IsInRole("Admin"))
+                        {
+                            <form method="post" class="form">
+                                <input asp-for="@Model.ProductID" class="form-control" value="@Model.Product.ID" hidden />
+                                <div class="form-group col mb-2">
+                                    <label asp-for="@Model.Amount"></label>
+                                    <input asp-for="@Model.Amount" class="form-control mt-2" id="noborder" value="1" style="max-width: 3rem; color: #A0BF91" />
+                                    <span asp-validation-for="@Model.Amount" class="text-danger"></span>
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-2 mt-2" id="btnyellow">Tilføj til kurv</button>
+                            </form>
+                        }
                         @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
                         {
                             <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>

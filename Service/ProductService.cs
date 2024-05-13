@@ -8,20 +8,24 @@ using System.Reflection;
 namespace Blomsterbinderiet.Service
 {
     /// <summary>
-    /// This class is responsible for most if not all things related to <see cref="Product"/>
+    /// This class is responsible for handling <see cref="Product"/> objects. It contains filter-, sort- and CRUD methods.
     /// </summary>
     public class ProductService
     {
         /// <summary>
-        /// A reference to the DbGenericService object handling CRUD methods to the database for the Product objects 
+        /// <c>DbService</c> represents a reference to the DbGenericService object handling CRUD calls to the database for the <see cref="Product"/> objects 
         /// </summary>
         private DbGenericService<Models.Product> DbService { get; set; }
         public List<Product> Products { get; set; }
 
         /// <summary>
-        /// Constructor for ProductService it must be dependency injected an object of type DbGenericService<Product></Product>
+        /// Constructor for the <c>ProductService</c> class. 
         /// </summary>
-        /// <param name="dbService">An object</param>
+        /// <remarks>
+        /// The constructor must be dependency injected an 
+        /// object of type <see cref="DbGenericService{T=Product}"/> where T is a type of Product
+        /// </remarks>
+        /// <param name="dbService">Reference to a <see cref="DbGenericService{T=Product}"/> object where T is Product</param>
         public ProductService(DbGenericService<Product> dbService)
         {
             DbService = dbService;
@@ -44,7 +48,7 @@ namespace Blomsterbinderiet.Service
         }
 
         /// <summary>
-        /// Retrieves all tuples in the Products table on the database
+        /// Retrieves all tuples/rows in the "Products" table on the database
         /// </summary>
         /// <returns>A task object containing an IEnumerable containing Product objects</returns>
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
@@ -53,8 +57,8 @@ namespace Blomsterbinderiet.Service
         }
 
         /// <summary>
-        /// Updates the tuple, with a primary key which matches the one <br />
-        /// on the supplied Product object, in the database 
+        /// Updates the tuple, in the "Products" entity/table, where the primary key matches the primary key <br />
+        /// on the supplied <see cref="Product"/> object in the database 
         /// </summary>
         /// <param name="product">A product object whose properties get sent to the database</param>
         /// <returns>A Task object which can be used to tell when a operation is done</returns>
@@ -64,9 +68,12 @@ namespace Blomsterbinderiet.Service
         }
 
         /// <summary>
-        /// Adds the given Product object to the database
+        /// Adds the passed <see cref="Product"/> object to the "Products" entity/table in the database
         /// </summary>
-        /// <param name="product"></param>
+        /// <remarks>
+        /// The Product object passed to this method must have its primary key, "ID", set to null.
+        /// </remarks>
+        /// <param name="product">An object of type Product</param>
         /// <returns>Returns a task object representing the Add operation</returns>
         public async Task AddProductAsync(Product product)
         {
@@ -74,11 +81,11 @@ namespace Blomsterbinderiet.Service
         }
 
         /// <summary>
-        /// Sets the <c>Disabled</c> property to <c>true</c>, on a product object specified by the primary key
-        /// Test <see cref="DbGenericService{T}"/>
+        /// Sets the <c>Disabled</c> property to <c>true</c>, on a product object specified by the primary key.
+        /// And updates the "Products" entity/table in the database
         /// </summary>
         /// <param name="id">Primary key of a product tuple/object</param>
-        /// <returns>A task object</returns>
+        /// <returns>A task object representing the DisableProduct operation</returns>
         public async Task DisableProductAsync(int id)
         {
             Product productToBeDisabled = DbService.GetObjectByIdAsync(id).Result;
@@ -91,7 +98,7 @@ namespace Blomsterbinderiet.Service
         /// Sets the <c>Disabled</c> property to <c>false</c>, on a product object specified by the primary key
         /// </summary>
         /// <param name="id">Primary key of a product tuple/object</param>
-        /// <returns>A task object</returns>
+        /// <returns>A task object representing the re-enable operation</returns>
 		public async Task ReenableProductAsync(int id)
 		{
 			Product productToBeReenabled = DbService.GetObjectByIdAsync(id).Result;
@@ -105,28 +112,28 @@ namespace Blomsterbinderiet.Service
         /// </summary>
         /// <param name="dataToBeSorted">The IEnumerable of Products to be sorted</param>
         /// <param name="property">Name of the Property which the IEnumerable should be ordered by</param>
-        /// <param name="largeToSmall">Optional parameter, true if the ordering of the data is reversed</param>
+        /// <param name="largeToSmall">Optional parameter, true if the ordering of the data should reversed before it's returned</param>
         /// <returns>The input IEnumerable but ordered by the name-specified property</returns>
         public IEnumerable<Product> Sort(IEnumerable<Product> dataToBeSorted,string property, bool largeToSmall=false)
         {
             switch(property)
             {
                 case nameof(Product.Name):
-                    dataToBeSorted.OrderBy(p => p.Name);
+                    dataToBeSorted = dataToBeSorted.OrderBy(p => p.Name);
                     break;
                 case nameof(Product.Price):
-                    dataToBeSorted.OrderBy(p => p.Price);
+                    dataToBeSorted = dataToBeSorted.OrderBy(p => p.Price);
                     break;
                 case nameof(Product.Colour):
-                    dataToBeSorted.OrderBy(p => p.Colour);
+                    dataToBeSorted = dataToBeSorted.OrderBy(p => p.Colour);
                     break;
                 case nameof(Product.Description):
-                    dataToBeSorted.OrderBy(p => p.Description);
+                    dataToBeSorted = dataToBeSorted.OrderBy(p => p.Description);
                     break;
             }
             if(largeToSmall)
             {
-                dataToBeSorted.Reverse();
+                dataToBeSorted = dataToBeSorted.Reverse();
             }
             return dataToBeSorted;
         }
@@ -147,12 +154,10 @@ namespace Blomsterbinderiet.Service
         /// <para>Except for the price filter which is only skipped when both price1 and price2 is null</para>
         /// </summary>
         /// <param name="colour">Colour which the <see cref="Product.Colour"/> property must be</param>
-        /// <param name="price1"></param>
-        /// <param name="price2"></param>
+        /// <param name="minPrice"></param>
+        /// <param name="maxPrice"></param>
         /// <param name="keywordNameSearch"></param>
         /// <param name="showDisabled"></param>
-        /// <param name="sortProperty"></param>
-        /// <param name="largeToSmall"></param>
         /// <returns>
         /// An IEnumerable of Products including the Keyword navigation property 
         /// which has been filtered and sorted according to the given parameters.
@@ -162,7 +167,7 @@ namespace Blomsterbinderiet.Service
         /// if they are equal to either or between price1 and price2 if price1 is 
         /// null but price2 isn't then price1 will act as 0.
         /// </remarks>
-        public async Task<IEnumerable<Models.Product>> GetAllProductsFilteredAndSorted(string colour, double? price1, double? price2, string keywordNameSearch, bool showDisabled, string sortProperty, bool largeToSmall)
+        public async Task<IEnumerable<Models.Product>> GetAllProductsFiltered(string colour, double? minPrice, double? maxPrice, string keywordNameSearch, bool showDisabled)
         {
             IEnumerable<Models.Product> Products = await GetAllProductsIncludeKeywordsAsync();
 
@@ -171,11 +176,15 @@ namespace Blomsterbinderiet.Service
                 Products = Products.Where(p => p.Colour.ToLower().Contains(colour.ToLower()));
             }
 
-            if (price1 != null || price2 != null)
+            if (minPrice != null && maxPrice != null)
             {
-                double min = Math.Min(Convert.ToDouble(price1), Convert.ToDouble(price2));
-                double maks = Math.Max(Convert.ToDouble(price1), Convert.ToDouble(price2));
-                Products = Products.Where(p => p.Price >= min && p.Price <= maks);
+                Products = Products.Where(p => p.Price >= minPrice && p.Price <= maxPrice);
+            } else if(minPrice != null) 
+            {
+                Products = Products.Where(p => p.Price >= minPrice);
+            } else if(maxPrice != null) 
+            {
+                Products = Products.Where(p => p.Price <= maxPrice);
             }
 
             if (keywordNameSearch != null)
@@ -189,19 +198,16 @@ namespace Blomsterbinderiet.Service
                            where product.Disabled == false
                            select product;
             }
-
-            Sort(Products, sortProperty, largeToSmall);
-            Products.OrderByDescending(p => p.Disabled);
             return Products;
         }
 
         /// <summary>
-        /// When Filter properties are not accessible then call this method. <br />
-        /// See <see cref="GetAllProductsFilteredAndSorted"/>
+        /// This method returns all tuples/rows in the "Products" entity excluding the disabled, or rather expired, products
+        /// which should not be shown to the customer.<br />
+        /// The returned IEnumerable containing the non-expired products gets sorted alphabetically by their name.
         /// </summary>
         /// <returns>
-        /// An IEnumerable of Product objects where <c>Disabled == false</c> is not 
-        /// included and it is ordered by the <c>Name</c> property
+        /// An IEnumerable of Product objects containing non-disabled products which is ordered by the <c>Name</c> property
         /// </returns>
         public async Task<IEnumerable<Models.Product>> GetAllProductsStandardFilterAndSort()
         {
