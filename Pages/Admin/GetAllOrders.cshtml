@@ -74,10 +74,13 @@
                                         <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatus"><i class="fa fa-sort-up"></i></a>
                                         <a data-toggle="tooltip" title="SorterStatus" asp-page-handler="SortByStatusDes"><i class="fa fa-sort-down"></i></a>
                                     </th>
-                                    <th>Total pris</th>
+                                    
                                     <th>
                                         <a class="btn" id="btngrey" title="AllOrders" asp-page-handler="SeeAll">Se alle ordrer</a>
                                         <a class="btn" id="btngrey" title="filterReset" asp-page-handler="Reset">Reset Filter</a>
+                                    </th>
+                                    <th>
+
                                     </th>
                                 </tr>
                             </thead>
@@ -117,26 +120,31 @@
                                                 @order.OrderStatus
                                             </td>
                                             <td>
-                                                Pris
-                                            </td>
-                                            <td>
                                                 @if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Ny)
                                                 {
                                                     <form method="post" asp-page-handler="Confirm" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Bekræft</button></form>
                                                     <form method="post" asp-page-handler="Deny" asp-route-id="@order.Id"><button class=" btn btn-primary mt-2" id="btnred">Afvis</button></form>
+                                                <td><a class="btn btn-primary" id="btngreen" asp-page="/UserPages/OrderDetails" asp-route-id="@order.Id">Se detaljer</a></td>
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Bekræftet)
                                                 {
                                                     <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Start produktion</button></form>
+                                                <td><a class="btn btn-primary" id="btngreen" asp-page="/UserPages/OrderDetails" asp-route-id="@order.Id">Se detaljer</a></td>
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Klargøres)
                                                 {
                                                     <form method="post" asp-page-handler="InProgress" asp-route-id="@order.Id"><button class="btn btn-info">Overtag klargøring</button></form>
                                                     <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn btn-primary mt-2" id="btngreen">Klar til afhentning</button></form>
+                                                <td><a class="btn btn-primary" id="btngreen" asp-page="/UserPages/OrderDetails" asp-route-id="@order.Id">Se detaljer</a></td>
                                                 }
                                                 else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Færdig)
                                                 {
                                                     <form method="post" asp-page-handler="ChangeStatus" asp-route-id="@order.Id"><button class="btn btn-primary" id="btngreen">Udleveret</button></form>
+                                                <td><a class="btn btn-primary" id="btngreen" asp-page="/UserPages/OrderDetails" asp-route-id="@order.Id">Se detaljer</a></td>
+                                                }
+                                                else if (order.OrderStatus == Blomsterbinderiet.Enums.Status.Udleveret || order.OrderStatus == Blomsterbinderiet.Enums.Status.Afvist)
+                                                {
+                                                <td><a class="btn btn-primary" id="btngreen" asp-page="/UserPages/OrderDetails" asp-route-id="@order.Id">Se detaljer</a></td>
                                                 }
                                             </td>
                                         </tr>
