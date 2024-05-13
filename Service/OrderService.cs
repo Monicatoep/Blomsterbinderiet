@@ -13,18 +13,20 @@ namespace Blomsterbinderiet.Service
         private DbGenericService<OrderLine> OrderlineService { get; set; }
         private DbGenericService<Models.Delivery> DeliveryDbService { get; set; }
         private UserService UserService { get; set; }
+        private ProductService ProductService { get; set; }
         private DbGenericService<Models.Order> DbService { get; set; }
         public List<Models.Order> Orders { get; set; }
         public List<Models.Delivery> Deliveries { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
-        public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, DbGenericService<Models.Delivery> deliveryDbService, UserService userService)
+        public OrderService(DbGenericService<Models.Order> dbService, DbGenericService<OrderLine> orderlineService, DbGenericService<Models.Delivery> deliveryDbService, UserService userService, ProductService productService)
         {
             DbService = dbService;
             Orders = dbService.GetObjectsAsync().Result.ToList();
             Deliveries = deliveryDbService.GetObjectsAsync().Result.ToList();
             OrderlineService = orderlineService;
             UserService = userService;
+            ProductService = productService;
             DeliveryDbService = deliveryDbService;
         }
 
@@ -69,6 +71,22 @@ namespace Blomsterbinderiet.Service
             }
             return orderSum;
         }
+
+        public async Task<double> GetOrderSum2(IEnumerable<OrderLine> orderLines)
+        {
+            double orderSum = 0;
+            if (orderLines == null)
+            {
+                return orderSum;
+            }
+
+            foreach (OrderLine orderLine in orderLines)
+            {
+                orderSum = orderSum + (ProductService.GetProductByIdAsync(orderLine.ProductID).Result.Price * orderLine.Amount);
+            }
+            return orderSum;
+        }
+
         public async Task AddOrderAsync(Models.Order order)
         {
             Orders.Add(order);
@@ -261,5 +279,13 @@ namespace Blomsterbinderiet.Service
                    where order.OrderStatus==status
                    select order;
         } 
+
+        public async Task <IEnumerable<Models.OrderLine>> Test(int id)
+        {
+            OrderLines = (await OrderlineService.GetObjectsAsync()).ToList();
+            return from orderLine in OrderLines
+                   where orderLine.OrderID == id
+                   select orderLine;
+        }
     }
 }

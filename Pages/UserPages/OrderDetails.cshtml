@@ -1,0 +1,79 @@
+﻿@page "{id:int}"
+@model Blomsterbinderiet.Pages.UserPages.OrderDetailsModel
+@{
+}
+
+<div class="container p-4">
+    <div class="col-md-10">
+        <div class="card mb-3 p-3" id="titlecard">
+            <h1>Ordreoplysninger</h1>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0" id="textcolor">Navn</h6>
+                    </div>
+                    <div class="col-sm-9" id="textcolor">
+                        @Model.User.Name
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9" id="textcolor">
+                        @Model.User.Email
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Telefon</h6>
+                    </div>
+                    <div class="col-sm-9" id="textcolor">
+                        @Model.User.Phone
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Adresse</h6>
+                    </div>
+                    <div class="col-sm-9" id="textcolor">
+                        @Model.User.Address
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-10">
+        <div class="card p-3" id="titlecard">
+            <table class="table">
+                <thead>
+                    <tr class="table-success">
+                        <th>Produkt</th>
+                        <th>Stykpris</th>
+                        <th>Antal</th>
+                        <th>Totalpris</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Models.OrderLine item in Model.OrderLines)
+                    {
+                        <tr class="table-warning">
+                            <td>@Model.ProductService.GetProductByIdAsync(item.ProductID).Result.Name</td>
+                            <td>@item.ProductPrice</td>
+                            <td>@item.Amount</td>
+                            <td>@(item.ProductPrice * item.Amount)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="pb-3">Ordrepris @Model.OrderSum kr</div>
+        </div>
+    </div>
+</div>
