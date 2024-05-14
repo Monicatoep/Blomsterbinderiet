@@ -79,15 +79,13 @@
                     <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3">
                         @if (Model.Products != null)
                         {
-                            int length = 0;
-                            if (Model.Products != null)
+                            int length = Model.Products.Count();
+                            if (length == 0)
                             {
-                                length = Model.Products.Count();
-                                if (length >= 24) length = 24;
+                                <p>Fandt ingen produkter med de givne filtre</p>
                             }
-                            @for (int i = 0; i < length; i++)
+                            foreach (var product in Model.Products.Take(24))
                             {
-                                var product = Model.Products.ElementAt(i);
                                 string cardClass = product.Disabled ? "card card-body disabled-product" : "card card-body";
                                 <div class="col">
                                     <div class="@cardClass" id="productcard">
@@ -128,17 +126,6 @@
                             }
                         }
                     </div>
-                    @{
-                        if (Model.Products != null)
-                        {
-                            int length = Model.Products.Count();
-                            if (length >= 24) length = 24;
-                            if (length == 0)
-                            {
-                                <p>Fandt ingen produkter med de givne filtre</p>
-                            }
-                        }
-                    }
                 </div>
             </div>
         </div>
