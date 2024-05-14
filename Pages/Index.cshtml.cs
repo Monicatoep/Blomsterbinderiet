@@ -25,6 +25,10 @@ namespace Blomsterbinderiet.Pages
 
         public IActionResult OnPost()
         {
+            if(SearchString == null)
+            {
+                return Page();
+            }
             return RedirectToPage("/Product/GetAllProducts", "SearchString", new { searchString = SearchString });
         }
     }
