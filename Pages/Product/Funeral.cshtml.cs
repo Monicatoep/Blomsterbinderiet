@@ -17,6 +17,9 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Størst til mindst?")]
         public bool SortDirection { get; set; }
         [BindProperty]
+        [DisplayName("Navn skal indeholde")]
+        public string SearchString { get; set; }
+        [BindProperty]
         [DisplayName("Farve")]
         public string? Colour { get; set; }
         [BindProperty]
@@ -79,7 +82,7 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Products = await ProductService.GetAllProductsFiltered(Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
+            Products = await ProductService.GetAllProductsFiltered(SearchString, Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
             Products = ProductService.Sort(Products, SortProperty, SortDirection);
             //Products.OrderBy(p => p.Disabled);
 

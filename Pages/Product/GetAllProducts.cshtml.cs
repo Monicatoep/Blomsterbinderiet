@@ -18,6 +18,9 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Sorter efter")]
         public string? SortProperty { get; set; }
         [BindProperty]
+        [DisplayName("Navn skal indeholde")]
+        public string SearchString { get; set; }
+        [BindProperty]
         [DisplayName("Størst til mindst?")]
         public bool SortDirection { get; set; }
         [BindProperty]
@@ -73,14 +76,20 @@ namespace Blomsterbinderiet.Pages.Product
             return Page();
         }
 
-        public async Task OnGetSearchStringAsync(string searchString)
+        public async Task<IActionResult> OnGetSearchStringAsync(string searchString)
         {
-            throw new NotImplementedException();
+            Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            SearchString = searchString;
+            searchString = searchString.ToLower();
+            //set Products to only contain where either product name or searchString is part of one another
+            Products = Products.Where(p => p.Name.ToLower().Contains(searchString) || searchString.Contains(p.Name.ToLower()));
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Products = await ProductService.GetAllProductsFiltered(Colour,MinimumPrice,MaksimumPrice,KeywordNameSearch,ShowDisabled);
+            Products = await ProductService.GetAllProductsFiltered(SearchString, Colour,MinimumPrice,MaksimumPrice,KeywordNameSearch,ShowDisabled);
             Products = ProductService.Sort(Products, SortProperty, SortDirection);
             //Products.OrderBy(p => p.Disabled);
 

@@ -7,6 +7,17 @@
 <a class="btn btn-danger text-center container-fluid pt-3" id="btngreen" href="Product/GetAllProducts">
     <h4>Mors dag er lige om hjørnet, køb din buket her</h4>
 </a>
+<form method="post">
+    <div class="row">
+        <div class="col-8">
+            <input class="form-control-lg" asp-for="@Model.SearchString" placeholder="Søg på produkter">
+        </div>
+        <div class="col">
+            <button type="submit">Søg på produkter<i class="fa fa-search"></i></button>
+        </div>
+    </div>
+</form>
+
 <div class="card mt-5" id="outercard">
     <div class="container">
         <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">

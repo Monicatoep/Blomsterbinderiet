@@ -182,9 +182,15 @@ namespace Blomsterbinderiet.Service
         /// if they are equal to either or between price1 and price2 if price1 is 
         /// null but price2 isn't then price1 will act as 0.
         /// </remarks>
-        public async Task<IEnumerable<Models.Product>> GetAllProductsFiltered(string colour, double? minPrice, double? maxPrice, string keywordNameSearch, bool showDisabled)
+        public async Task<IEnumerable<Models.Product>> GetAllProductsFiltered(string name, string colour, double? minPrice, double? maxPrice, string keywordNameSearch, bool showDisabled)
         {
             IEnumerable<Models.Product> Products = await GetAllProductsIncludeKeywordsAsync();
+
+            if (name != null)
+            {
+                name = name.ToLower();
+                Products = Products.Where(p => p.Name.ToLower().Contains(name) || name.Contains(p.Name.ToLower()));
+            }
 
             if (colour != null)
             {
