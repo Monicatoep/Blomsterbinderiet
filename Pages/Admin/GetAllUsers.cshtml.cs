@@ -1,3 +1,4 @@
+using Blomsterbinderiet.Enums;
 using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
@@ -39,7 +40,7 @@ namespace Blomsterbinderiet.Pages.Admin
         }
         #endregion
 
-        #region Role sorting
+        #region Role sorting and filter
         public IActionResult OnGetSortByRole()
         {
             Users = UserService.SortByRole().ToList();
@@ -51,6 +52,18 @@ namespace Blomsterbinderiet.Pages.Admin
             Users = UserService.SortByRoleDescending().ToList();
             return Page();
         }
+        public IActionResult OnGetFilterByRole(string role)
+        {
+            Users = UserService.FilterByRole(role).ToList();
+            return Page();
+        }
         #endregion
+
+
+        public IActionResult OnGetFilterByStatus(string status)
+        {
+            Users = UserService.FilterByStatus(status).ToList();
+            return Page();
+        }
     }
 }

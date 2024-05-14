@@ -1,4 +1,5 @@
-﻿using Blomsterbinderiet.Migrations;
+﻿using Blomsterbinderiet.Enums;
+using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
@@ -234,5 +235,6 @@ namespace Blomsterbinderiet.Service
         {
             return (await GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
         }
+
     }
 }

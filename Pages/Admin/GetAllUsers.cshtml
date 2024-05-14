@@ -29,10 +29,32 @@
                                             <a data-toggle="tooltip" title="Sort By Name" asp-page-handler="SortByRole"><i class="fa fa-angle-up"></i></a>
                                             <a data-toggle="tooltip" title="Sort By Name Descending" asp-page-handler="SortByRoleDescending"><i class="fa fa-angle-down"></i></a>
                                         </div>
+                                        <div class="nav-item dropdown">
+                                            <button type="button" data-toggle="dropdown">
+                                                <i class="fa fa-filter"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a title="filtreRole" asp-page-handler="FilterByRole" asp-route-role="Admin">Admin</a>
+                                                <a title="filtreRole" asp-page-handler="FilterByRole" asp-route-role="Undertaker">Bedemand</a>
+                                                <a title="filtreRole" asp-page-handler="FilterByRole" asp-route-role="Customer">Kunde</a>
+                                                <a title="filtreRole" asp-page-handler="FilterByRole" asp-route-role="Employee">Medarbejder</a>
+                                            </div>
+                                        </div>
                                     </th>
                                     <th>Telefon</th>
                                     <th>Adresse</th>
-                                    <th>Status</th>
+                                    <th>
+                                        Status<div class="nav-item dropdown">
+                                            <button type="button" data-toggle="dropdown">
+                                                <i class="fa fa-filter"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a title="filtreStatus" asp-page-handler="FilterByStatus" asp-route-status="Aktiv">Aktive</a>
+                                                <a title="filtreStatus" asp-page-handler="FilterByStatus" asp-route-status="Deaktiveret">Deaktive</a>
+                                            </div>
+                                        </div>
+
+                                    </th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -51,9 +73,30 @@
                                             <td>
                                                 @user.Email
                                             </td>
-                                            <td>
-                                                @user.Role
-                                            </td>
+                                            @if (user.Role == "Undertaker")
+                                            {
+                                                <td>
+                                                    Bedemand
+                                                </td>
+                                            }
+                                            else if (user.Role == "Employee")
+                                            {
+                                                <td>
+                                                    Medarbejder
+                                                </td>
+                                            }
+                                            else if (user.Role == "Customer")
+                                            {
+                                                <td>
+                                                    Kunde
+                                                </td>
+                                            }
+                                            else if (user.Role == "Admin")
+                                            {
+                                                <td>
+                                                    Admin
+                                                </td>
+                                            }
                                             <td>
                                                 @user.Phone
                                             </td>

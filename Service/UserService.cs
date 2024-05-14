@@ -118,5 +118,17 @@ namespace Blomsterbinderiet.Service
                    where user.Role == "Employee"
                    select user;
         }
+        public IEnumerable<Models.User> FilterByStatus(string status)
+        {
+            return from user in Users
+                   where user.State == status
+                   select user;
+        }
+        public IEnumerable<Models.User> FilterByRole(string role)
+        {
+            return from user in Users
+                   where user.Role == role
+                   select user;
+        }
     }
 }
