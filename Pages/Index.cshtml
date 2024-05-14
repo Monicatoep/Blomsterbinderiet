@@ -8,12 +8,12 @@
     <h4>Mors dag er lige om hjørnet, køb din buket her</h4>
 </a>
 <form method="post">
-    <div class="row">
-        <div class="col-8">
-            <input class="form-control-lg" asp-for="@Model.SearchString" placeholder="Søg på produkter">
-        </div>
-        <div class="col">
-            <button type="submit">Søg på produkter<i class="fa fa-search"></i></button>
+    <div class="row mt-2">
+        <div class="input-group mb-3 col-12 ">
+            <input class="form-control-lg col border border-top-2 border-bottom-2 border-left-2 border-right-0 border-dark" asp-for="@Model.SearchString" placeholder="Søg på produkter">
+            <div class="input-group-append">
+                <button class="btn-lg btn-secondary" type="submit">Søg på produkter <i class="fa fa-search"></i></button>
+            </div>
         </div>
     </div>
 </form>
