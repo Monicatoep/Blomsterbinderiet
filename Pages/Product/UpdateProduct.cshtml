@@ -30,6 +30,7 @@
         <span asp-validation-for="@Model.Product.Colour" class="text-danger"></span>
     </div>
     <div>
+        <p class="pt-2">Keywords</p>
         <select class="form-select-lg" multiple asp-for="@Model.KeywordIDs">
             @foreach (Models.Keyword keyword in Model.ProductKeywords)
             {
