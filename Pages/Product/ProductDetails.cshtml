@@ -42,11 +42,11 @@
                             <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
                             @if (Model.Product.Disabled == false)
                             {
-                                <a class="btn btn-danger btn-sm " type="button" title="Disable" asp-page="DisableProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-danger btn-sm " type="button" title="Disable" asp-page="DisableProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-eye-slash"></i></a>
                             }
                             else if (Model.Product.Disabled == true)
                             {
-                                <a class="btn btn-danger btn-sm " type="button" title="Enable" asp-page="ReenableProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-check"></i></a>
+                                <a class="btn btn-success btn-sm " type="button" title="Enable" asp-page="ReenableProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-eye"></i></a>
                             }
                         }
                     </div>
