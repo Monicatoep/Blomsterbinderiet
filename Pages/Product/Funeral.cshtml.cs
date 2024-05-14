@@ -18,7 +18,7 @@ namespace Blomsterbinderiet.Pages.Product
         public bool SortDirection { get; set; }
         [BindProperty]
         [DisplayName("Navn skal indeholde")]
-        public string SearchString { get; set; }
+        public string? SearchString { get; set; }
         [BindProperty]
         [DisplayName("Farve")]
         public string? Colour { get; set; }

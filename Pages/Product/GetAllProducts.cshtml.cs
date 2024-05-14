@@ -19,7 +19,7 @@ namespace Blomsterbinderiet.Pages.Product
         public string? SortProperty { get; set; }
         [BindProperty]
         [DisplayName("Navn skal indeholde")]
-        public string SearchString { get; set; }
+        public string? SearchString { get; set; }
         [BindProperty]
         [DisplayName("Størst til mindst?")]
         public bool SortDirection { get; set; }
