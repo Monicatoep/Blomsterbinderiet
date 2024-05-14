@@ -41,17 +41,9 @@ namespace Blomsterbinderiet.Pages.Product
             //    Confirmation = "Oprettelse fejlede";
             //    return Page();
             //}
-            //Product.Keywords = new List<Keyword>();
-            //Keyword keyword;
-            foreach (int id in KeywordIDs)
-            {
-                //keyword = await KeywordService.GetKeywordByIdAsync(id);
-                //keyword.Name = null;
-                //Product.Keywords.Add(keyword);
-                Console.WriteLine(id);
-            }
+            
             //maybe a solution https://stackoverflow.com/questions/4253165/insert-update-many-to-many-entity-framework-how-do-i-do-it
-            //Product.Keywords = null;
+          
             ProductKeywords = await KeywordService.GetAllKeywordsAsync();
             if(Product.UploadedImage != null)
             {
@@ -60,6 +52,7 @@ namespace Blomsterbinderiet.Pages.Product
             await ProductService.AddProductAsync(Product, KeywordIDs);
 
             Confirmation = "Tilføjet produktet";
+            
             return Page();
         }
     }
