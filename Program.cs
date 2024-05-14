@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<BlomstDbContext>();
 builder.Services.AddTransient<DbGenericService<User>, DbGenericService<User>>();
-builder.Services.AddTransient<DbGenericService<Product>, DbGenericService<Product>>();
+builder.Services.AddTransient<ProductDbService, ProductDbService>();
 builder.Services.AddTransient<DbGenericService<Keyword>, DbGenericService<Keyword>>();
 builder.Services.AddTransient<DbGenericService<Order>, DbGenericService<Order>>();
 builder.Services.AddTransient<DbGenericService<Delivery>, DbGenericService<Delivery>>();

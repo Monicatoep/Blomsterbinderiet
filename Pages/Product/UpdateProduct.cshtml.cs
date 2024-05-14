@@ -14,32 +14,48 @@ namespace Blomsterbinderiet.Pages.Product
     {
         private ProductService ProductService { get; set; }
         public ImageService ImageService { get; set; }
+        private KeywordService KeywordService { get; set; }
         [BindProperty]
         public Models.Product Product { get; set; }
+        [BindProperty]
+        public ICollection<int> KeywordIDs { get; set; }
         public string Confirmation { get; set; }
+        public IEnumerable<Keyword> ProductKeywords { get; set; }
 
-        public UpdateProductModel(ProductService productService, ImageService imageService)
+        public UpdateProductModel(ProductService productService, ImageService imageService, KeywordService keywordService)
         {
             ProductService = productService;
-            this.ImageService = imageService;
+            ImageService = imageService;
+            KeywordService = keywordService;
         }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Product = await ProductService.GetProductByIdAsync(id);
-            
+            Product = await ProductService.GetProductIncludingKeywordsByID(id);
+            KeywordIDs = new List<int>();
+            foreach(Keyword keyword in Product.Keywords)
+            {
+                KeywordIDs.Add(keyword.ID);
+            }
+            ProductKeywords = await KeywordService.GetAllKeywordsAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                Confirmation = "Opdatering fejlede";
-                return Page();
-            }
+            ProductKeywords = await KeywordService.GetAllKeywordsAsync();
+            //if (!ModelState.IsValid)
+            //{
+            //    Confirmation = "Opdatering fejlede";
+            //    return Page();
+            //}
 
-            await ProductService.UpdateProductAsync(Product);
+            if (Product.UploadedImage != null)
+            {
+                Product.Image = ImageService.ConvertToByteArray(Product.UploadedImage);
+            }
+            //await ProductService.AddProductAsync(Product, KeywordIDs);
+            await ProductService.UpdateProductAsync(Product, KeywordIDs);
 
             Confirmation = "Opdaterede produktet";
             return Page();

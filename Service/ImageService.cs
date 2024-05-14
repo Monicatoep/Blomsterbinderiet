@@ -5,9 +5,14 @@ namespace Blomsterbinderiet.Service
 {
     public class ImageService
     {
-        private IWebHostEnvironment WebHostEnvironment { get; }
+        private IWebHostEnvironment WebHostEnvironment { get; set; }
 
-        public async Task<byte[]> ConvertToByteArrayAsync(IFormFile temp)
+        public ImageService(IWebHostEnvironment webHostEnvironment)
+        {
+            WebHostEnvironment = webHostEnvironment;
+        }
+
+        public byte[] ConvertToByteArray(IFormFile temp)
         {
             var filePath = Path.Combine(Path.Combine(WebHostEnvironment.WebRootPath, "images"), temp.FileName);
 

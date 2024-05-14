@@ -29,6 +29,21 @@
         <input asp-for="@Model.Product.Colour" class="form-control" />
         <span asp-validation-for="@Model.Product.Colour" class="text-danger"></span>
     </div>
+    <div>
+        <select class="form-select-lg" multiple asp-for="@Model.KeywordIDs">
+            @foreach (Models.Keyword keyword in Model.ProductKeywords)
+            {
+                if (Model.KeywordIDs.Contains(keyword.ID))
+                {
+                    <option selected value="@keyword.ID">@keyword.Name</option>
+                } else
+                {
+                    <option value="@keyword.ID">@keyword.Name</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="@Model.KeywordIDs" class="text-danger"></span>
+    </div>
     @if (Model.Confirmation != null)
     {
         <p>@Model.Confirmation</p>

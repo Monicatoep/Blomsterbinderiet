@@ -37,22 +37,13 @@
                             <span asp-validation-for="@Model.Product.Colour" class="text-danger"></span>
                         </div>
                         <div>
-                            @{
-                                if (Model.ProductKeywords == null)
+                            <select class="form-select-lg" multiple asp-for="@Model.KeywordIDs">
+                                @foreach(Models.Keyword keyword in Model.ProductKeywords)
                                 {
-
+                                    <option value="@keyword.ID">@keyword.Name</option>
                                 }
-                                else
-                                {
-                                    int length = Model.ProductKeywords.Count();
-                                    for (int i = 0; i < length; i++)
-                                    {
-                                        @Model.ProductKeywords[i].Name
-                                        <a asp-page-handler="Remove" asp-route-id="@i" class="btn btn-primary" id="btnlight">Fjern</a>
-                                        <input asp-for="@Model.ProductKeywords[i]" hidden />
-                                    }
-                                }
-                            }
+                            </select>
+                            <span asp-validation-for="@Model.KeywordIDs" class="text-danger"></span>
                         </div>
                         @if (Model.Confirmation != null)
                         {

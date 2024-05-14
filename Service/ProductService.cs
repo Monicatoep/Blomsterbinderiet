@@ -15,7 +15,7 @@ namespace Blomsterbinderiet.Service
         /// <summary>
         /// <c>DbService</c> represents a reference to the DbGenericService object handling CRUD calls to the database for the <see cref="Product"/> objects 
         /// </summary>
-        private DbGenericService<Models.Product> DbService { get; set; }
+        private ProductDbService DbService { get; set; }
         public List<Product> Products { get; set; }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Blomsterbinderiet.Service
         /// object of type <see cref="DbGenericService{T=Product}"/> where T is a type of Product
         /// </remarks>
         /// <param name="dbService">Reference to a <see cref="DbGenericService{T=Product}"/> object where T is Product</param>
-        public ProductService(DbGenericService<Product> dbService)
+        public ProductService(ProductDbService dbService)
         {
             DbService = dbService;
         }
@@ -45,6 +45,11 @@ namespace Blomsterbinderiet.Service
         public async Task<Product> GetProductByIdAsync(int id)
         {
             return DbService.GetObjectByIdAsync(id).Result;
+        }
+
+        public async Task<Product?> GetProductIncludingKeywordsByID(int id)
+        {
+            return await DbService.GetProductIncludingKeywordsByID(id);
         }
 
         /// <summary>
@@ -67,6 +72,11 @@ namespace Blomsterbinderiet.Service
             await DbService.UpdateObjectAsync(product);
         }
 
+        public async Task UpdateProductAsync(Product product, IEnumerable<int> idsOfKeywords)
+        {
+            await DbService.UpdateObjectAsync(product, idsOfKeywords);
+        }
+
         /// <summary>
         /// Adds the passed <see cref="Product"/> object to the "Products" entity/table in the database
         /// </summary>
@@ -78,6 +88,11 @@ namespace Blomsterbinderiet.Service
         public async Task AddProductAsync(Product product)
         {
             await DbService.AddObjectAsync(product);
+        }
+
+        public async Task AddProductAsync(Product product, int[] idsOfKeywords)
+        {
+            await DbService.AddProductAsync(product, idsOfKeywords);
         }
 
         /// <summary>
