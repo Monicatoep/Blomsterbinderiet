@@ -17,6 +17,9 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Størst til mindst?")]
         public bool SortDirection { get; set; }
         [BindProperty]
+        [DisplayName("Navn skal indeholde")]
+        public string? SearchString { get; set; }
+        [BindProperty]
         [DisplayName("Farve")]
         public string? Colour { get; set; }
         [BindProperty]
@@ -47,19 +50,6 @@ namespace Blomsterbinderiet.Pages.Product
             Products = Products.OrderBy(p => p.Name);
         }
 
-        public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
-        {
-            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
-
-            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains(keywordName)));
-            Products = Products.Where(p => p.Disabled == false);
-            Products = Products.OrderBy(p => p.Name);
-
-            KeywordNameSearch = keywordName;
-
-            return Page();
-        }
-
         public async Task<IActionResult> OnGetResetAsync()
         {
             SortProperty = null;
@@ -68,19 +58,18 @@ namespace Blomsterbinderiet.Pages.Product
             MinimumPrice = null;
             MaksimumPrice = null;
             ShowDisabled = false;
-            Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
+            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
+            Products = Products.Where(p => p.Disabled == false);
+            Products = Products.OrderBy(p => p.Name);
             return Page();
-        }
-
-        public async Task OnGetSearchStringAsync(string searchString)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Products = await ProductService.GetAllProductsFiltered(Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
+            Products = await ProductService.GetAllProductsFiltered(SearchString, Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
             Products = ProductService.Sort(Products, SortProperty, SortDirection);
+            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
             //Products.OrderBy(p => p.Disabled);
 
             return Page();
@@ -90,7 +79,10 @@ namespace Blomsterbinderiet.Pages.Product
         {
             await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
 
-            Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
+            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
+            Products = Products.Where(p => p.Disabled == false);
+            Products = Products.OrderBy(p => p.Name);
             return Page();
         }
     }

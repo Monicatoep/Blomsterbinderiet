@@ -9,6 +9,9 @@ namespace Blomsterbinderiet.Pages
         private readonly ILogger<IndexModel> _logger;
         public ProductService ProductService;
 
+        [BindProperty]
+        public string SearchString { get; set; }
+
         public IndexModel(ILogger<IndexModel> logger, ProductService productService)
         {
             ProductService = productService;
@@ -18,6 +21,15 @@ namespace Blomsterbinderiet.Pages
         public void OnGet()
         {
 
+        }
+
+        public IActionResult OnPost()
+        {
+            if(SearchString == null)
+            {
+                return Page();
+            }
+            return RedirectToPage("/Product/GetAllProducts", "SearchString", new { searchString = SearchString });
         }
     }
 }
