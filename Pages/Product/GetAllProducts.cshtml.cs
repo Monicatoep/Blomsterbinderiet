@@ -103,6 +103,8 @@ namespace Blomsterbinderiet.Pages.Product
             CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
             Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            Message = $"Tilføjede produkt til kurven";
+            ID = id;
             return Page();
         }
     }

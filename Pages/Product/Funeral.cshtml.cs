@@ -85,6 +85,8 @@ namespace Blomsterbinderiet.Pages.Product
             Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
             Products = Products.Where(p => p.Disabled == false);
             Products = Products.OrderBy(p => p.Name);
+            Message = $"Tilføjede produkt til kurven";
+            ID = id;
             return Page();
         }
     }

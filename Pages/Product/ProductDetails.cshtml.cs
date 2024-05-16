@@ -40,6 +40,7 @@ namespace Blomsterbinderiet.Pages.Product
             CookieService.PlusMany(Request.Cookies, Response.Cookies, ProductID, Amount);
 
             Product = ProductService.GetProductByIdAsync(ProductID).Result;
+            Message = $"Tilføjede {Amount} produkt til kurven";
             return Page();
         }
     }
