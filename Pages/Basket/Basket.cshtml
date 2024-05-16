@@ -9,7 +9,7 @@
             <h1>Kurv</h1>
         </div>
         
-        @if (Model.CookieService.ReadCookieAsync(Request.Cookies).Result != null)
+        @if (Model.OrderLines != null)
         {
         
             <div class="card mb-3">

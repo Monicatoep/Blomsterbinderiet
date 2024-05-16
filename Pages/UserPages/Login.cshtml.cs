@@ -41,7 +41,7 @@ namespace Blomsterbinderiet.Pages.Customer
                 return Page(); 
             }
             
-            ClaimsIdentity identity = await CookieService.Login(await UserService.GetAllUsersAsync(), Email, Password);
+            ClaimsIdentity identity = CookieService.Login(await UserService.GetAllUsersAsync(), Email, Password);
             if(identity != null)
             {
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));

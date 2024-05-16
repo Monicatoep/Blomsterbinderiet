@@ -36,7 +36,7 @@ namespace Blomsterbinderiet.Pages.Product
         //cookies can only store string values
         public async Task<IActionResult> OnPostAsync()
         {
-            await CookieService.PlusMany(Request.Cookies, Response.Cookies, ProductID, Amount);
+            CookieService.PlusMany(Request.Cookies, Response.Cookies, ProductID, Amount);
 
             Product = ProductService.GetProductByIdAsync(ProductID).Result;
             return Page();

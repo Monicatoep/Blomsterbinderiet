@@ -66,7 +66,8 @@ namespace Blomsterbinderiet.Pages.Basket
 
             if (OrderLines.Count() == 0)
             {
-                CookieService.SaveCookieAsync(Response.Cookies, null);
+                OrderLines = null;
+                CookieService.SaveCookie(Response.Cookies, null);
             }
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
@@ -83,7 +84,8 @@ namespace Blomsterbinderiet.Pages.Basket
 
             if(OrderLines.Count() == 0)
             {
-                CookieService.SaveCookieAsync(Response.Cookies, null);
+                OrderLines = null;
+                CookieService.SaveCookie(Response.Cookies, null);
             }
 
             OrderSum = OrderService.GetOrderSum(OrderLines);

@@ -18,7 +18,7 @@ namespace Blomsterbinderiet.Pages.Customer
         public async Task<IActionResult> OnGetAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            CookieService.SaveCookieAsync(Response.Cookies, null);
+            CookieService.SaveCookie(Response.Cookies, null);
             return RedirectToPage("/index");
         }
     }

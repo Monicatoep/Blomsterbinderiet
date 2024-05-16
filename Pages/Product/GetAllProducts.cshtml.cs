@@ -98,7 +98,7 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAddToBasket(int id)
         {
-            await CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
+            CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
             Products = await ProductService.GetAllProductsStandardFilterAndSort();
             return Page();
