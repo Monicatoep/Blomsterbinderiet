@@ -27,7 +27,7 @@ namespace Blomsterbinderiet.Models
 
         public override string ToString()
         {
-            return $"{{{nameof(ID)}={ID.ToString()}, {nameof(DeseasedName)}={DeseasedName}, {nameof(Address)}={Address}}}";
+            return $"{{{nameof(ID)}={ID}, {nameof(DeseasedName)}={DeseasedName}, {nameof(Address)}={Address}}}";
         }
     }
 }

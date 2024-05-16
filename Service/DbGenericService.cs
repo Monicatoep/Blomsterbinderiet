@@ -1,7 +1,5 @@
 ﻿using Blomsterbinderiet.EFDbContext;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Blomsterbinderiet.Service
 {

@@ -61,7 +61,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
             OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
 
-            if (OrderLines.Count() == 0)
+            if (OrderLines.Count == 0)
             {
                 OrderLines = null;
                 CookieService.SaveCookie(Response.Cookies, null);
@@ -79,7 +79,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
             OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
 
-            if(OrderLines.Count() == 0)
+            if(OrderLines.Count == 0)
             {
                 OrderLines = null;
                 CookieService.SaveCookie(Response.Cookies, null);

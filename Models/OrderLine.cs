@@ -37,7 +37,7 @@ namespace Blomsterbinderiet.Models
 
         public override string ToString()
         {
-            return $"{{{nameof(ID)}={ID.ToString()}, {nameof(OrderID)}={OrderID.ToString()}, {nameof(Order)}={Order}, {nameof(ProductID)}={ProductID.ToString()}, {nameof(Product)}={Product}, {nameof(Amount)}={Amount.ToString()}}}";
+            return $"{{{nameof(ID)}={ID}, {nameof(OrderID)}={OrderID}, {nameof(Order)}={Order}, {nameof(ProductID)}={ProductID}, {nameof(Product)}={Product}, {nameof(Amount)}={Amount}}}";
         }
     }
 }

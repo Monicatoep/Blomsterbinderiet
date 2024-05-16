@@ -32,14 +32,14 @@ namespace Blomsterbinderiet.Pages.Basket
         public CheckOutUndertakerModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
         {
             UserService = userService;
-            this.ProductService = productService;
-            this.CookieService = cookieService;
-            this.OrderService = orderService;
+            ProductService = productService;
+            CookieService = cookieService;
+            OrderService = orderService;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            this.User = await UserService.GetUserByHttpContextAsync(HttpContext);
+            User = await UserService.GetUserByHttpContextAsync(HttpContext);
 
             IEnumerable<BasketItem> basketItems = CookieService.ReadCookie(Request.Cookies);
             OrderLines = CookieService.LoadOrderLines(basketItems).ToList();

@@ -1,4 +1,3 @@
-using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

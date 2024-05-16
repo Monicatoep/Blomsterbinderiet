@@ -4,10 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Blomsterbinderiet.Enums;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System.Security.Claims;
-using System.Collections.Immutable;
 
 namespace Blomsterbinderiet.Pages.Admin
 {

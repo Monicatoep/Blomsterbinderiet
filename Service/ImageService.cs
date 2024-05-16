@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using static Azure.Core.HttpHeader;
-
-namespace Blomsterbinderiet.Service
+﻿namespace Blomsterbinderiet.Service
 {
     public class ImageService
     {

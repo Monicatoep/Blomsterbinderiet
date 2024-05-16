@@ -12,7 +12,7 @@ namespace Blomsterbinderiet.Pages.Customer
 
         public LogoutModel(CookieService cookieService)
         {
-            this.CookieService = cookieService;
+            CookieService = cookieService;
         }
 
         public async Task<IActionResult> OnGetAsync()

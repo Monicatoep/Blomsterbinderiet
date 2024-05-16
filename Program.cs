@@ -1,9 +1,7 @@
-
 using Blomsterbinderiet.EFDbContext;
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 

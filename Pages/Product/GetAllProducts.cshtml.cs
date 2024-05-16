@@ -1,12 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Blomsterbinderiet.Models;
-using Blomsterbinderiet.MockData;
 using Blomsterbinderiet.Service;
 using System.ComponentModel;
-using System.Linq.Expressions;
-using Blomsterbinderiet.Migrations;
-using System;
 
 namespace Blomsterbinderiet.Pages.Product
 {

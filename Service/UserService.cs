@@ -1,10 +1,5 @@
-﻿using Blomsterbinderiet.Migrations;
-using Blomsterbinderiet.Models;
+﻿using Blomsterbinderiet.Models;
 using System.Data;
-using System.Net;
-using System.Numerics;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
@@ -117,13 +112,13 @@ namespace Blomsterbinderiet.Service
                    where user.Role == "Employee"
                    select user;
         }
-        public IEnumerable<Models.User> FilterByStatus(string status)
+        public IEnumerable<User> FilterByStatus(string status)
         {
             return from user in Users
                    where user.State == status
                    select user;
         }
-        public IEnumerable<Models.User> FilterByRole(string role)
+        public IEnumerable<User> FilterByRole(string role)
         {
             return from user in Users
                    where user.Role == role
