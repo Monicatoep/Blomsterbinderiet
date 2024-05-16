@@ -39,6 +39,8 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
         public IEnumerable<Models.Product> Products { get; private set; }
+        public string Message { get; set; }
+        public int ID { get; set; }
 
         public GetAllProductsModel(ProductService productService, CookieService cookieService)
         {

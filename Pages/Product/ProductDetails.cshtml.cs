@@ -21,6 +21,7 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         public int ProductID { get; set; }
         public Models.Product Product { get; set; }
+        public string Message { get; set; }
 
         public ProductDetailsModel(ProductService service, CookieService cookieService)
         {
@@ -34,7 +35,7 @@ namespace Blomsterbinderiet.Pages.Product
         }
 
         //cookies can only store string values
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             CookieService.PlusMany(Request.Cookies, Response.Cookies, ProductID, Amount);
 

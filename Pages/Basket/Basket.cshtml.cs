@@ -1,11 +1,7 @@
 using Blomsterbinderiet.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Claims;
-using System.Text.Json;
-using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
-using System;
 
 namespace Blomsterbinderiet.Pages.Basket
 {
@@ -25,7 +21,7 @@ namespace Blomsterbinderiet.Pages.Basket
             this.OrderService = orderService;
         }
 
-        public async Task OnGetAsync()
+        public IActionResult OnGet()
         {
             if (CookieService.ReadCookie(Request.Cookies) == null)
             {
@@ -45,9 +41,10 @@ namespace Blomsterbinderiet.Pages.Basket
             }
             
             OrderSum = OrderService.GetOrderSum(OrderLines);
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostPlusAsync(int id)
+        public IActionResult OnPostPlus(int id)
         {
             IEnumerable<BasketItem> basketItems = CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
@@ -58,7 +55,7 @@ namespace Blomsterbinderiet.Pages.Basket
             return Page();
         }
 
-        public async Task<IActionResult> OnPostMinusAsync(int id)
+        public IActionResult OnPostMinusAsync(int id)
         {
             IEnumerable<BasketItem> basketItems = CookieService.MinusOne(Request.Cookies, Response.Cookies, id);
 

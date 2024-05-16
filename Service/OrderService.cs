@@ -33,27 +33,26 @@ namespace Blomsterbinderiet.Service
         public async Task<List<Models.Order>> GetAllOrdersAsync()
 
         {
-            Orders = DbService.GetObjectsAsync().Result.ToList();
+            Orders = (await DbService.GetObjectsAsync()).ToList();
             List<Models.Order> orders = Orders;
             return orders;
         }
         public async Task<List<Models.Order>> GetAllOrdersWeekAsync()
 
         {
-            Orders = DbService.GetObjectsAsync().Result.ToList();
+            Orders = (await DbService.GetObjectsAsync()).ToList();
             List<Models.Order> orders = (from order in Orders
                                          where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate>=DateTime.Now
                                          select order).ToList();
             return orders;
         }
 
-        public async Task<Models.Order> GetOrderByIdAsync(int id)
+        public async Task<Models.Order?> GetOrderByIdAsync(int id)
         {
-           Models.Order order = await DbService.GetObjectByIdAsync(id);
-            return order;
+            return await DbService.GetObjectByIdAsync(id);
         }
 
-        public async Task<Models.Delivery> GetDeliveryByOrderIdAsync(int id)
+        public async Task<Models.Delivery?> GetDeliveryByOrderIdAsync(int id)
         {
             return await DeliveryDbService.GetObjectByIdAsync(id);
         }
@@ -88,7 +87,7 @@ namespace Blomsterbinderiet.Service
 
             foreach (OrderLine orderLine in orderLines)
             {
-                orderSum = orderSum + (ProductService.GetProductByIdAsync(orderLine.ProductID).Result.Price * orderLine.Amount);
+                orderSum = orderSum + ((await ProductService.GetProductByIdAsync(orderLine.ProductID)).Price * orderLine.Amount);
             }
             return orderSum;
         }

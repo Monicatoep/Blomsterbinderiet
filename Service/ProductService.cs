@@ -43,9 +43,9 @@ namespace Blomsterbinderiet.Service
         /// exists in the database then a null object is returned
         /// </remarks>
         /// 
-        public async Task<Product> GetProductByIdAsync(int id)
+        public async Task<Product?> GetProductByIdAsync(int id)
         {
-            return DbService.GetObjectByIdAsync(id).Result;
+            return await DbService.GetObjectByIdAsync(id);
         }
 
         public async Task<Product?> GetProductIncludingKeywordsByID(int id)

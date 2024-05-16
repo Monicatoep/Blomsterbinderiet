@@ -22,23 +22,22 @@ namespace Blomsterbinderiet.Service
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            Users = DbService.GetObjectsAsync().Result.ToList();
+            Users = (await DbService.GetObjectsAsync()).ToList();
             return Users;
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<User?> GetUserByIdAsync(int id)
         {
             User user = await DbService.GetObjectByIdAsync(id);
             return user;
         }
 
-        public async Task<User> GetUserByIdAsync(string id)
+        public async Task<User?> GetUserByIdAsync(string id)
         {
-            User user = await DbService.GetObjectByIdAsync(Convert.ToInt32(id));
-            return user;
+            return await DbService.GetObjectByIdAsync(Convert.ToInt32(id));
         }
 
-        public User GetUserByEmail(string email)
+        public User? GetUserByEmail(string email)
         {
             foreach (User u in Users)
             {
@@ -92,7 +91,7 @@ namespace Blomsterbinderiet.Service
                    select user;
         }
 
-        public async Task<User> GetUserByHttpContextAsync(HttpContext context)
+        public async Task<User?> GetUserByHttpContextAsync(HttpContext context)
         {
             if (context.User.Identity.IsAuthenticated)
             {
