@@ -22,8 +22,6 @@ namespace Blomsterbinderiet.Pages.Product
         public int ProductID { get; set; }
         public Models.Product Product { get; set; }
 
-        public string Message { get; set; }
-
         public ProductDetailsModel(ProductService service, CookieService cookieService)
         {
             this.ProductService = service;
@@ -38,12 +36,9 @@ namespace Blomsterbinderiet.Pages.Product
         //cookies can only store string values
         public async Task<IActionResult> OnPostAsync()
         {
-            await CookieService.PlusManyAsync(Request.Cookies, Response.Cookies, ProductID, Amount);
+            await CookieService.PlusMany(Request.Cookies, Response.Cookies, ProductID, Amount);
 
             Product = ProductService.GetProductByIdAsync(ProductID).Result;
-            
-            Message = "Tilføjet til kurv";
-
             return Page();
         }
     }

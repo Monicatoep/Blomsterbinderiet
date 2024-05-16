@@ -27,17 +27,17 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public async Task OnGetAsync()
         {
-            if (await CookieService.ReadCookieAsync(Request.Cookies) == null)
+            if (CookieService.ReadCookie(Request.Cookies) == null)
             {
                 BasketItems = null;
                 OrderLines = new List<OrderLine>();
             }
             else
             {
-                BasketItems = await CookieService.ReadCookieAsync(Request.Cookies);
+                BasketItems = CookieService.ReadCookie(Request.Cookies);
                 if(BasketItems != null)
                 {
-                    OrderLines = CookieService.LoadOrderLinesAsync(BasketItems).Result.ToList();
+                    OrderLines = CookieService.LoadOrderLines(BasketItems).ToList();
                 } else
                 {
                     OrderLines = new List<OrderLine>();
@@ -49,9 +49,9 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public async Task<IActionResult> OnPostPlusAsync(int id)
         {
-            IEnumerable<BasketItem> basketItems = await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
+            IEnumerable<BasketItem> basketItems = CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
             
@@ -60,9 +60,9 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public async Task<IActionResult> OnPostMinusAsync(int id)
         {
-            IEnumerable<BasketItem> basketItems = await CookieService.MinusOneAsync(Request.Cookies, Response.Cookies, id);
+            IEnumerable<BasketItem> basketItems = CookieService.MinusOne(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
 
             if (OrderLines.Count() == 0)
             {
@@ -79,7 +79,7 @@ namespace Blomsterbinderiet.Pages.Basket
         {
             IEnumerable<BasketItem> basketItems = CookieService.Remove(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
 
             if(OrderLines.Count() == 0)
             {
