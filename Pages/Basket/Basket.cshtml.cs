@@ -12,7 +12,7 @@ namespace Blomsterbinderiet.Pages.Basket
     public class BasketModel : PageModel
     {
         private ProductService ProductService { get; set; }
-        private CookieService CookieService { get; set; }
+        public CookieService CookieService { get; set; }
         private OrderService OrderService { get; set; }
         public ICollection<BasketItem> BasketItems { get; set; }
         public List<OrderLine> OrderLines { get; set; }
@@ -64,7 +64,13 @@ namespace Blomsterbinderiet.Pages.Basket
 
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
+            if (OrderLines.Count() == 0)
+            {
+                CookieService.SaveCookieAsync(Response.Cookies, null);
+            }
+
             OrderSum = OrderService.GetOrderSum(OrderLines);
+
 
             return Page();
         }
@@ -74,6 +80,11 @@ namespace Blomsterbinderiet.Pages.Basket
             IEnumerable<BasketItem> basketItems = CookieService.Remove(Request.Cookies, Response.Cookies, id);
 
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+
+            if(OrderLines.Count() == 0)
+            {
+                CookieService.SaveCookieAsync(Response.Cookies, null);
+            }
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
 
