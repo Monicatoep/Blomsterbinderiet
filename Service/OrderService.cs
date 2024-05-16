@@ -63,20 +63,20 @@ namespace Blomsterbinderiet.Service
             await DbService.UpdateObjectAsync(order);
         }
 
-        //public double GetOrderSum1(IEnumerable<OrderLine> orderLines)
-        //{
-        //    double orderSum = 0;
-        //    if (orderLines == null)
-        //    {
-        //        return orderSum; 
-        //    }
-            
-        //    foreach (OrderLine orderLine in orderLines)
-        //    {
-        //        orderSum += orderLine.Product.Price * orderLine.Amount;
-        //    }
-        //    return orderSum;
-        //}
+        public double GetOrderSum(IEnumerable<OrderLine> orderLines)
+        {
+            double orderSum = 0;
+            if (orderLines == null)
+            {
+                return orderSum;
+            }
+
+            foreach (OrderLine orderLine in orderLines)
+            {
+                orderSum += orderLine.Product.Price * orderLine.Amount;
+            }
+            return orderSum;
+        }
 
         public async Task<double> GetOrderSumAsync(IEnumerable<OrderLine> orderLines)
         {
