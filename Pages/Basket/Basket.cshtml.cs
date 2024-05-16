@@ -44,7 +44,7 @@ namespace Blomsterbinderiet.Pages.Basket
                 }
             }
             
-            OrderSum = OrderService.GetOrderSum(OrderLines);
+            OrderSum = OrderService.GetOrderSumAsync(OrderLines);
         }
 
         public async Task<IActionResult> OnPostPlusAsync(int id)
@@ -53,7 +53,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
-            OrderSum = OrderService.GetOrderSum(OrderLines);
+            OrderSum = OrderService.GetOrderSumAsync(OrderLines);
             
             return Page();
         }
@@ -64,7 +64,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
-            OrderSum = OrderService.GetOrderSum(OrderLines);
+            OrderSum = OrderService.GetOrderSumAsync(OrderLines);
 
             return Page();
         }
@@ -75,7 +75,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
 
-            OrderSum = OrderService.GetOrderSum(OrderLines);
+            OrderSum = OrderService.GetOrderSumAsync(OrderLines);
 
             return Page();
         }

@@ -63,22 +63,22 @@ namespace Blomsterbinderiet.Service
             await DbService.UpdateObjectAsync(order);
         }
 
-        public double GetOrderSum(IEnumerable<OrderLine> orderLines)
-        {
-            double orderSum = 0;
-            if (orderLines == null)
-            {
-                return orderSum; 
-            }
+        //public double GetOrderSum1(IEnumerable<OrderLine> orderLines)
+        //{
+        //    double orderSum = 0;
+        //    if (orderLines == null)
+        //    {
+        //        return orderSum; 
+        //    }
             
-            foreach (OrderLine orderLine in orderLines)
-            {
-                orderSum += orderLine.Product.Price * orderLine.Amount;
-            }
-            return orderSum;
-        }
+        //    foreach (OrderLine orderLine in orderLines)
+        //    {
+        //        orderSum += orderLine.Product.Price * orderLine.Amount;
+        //    }
+        //    return orderSum;
+        //}
 
-        public async Task<double> GetOrderSum2(IEnumerable<OrderLine> orderLines)
+        public async Task<double> GetOrderSumAsync(IEnumerable<OrderLine> orderLines)
         {
             double orderSum = 0;
             if (orderLines == null)
@@ -286,7 +286,7 @@ namespace Blomsterbinderiet.Service
                    select order;
         } 
 
-        public async Task <IEnumerable<Models.OrderLine>> Test(int id)
+        public async Task <IEnumerable<Models.OrderLine>> GetOrderlinesByOrderIdAsync(int id)
         {
             OrderLines = (await OrderlineService.GetObjectsAsync()).ToList();
             return from orderLine in OrderLines

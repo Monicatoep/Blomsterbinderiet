@@ -43,7 +43,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
             IEnumerable<BasketItem> basketItems = CookieService.ReadCookieAsync(Request.Cookies).Result;
             OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
-            OrderSum = OrderService.GetOrderSum(OrderLines);
+            OrderSum = OrderService.GetOrderSumAsync(OrderLines);
             return Page();
         }
 
