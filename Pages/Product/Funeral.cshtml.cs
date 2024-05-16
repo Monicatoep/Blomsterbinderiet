@@ -34,6 +34,8 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
+        public string Message { get; set; }
+        public int ID { get; set; }
         public IEnumerable<Models.Product> Products { get; private set; }
 
         public FuneralModel(ProductService productService, CookieService cookieService)
@@ -83,6 +85,9 @@ namespace Blomsterbinderiet.Pages.Product
             Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
             Products = Products.Where(p => p.Disabled == false);
             Products = Products.OrderBy(p => p.Name);
+
+            Message = "Tilføjet til kurv";
+            ID = id;
             return Page();
         }
     }

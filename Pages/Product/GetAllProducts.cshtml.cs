@@ -38,6 +38,8 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
+        public string Message { get; set; }
+        public int ID { get; set; }
         public IEnumerable<Models.Product> Products { get; private set; }
 
         public GetAllProductsModel(ProductService productService, CookieService cookieService)
@@ -101,6 +103,8 @@ namespace Blomsterbinderiet.Pages.Product
             await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
 
             Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            Message = "Tilføjet til kurv";
+            ID = id;
             return Page();
         }
     }
