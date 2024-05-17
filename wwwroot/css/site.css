@@ -42,7 +42,6 @@ body {
 }
 
 #product-detail-card {
-    /*background-color: #A7A0BC;*/
     background-color: #A0BF91;
     color: white;
     margin-bottom: 20px;
@@ -62,7 +61,6 @@ body {
     background-color: #f7f7f7;
     border: solid;
 }
-
 
 #btnlight {
     background-color: #F4EBE8;

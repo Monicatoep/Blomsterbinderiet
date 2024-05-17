@@ -11,6 +11,7 @@ namespace Blomsterbinderiet.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         [Required]
         public int CustomerID { get; set; }
         public User Customer { get; set; }
@@ -22,7 +23,6 @@ namespace Blomsterbinderiet.Models
         public DateTime? CompletedDate { get; set; }
         public DateTime PickUpDate { get; set; }
         public string? CommentShop { get; set; }
-        //public ICollection<OrderLine> OrderLines { get; set; }
         public Status OrderStatus { get; set; }
 
         public Order(User customer, DateTime orderDate, DateTime PickUpTime)

@@ -59,7 +59,6 @@ namespace Blomsterbinderiet.Pages.Admin
         }
         #endregion
 
-
         public IActionResult OnGetFilterByStatus(string status)
         {
             Users = UserService.FilterByStatus(status).ToList();

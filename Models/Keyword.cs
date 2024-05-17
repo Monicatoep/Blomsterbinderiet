@@ -8,8 +8,10 @@ namespace Blomsterbinderiet.Models
         [Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int ID { get; set; }
+
         [Required(ErrorMessage = "Du skal indtaste et navn")]
         public string Name { get; set; }
+
         public ICollection<Product>? Products { get; set; }
 
 		public Keyword()

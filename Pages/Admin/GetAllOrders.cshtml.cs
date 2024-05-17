@@ -84,6 +84,7 @@ namespace Blomsterbinderiet.Pages.Admin
             MyOrders = OrderService.SortByEmployee().ToList();
             return Page();
         }
+
         public IActionResult OnGetSortByEmployeeDes()
         {
             MyOrders = OrderService.SortByEmployeeDes().ToList();

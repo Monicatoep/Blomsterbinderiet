@@ -10,6 +10,7 @@ namespace Blomsterbinderiet.Pages.Admin
     public class GetAllKeywordsModel : PageModel
     { 
         public KeywordService KeywordService { get; set; }
+        
         public IEnumerable<Keyword> Keywords { get; set; }
 
         public GetAllKeywordsModel(KeywordService keywordService)
@@ -21,6 +22,5 @@ namespace Blomsterbinderiet.Pages.Admin
         {
             Keywords = KeywordService.GetAllKeywordsAsync().Result.ToList();
         }
-
     }
 }

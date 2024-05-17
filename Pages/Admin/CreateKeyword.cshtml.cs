@@ -11,6 +11,7 @@ namespace Blomsterbinderiet.Pages.Admin
     public class CreateKeywordModel : PageModel
     {
         public KeywordService KeywordService { get; set; }
+        
         public IEnumerable<Keyword> Keywords { get; set; }
 
         [BindProperty]

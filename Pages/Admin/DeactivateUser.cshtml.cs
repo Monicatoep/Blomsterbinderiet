@@ -10,7 +10,8 @@ namespace Blomsterbinderiet.Pages.Admin
     public class DeactivateUserModel : PageModel
     {
 		private UserService UserService { get; set; }
-        [BindProperty]
+        
+		[BindProperty]
         public User User { get; set; }
 
         public DeactivateUserModel(UserService userService)

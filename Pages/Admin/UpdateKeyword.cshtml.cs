@@ -37,7 +37,5 @@ namespace Blomsterbinderiet.Pages.Admin
             Confirmation = "Opdaterede produktet";
             return Page();
         }
-
-
     }
 }
