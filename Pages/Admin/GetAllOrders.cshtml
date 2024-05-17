@@ -16,7 +16,7 @@
                             <thead>
                                 <tr class="btn-secondary table-success active">
                                     <th>Ordre ID</th>
-                                    <th>Kunde ID</th>
+                                    <th>Kunde Navn</th>
                                     <th>
                                         <div class="nav-item dropdown">
                                             <button type="button" data-toggle="dropdown">
@@ -97,7 +97,7 @@
                                                 @order.Id
                                             </td>
                                             <td>
-                                                @order.CustomerID
+                                                @Model.UserService.GetUserByIdAsync(Convert.ToInt32(order.CustomerID)).Result.Name
                                             </td>
                                             <td>
                                                 @if (order.EmployeeID != null)

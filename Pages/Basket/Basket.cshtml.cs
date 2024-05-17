@@ -41,7 +41,7 @@ namespace Blomsterbinderiet.Pages.Basket
             return Page();
         }
 
-        public IActionResult OnPostMinusAsync(int id)
+        public IActionResult OnPostMinus(int id)
         {
             IEnumerable<BasketItem> basketItems = CookieService.MinusOne(Request.Cookies, Response.Cookies, id);
 

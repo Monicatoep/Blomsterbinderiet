@@ -8,7 +8,7 @@ namespace Blomsterbinderiet.Pages.Admin
     [Authorize(Roles = "Admin")]
     public class GetAllKeywordsModel : PageModel
     { 
-        public KeywordService KeywordService { get; set; }
+        private KeywordService KeywordService { get; set; }
         
         public IEnumerable<Keyword> Keywords { get; set; }
 
