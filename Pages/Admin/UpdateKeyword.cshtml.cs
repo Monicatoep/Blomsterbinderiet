@@ -9,21 +9,21 @@ namespace Blomsterbinderiet.Pages.Admin
     [Authorize(Roles = "Admin")]
     public class UpdateKeywordModel : PageModel
     {
+        private KeywordService KeywordService { get; set; }
+
         [BindProperty]
         public Keyword Keyword { get; set; }
 
         public string Confirmation { get; set; }
-
-        public KeywordService KeywordService { get; set; }
 
         public UpdateKeywordModel(KeywordService keywordService)
         {
             KeywordService = keywordService;
         }
 
-        public void OnGet(int id)
+        public async Task OnGetAsync(int id)
         {
-            Keyword = KeywordService.GetKeywordByIdAsync(id).Result;
+            Keyword = await KeywordService.GetKeywordByIdAsync(id);
         }
 
         public async Task<IActionResult> OnPostAsync()

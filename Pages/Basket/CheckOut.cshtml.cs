@@ -20,7 +20,6 @@ namespace Blomsterbinderiet.Pages.Basket
         [Required(ErrorMessage = "Der skal angives et afhentningsstidspunkt")]
         [BindProperty]
         public DateTime PickUpDate { get; set; }
-        public string? Address { get; set; }
 
         public CheckOutModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
         {

@@ -8,7 +8,7 @@ namespace Blomsterbinderiet.Pages.Admin
     [Authorize(Roles = "Admin")]
     public class DeleteKeywordModel : PageModel
     {
-        public KeywordService KeywordService { get; set; }
+        private KeywordService KeywordService { get; set; }
 
         [BindProperty]
         public Models.Keyword Keyword { get; set; }
