@@ -83,7 +83,7 @@
                                 var product = Model.Products.ElementAt(i);
                                 string cardClass = product.Disabled ? "card card-body disabled-product" : "card card-body";
                                 <div class="col">
-                                    <div class="@cardClass" id="productcard">
+                                    <div class="@cardClass">
                                         <h5 class="card-title">@product.Name</h5>
                                         @{
                                             if (product.Image != null)
