@@ -16,6 +16,20 @@ namespace Blomsterbinderiet.Service
             }
         }
 
+        public async Task<IEnumerable<Product>> GetObjectsAsync(string? include)
+        {
+            using (var context = new BlomstDbContext())
+            {
+                var query = context.Set<Product>().AsNoTracking();
+
+                if (include != null)
+                {
+                    query = query.Include(include);
+                }
+                return await query.ToListAsync();
+            }
+        }
+
         public async Task AddProductAsync(Product product, int[] idsOfKeywords)
         {
             using (var context = new BlomstDbContext())
