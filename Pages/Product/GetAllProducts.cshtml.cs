@@ -13,7 +13,7 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Sorter efter")]
         public string? SortProperty { get; set; }
         [BindProperty]
-        [DisplayName("Navn skal indeholde")]
+        [DisplayName("Søg på navn")]
         public string? SearchString { get; set; }
         [BindProperty]
         [DisplayName("Størst til mindst?")]
@@ -77,10 +77,15 @@ namespace Blomsterbinderiet.Pages.Product
         {
             Products = await ProductService.GetAllProductsStandardFilterAndSort();
             SearchString = searchString;
+            Colour = searchString;
             searchString = searchString.ToLower();
             //set Products to only contain where either product name or searchString is part of one another
-            Products = Products.Where(p => p.Name.ToLower().Contains(searchString) || searchString.Contains(p.Name.ToLower()));
-
+            Products = Products.Where(p => 
+                p.Name.ToLower().Contains(searchString) || 
+                searchString.Contains(p.Name.ToLower()) ||
+                p.Colour.ToLower().Contains(searchString) || 
+                searchString.Contains(p.Colour.ToLower())
+                );
             return Page();
         }
 
