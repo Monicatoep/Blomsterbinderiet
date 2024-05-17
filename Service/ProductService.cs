@@ -111,7 +111,7 @@ namespace Blomsterbinderiet.Service
         /// <returns>A task object representing the re-enable operation</returns>
 		public async Task ReenableProductAsync(int id)
 		{
-			Product productToBeReenabled = DbService.GetObjectByIdAsync(id).Result;
+			Product productToBeReenabled = await DbService.GetObjectByIdAsync(id);
 			productToBeReenabled.Disabled = false;
 			await DbService.UpdateObjectAsync(productToBeReenabled);
             Products = (await GetAllProductsAsync()).ToList();
