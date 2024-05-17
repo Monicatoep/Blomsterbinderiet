@@ -1,7 +1,5 @@
-using Blomsterbinderiet.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
@@ -41,7 +39,7 @@ namespace Blomsterbinderiet.Pages.Customer
                 return Page(); 
             }
             
-            ClaimsIdentity identity = await CookieService.LoginAsync(await UserService.GetAllUsersAsync(), Email, Password);
+            ClaimsIdentity identity = CookieService.Login(await UserService.GetAllUsersAsync(), Email, Password);
             if(identity != null)
             {
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));

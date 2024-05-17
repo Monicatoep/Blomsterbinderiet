@@ -36,6 +36,12 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary mb-2 mt-2" id="btnyellow">Tilføj til kurv</button>
                             </form>
+                            @if(Model.Message!=null)
+                            {
+                                <div>
+                                    @Model.Message
+                                </div>
+                            }
                         }
                         @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
                         {

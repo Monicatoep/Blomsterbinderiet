@@ -1,10 +1,5 @@
-﻿using Blomsterbinderiet.Migrations;
-using Blomsterbinderiet.Models;
+﻿using Blomsterbinderiet.Models;
 using System.Data;
-using System.Net;
-using System.Numerics;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace Blomsterbinderiet.Service
@@ -22,23 +17,22 @@ namespace Blomsterbinderiet.Service
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            Users = DbService.GetObjectsAsync().Result.ToList();
+            Users = (await DbService.GetObjectsAsync()).ToList();
             return Users;
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<User?> GetUserByIdAsync(int id)
         {
             User user = await DbService.GetObjectByIdAsync(id);
             return user;
         }
 
-        public async Task<User> GetUserByIdAsync(string id)
+        public async Task<User?> GetUserByIdAsync(string id)
         {
-            User user = await DbService.GetObjectByIdAsync(Convert.ToInt32(id));
-            return user;
+            return await DbService.GetObjectByIdAsync(Convert.ToInt32(id));
         }
 
-        public User GetUserByEmail(string email)
+        public User? GetUserByEmail(string email)
         {
             foreach (User u in Users)
             {
@@ -92,7 +86,7 @@ namespace Blomsterbinderiet.Service
                    select user;
         }
 
-        public async Task<User> GetUserByHttpContextAsync(HttpContext context)
+        public async Task<User?> GetUserByHttpContextAsync(HttpContext context)
         {
             if (context.User.Identity.IsAuthenticated)
             {
@@ -118,13 +112,13 @@ namespace Blomsterbinderiet.Service
                    where user.Role == "Employee"
                    select user;
         }
-        public IEnumerable<Models.User> FilterByStatus(string status)
+        public IEnumerable<User> FilterByStatus(string status)
         {
             return from user in Users
                    where user.State == status
                    select user;
         }
-        public IEnumerable<Models.User> FilterByRole(string role)
+        public IEnumerable<User> FilterByRole(string role)
         {
             return from user in Users
                    where user.Role == role

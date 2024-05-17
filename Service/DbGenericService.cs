@@ -1,7 +1,5 @@
 ﻿using Blomsterbinderiet.EFDbContext;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Blomsterbinderiet.Service
 {
@@ -25,7 +23,7 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task<T> GetObjectByIdAsync(int id)
+        public async Task<T?> GetObjectByIdAsync(int id)
         {
             using (var context = new BlomstDbContext())
             {
@@ -41,17 +39,15 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task SaveObjectsAsync(List<T> objs)
+        public async Task SaveObjectsAsync(IEnumerable<T> objs)
         {
             using (var context = new BlomstDbContext())
             {
                 foreach (T obj in objs)
                 {
                     context.Set<T>().Add(obj);
-                    context.SaveChanges();
                 }
-
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 

@@ -30,14 +30,13 @@ namespace Blomsterbinderiet.Service
         {
             using (var context = new BlomstDbContext())
             {
-                //get the correct product including its tags (dont add asnotracking)
-                Product tempProduct = await context.Set<Product>().Include(p => p.Keywords).FirstAsync(p => p.ID == product.ID);
+                //start tasks
+                Task<Product> productTask = context.Set<Product>().Include(p => p.Keywords).FirstAsync(p => p.ID == product.ID);
+                Task<List<Keyword>> keywordsTask = context.Set<Keyword>().Where(k => idsOfKeywords.Contains(k.ID)).ToListAsync();
 
+                Product tempProduct = await productTask;
                 //remove all of its keywords
                 tempProduct.Keywords.Clear();
-
-                //add the new keywords
-                tempProduct.Keywords = (await context.Set<Keyword>().Where(k => idsOfKeywords.Contains(k.ID)).ToListAsync());
 
                 //pass the values from product from the parameter to the product being tracked
                 tempProduct.Colour = product.Colour;
@@ -48,6 +47,9 @@ namespace Blomsterbinderiet.Service
                 {
                     tempProduct.Image = product.Image;
                 }
+
+                //add the new keywords
+                tempProduct.Keywords = await keywordsTask;
 
                 //update and save
                 context.Set<Product>().Update(tempProduct);

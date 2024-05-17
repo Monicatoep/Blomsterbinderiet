@@ -32,10 +32,9 @@ namespace Blomsterbinderiet.Service
             return keywordToBeDeleted;
         }
 
-        public async Task<Keyword> GetKeywordByIdAsync(int id)
+        public async Task<Keyword?> GetKeywordByIdAsync(int id)
         {
-            Keyword keyword = await KeywordsDbService.GetObjectByIdAsync(id);
-            return keyword;
+            return await KeywordsDbService.GetObjectByIdAsync(id);
         }
 
         public async Task UpdateKeywordAsync(Keyword keyword)

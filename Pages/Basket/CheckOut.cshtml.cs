@@ -1,11 +1,9 @@
-using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 
 namespace Blomsterbinderiet.Pages.Basket
 {
@@ -27,36 +25,36 @@ namespace Blomsterbinderiet.Pages.Basket
         public CheckOutModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
         {
             UserService = userService;
-            this.ProductService = productService;
-            this.CookieService = cookieService;
-            this.OrderService = orderService;
+            ProductService = productService;
+            CookieService = cookieService;
+            OrderService = orderService;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            this.User = await UserService.GetUserByHttpContextAsync(HttpContext);
+            User = await UserService.GetUserByHttpContextAsync(HttpContext);
           
-            IEnumerable<BasketItem> basketItems = CookieService.ReadCookieAsync(Request.Cookies).Result;
-            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+            IEnumerable<BasketItem> basketItems = CookieService.ReadCookie(Request.Cookies);
+            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
             OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            IEnumerable<BasketItem> basketItems = await CookieService.ReadCookieAsync(Request.Cookies);
+            IEnumerable<BasketItem> basketItems = CookieService.ReadCookie(Request.Cookies);
             if (!ModelState.IsValid)
             {
                 User = await UserService.GetUserByHttpContextAsync(HttpContext);
-                OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+                OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
                 return Page();
             }
             User = await UserService.GetUserByHttpContextAsync(HttpContext);
-            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
 
             await OrderService.CreateNewOrderAsync(User, PickUpDate, OrderLines);
           
-            await CookieService.SaveCookieAsync(Response.Cookies, null);
+            CookieService.SaveCookie(Response.Cookies, null);
             return RedirectToPage("/Basket/Confirmation");
         }
     }

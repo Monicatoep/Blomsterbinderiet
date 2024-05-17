@@ -1,13 +1,7 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Claims;
 using Blomsterbinderiet.Service;
-using Blomsterbinderiet.Models;
-using System.Text.Json;
 using System.ComponentModel;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Blomsterbinderiet.Pages.Product
 {
@@ -21,6 +15,7 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         public int ProductID { get; set; }
         public Models.Product Product { get; set; }
+        public string Message { get; set; }
 
         public ProductDetailsModel(ProductService service, CookieService cookieService)
         {
@@ -34,11 +29,12 @@ namespace Blomsterbinderiet.Pages.Product
         }
 
         //cookies can only store string values
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
-            await CookieService.PlusManyAsync(Request.Cookies, Response.Cookies, ProductID, Amount);
+            CookieService.PlusMany(Request.Cookies, Response.Cookies, ProductID, Amount);
 
             Product = ProductService.GetProductByIdAsync(ProductID).Result;
+            Message = $"Tilføjede {Amount} produkt til kurven";
             return Page();
         }
     }

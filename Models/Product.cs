@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace Blomsterbinderiet.Models
 {
@@ -54,7 +52,7 @@ namespace Blomsterbinderiet.Models
 
 		public override string ToString()
 		{
-			return $"{{{nameof(ID)}={ID.ToString()}, {nameof(Name)}={Name}, {nameof(Description)}={Description}, {nameof(Price)}={Price.ToString()}, {nameof(Image)}={Image}, {nameof(Keywords)}={Keywords}, {nameof(Colour)}={Colour}}}";
+			return $"{{{nameof(ID)}={ID}, {nameof(Name)}={Name}, {nameof(Description)}={Description}, {nameof(Price)}={Price}, {nameof(Image)}={Image}, {nameof(Keywords)}={Keywords}, {nameof(Colour)}={Colour}}}";
 		}
 	}
 }

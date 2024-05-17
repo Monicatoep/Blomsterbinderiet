@@ -1,18 +1,14 @@
 using Blomsterbinderiet.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Claims;
-using System.Text.Json;
-using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
-using System;
 
 namespace Blomsterbinderiet.Pages.Basket
 {
     public class BasketModel : PageModel
     {
-        //private ProductService ProductService { get; set; }
-        private CookieService CookieService { get; set; }
+        private ProductService ProductService { get; set; }
+        public CookieService CookieService { get; set; }
         private OrderService OrderService { get; set; }
         public ICollection<BasketItem> BasketItems { get; set; }
         public List<OrderLine> OrderLines { get; set; }
@@ -25,19 +21,19 @@ namespace Blomsterbinderiet.Pages.Basket
             this.OrderService = orderService;
         }
 
-        public async Task OnGetAsync()
+        public IActionResult OnGet()
         {
-            if (await CookieService.ReadCookieAsync(Request.Cookies) == null)
+            if (CookieService.ReadCookie(Request.Cookies) == null)
             {
                 BasketItems = null;
                 OrderLines = new List<OrderLine>();
             }
             else
             {
-                BasketItems = await CookieService.ReadCookieAsync(Request.Cookies);
+                BasketItems = CookieService.ReadCookie(Request.Cookies);
                 if(BasketItems != null)
                 {
-                    OrderLines = CookieService.LoadOrderLinesAsync(BasketItems).Result.ToList();
+                    OrderLines = CookieService.LoadOrderLines(BasketItems).ToList();
                 } else
                 {
                     OrderLines = new List<OrderLine>();
@@ -45,26 +41,34 @@ namespace Blomsterbinderiet.Pages.Basket
             }
             
             OrderSum = OrderService.GetOrderSum(OrderLines);
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostPlusAsync(int id)
+        public IActionResult OnPostPlus(int id)
         {
-            IEnumerable<BasketItem> basketItems = await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
+            IEnumerable<BasketItem> basketItems = CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
             
             return Page();
         }
 
-        public async Task<IActionResult> OnPostMinusAsync(int id)
+        public IActionResult OnPostMinusAsync(int id)
         {
-            IEnumerable<BasketItem> basketItems = await CookieService.MinusOneAsync(Request.Cookies, Response.Cookies, id);
+            IEnumerable<BasketItem> basketItems = CookieService.MinusOne(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
+
+            if (OrderLines.Count == 0)
+            {
+                OrderLines = null;
+                CookieService.SaveCookie(Response.Cookies, null);
+            }
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
+
 
             return Page();
         }
@@ -73,7 +77,13 @@ namespace Blomsterbinderiet.Pages.Basket
         {
             IEnumerable<BasketItem> basketItems = CookieService.Remove(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLinesAsync(basketItems).Result.ToList();
+            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
+
+            if(OrderLines.Count == 0)
+            {
+                OrderLines = null;
+                CookieService.SaveCookie(Response.Cookies, null);
+            }
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
 

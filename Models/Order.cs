@@ -1,8 +1,6 @@
-﻿using Blomsterbinderiet.Pages.Customer;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Blomsterbinderiet.Enums;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Blomsterbinderiet.Models
 {
@@ -42,7 +40,7 @@ namespace Blomsterbinderiet.Models
 
         public override string ToString()
         {
-            return $"{{{nameof(Id)}={Id.ToString()}, {nameof(CustomerID)}={CustomerID.ToString()}, {nameof(Customer)}={Customer}, {nameof(EmployeeID)}={EmployeeID.ToString()}, {nameof(Employee)}={Employee}, {nameof(DeliveryId)}={DeliveryId.ToString()}, {nameof(Delivery)}={Delivery}, {nameof(OrderDate)}={OrderDate.ToString()}, {nameof(CompletedDate)}={CompletedDate.ToString()}, {nameof(PickUpDate)}={PickUpDate.ToString()}, {nameof(CommentShop)}={CommentShop}, {nameof(OrderStatus)}={OrderStatus.ToString()}}}";
+            return $"{{{nameof(Id)}={Id}, {nameof(CustomerID)}={CustomerID}, {nameof(Customer)}={Customer}, {nameof(EmployeeID)}={EmployeeID}, {nameof(Employee)}={Employee}, {nameof(DeliveryId)}={DeliveryId}, {nameof(Delivery)}={Delivery}, {nameof(OrderDate)}={OrderDate}, {nameof(CompletedDate)}={CompletedDate}, {nameof(PickUpDate)}={PickUpDate}, {nameof(CommentShop)}={CommentShop}, {nameof(OrderStatus)}={OrderStatus}}}";
         }
     }
 }

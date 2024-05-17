@@ -1,12 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Blomsterbinderiet.Models;
-using Blomsterbinderiet.MockData;
 using Blomsterbinderiet.Service;
 using System.ComponentModel;
-using System.Linq.Expressions;
-using Blomsterbinderiet.Migrations;
-using System;
 
 namespace Blomsterbinderiet.Pages.Product
 {
@@ -39,6 +34,8 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
         public IEnumerable<Models.Product> Products { get; private set; }
+        public string Message { get; set; }
+        public int ID { get; set; }
 
         public GetAllProductsModel(ProductService productService, CookieService cookieService)
         {
@@ -98,9 +95,11 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAddToBasket(int id)
         {
-            await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
+            CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
             Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            Message = $"Tilføjede produkt til kurven";
+            ID = id;
             return Page();
         }
     }

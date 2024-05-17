@@ -1,5 +1,3 @@
-using Blomsterbinderiet.Enums;
-using Blomsterbinderiet.Migrations;
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
 using Microsoft.AspNetCore.Authorization;

@@ -1,11 +1,5 @@
-﻿using Blomsterbinderiet.Enums;
-using Blomsterbinderiet.Migrations;
-using Blomsterbinderiet.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
+﻿using Blomsterbinderiet.Models;
+
 namespace Blomsterbinderiet.Service
 {
     /// <summary>
@@ -43,9 +37,9 @@ namespace Blomsterbinderiet.Service
         /// exists in the database then a null object is returned
         /// </remarks>
         /// 
-        public async Task<Product> GetProductByIdAsync(int id)
+        public async Task<Product?> GetProductByIdAsync(int id)
         {
-            return DbService.GetObjectByIdAsync(id).Result;
+            return await DbService.GetObjectByIdAsync(id);
         }
 
         public async Task<Product?> GetProductIncludingKeywordsByID(int id)
@@ -117,7 +111,7 @@ namespace Blomsterbinderiet.Service
         /// <returns>A task object representing the re-enable operation</returns>
 		public async Task ReenableProductAsync(int id)
 		{
-			Product productToBeReenabled = DbService.GetObjectByIdAsync(id).Result;
+			Product productToBeReenabled = await DbService.GetObjectByIdAsync(id);
 			productToBeReenabled.Disabled = false;
 			await DbService.UpdateObjectAsync(productToBeReenabled);
             Products = (await GetAllProductsAsync()).ToList();
@@ -158,7 +152,7 @@ namespace Blomsterbinderiet.Service
         /// A method like the <see cref="GetAllProductsAsync"/> but this method also includes the navigation property <see cref="Product.Keywords"/>
         /// </summary>
         /// <returns>A IEnumerable of Product objects whose <c>Keyword</c> navigation property has been included</returns>
-        public async Task<IEnumerable<Models.Product>> GetAllProductsIncludeKeywordsAsync()
+        public async Task<IEnumerable<Product>> GetAllProductsIncludeKeywordsAsync()
         {
             return await DbService.GetObjectsAsync(nameof(Models.Product.Keywords));
         }
@@ -183,9 +177,9 @@ namespace Blomsterbinderiet.Service
         /// if they are equal to either or between price1 and price2 if price1 is 
         /// null but price2 isn't then price1 will act as 0.
         /// </remarks>
-        public async Task<IEnumerable<Models.Product>> GetAllProductsFiltered(string name, string colour, double? minPrice, double? maxPrice, string keywordNameSearch, bool showDisabled)
+        public async Task<IEnumerable<Product>> GetAllProductsFiltered(string name, string colour, double? minPrice, double? maxPrice, string keywordNameSearch, bool showDisabled)
         {
-            IEnumerable<Models.Product> Products = await GetAllProductsIncludeKeywordsAsync();
+            IEnumerable<Product> Products = await GetAllProductsIncludeKeywordsAsync();
 
             if (name != null)
             {
@@ -231,7 +225,7 @@ namespace Blomsterbinderiet.Service
         /// <returns>
         /// An IEnumerable of Product objects containing non-disabled products which is ordered by the <c>Name</c> property
         /// </returns>
-        public async Task<IEnumerable<Models.Product>> GetAllProductsStandardFilterAndSort()
+        public async Task<IEnumerable<Product>> GetAllProductsStandardFilterAndSort()
         {
             return (await GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
         }

@@ -35,6 +35,8 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
         public IEnumerable<Models.Product> Products { get; private set; }
+        public string Message { get; set; }
+        public int ID { get; set; }
 
         public FuneralModel(ProductService productService, CookieService cookieService)
         {
@@ -77,12 +79,14 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAddToBasket(int id)
         {
-            await CookieService.PlusOneAsync(Request.Cookies, Response.Cookies, id);
+            CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
             Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
             Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
             Products = Products.Where(p => p.Disabled == false);
             Products = Products.OrderBy(p => p.Name);
+            Message = $"Tilføjede produkt til kurven";
+            ID = id;
             return Page();
         }
     }

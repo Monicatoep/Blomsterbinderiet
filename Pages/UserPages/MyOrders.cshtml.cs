@@ -1,8 +1,5 @@
 using Blomsterbinderiet.Service;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Claims;
-using Blomsterbinderiet.Models;
 using Blomsterbinderiet.DAO;
 
 namespace Blomsterbinderiet.Pages.UserPages
