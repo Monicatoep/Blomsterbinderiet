@@ -32,7 +32,7 @@ namespace Blomsterbinderiet.Service
             {
                 //start tasks
                 Task<Product> productTask = context.Set<Product>().Include(p => p.Keywords).FirstAsync(p => p.ID == product.ID);
-                Task<List<Keyword>> keywordsTask = (context.Set<Keyword>().Where(k => idsOfKeywords.Contains(k.ID)).ToListAsync();
+                Task<List<Keyword>> keywordsTask = context.Set<Keyword>().Where(k => idsOfKeywords.Contains(k.ID)).ToListAsync();
 
                 Product tempProduct = await productTask;
                 //remove all of its keywords
