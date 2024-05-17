@@ -112,9 +112,12 @@
                                         }
                                         <p class="card-text">@product.Price kr</p>
                                         <div class="d-flex justify-content-between">
-                                            <form method="post">
-                                                <button class="btn btn-success" id="btngreen" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
-                                            </form>
+                                            @if (!HttpContext.User.IsInRole("Admin"))
+                                            {
+                                                <form method="post">
+                                                    <button class="btn btn-success" id="btngreen" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
+                                                </form>
+                                            }
                                             <a class="btn" id="btnlight" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@product.ID">Se mere</a>
                                             @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
                                             {

@@ -36,7 +36,7 @@ namespace Blomsterbinderiet.Service
         public async Task<List<Order>> GetAllOrdersWeekAsync()
 
         {
-            Orders = (await DbService.GetObjectsAsync()).ToList();
+            Orders = (await DbService.GetObjectsAsync(nameof(Order.Customer))).ToList();
             List<Order> orders = (from order in Orders
                                          where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate>=DateTime.Now
                                          select order).ToList();

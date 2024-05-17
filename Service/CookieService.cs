@@ -1,4 +1,5 @@
-﻿using Blomsterbinderiet.Models;
+﻿using Azure;
+using Blomsterbinderiet.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
@@ -32,7 +33,11 @@ namespace Blomsterbinderiet.Service
         public void SaveCookie(IResponseCookies output, IEnumerable<BasketItem> listOfItems)
         {
             string jsonString = JsonSerializer.Serialize(listOfItems);
-            output.Append(_cookieName, jsonString);
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMinutes(60)
+            };
+            output.Append(_cookieName, jsonString, cookieOptions);
         }
 
         public IEnumerable<OrderLine>? LoadOrderLines(IEnumerable<BasketItem> basket)
