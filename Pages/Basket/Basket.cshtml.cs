@@ -23,22 +23,8 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public IActionResult OnGet()
         {
-            if (CookieService.ReadCookie(Request.Cookies) == null)
-            {
-                BasketItems = null;
-                OrderLines = new List<OrderLine>();
-            }
-            else
-            {
-                BasketItems = CookieService.ReadCookie(Request.Cookies);
-                if(BasketItems != null)
-                {
-                    OrderLines = CookieService.LoadOrderLines(BasketItems).ToList();
-                } else
-                {
-                    OrderLines = new List<OrderLine>();
-                }
-            }
+            BasketItems = CookieService.ReadCookie(Request.Cookies);
+            OrderLines = CookieService.LoadOrderLines(BasketItems).ToList();
             
             OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
