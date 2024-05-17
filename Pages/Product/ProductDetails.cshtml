@@ -45,7 +45,7 @@
                         }
                         @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
                         {
-                            <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
+                            <a class="btn btn-primary" id="btnyellow" asp-page="/Product/UpdateProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
                             @if (Model.Product.Disabled == false)
                             {
                                 <a class="btn btn-danger btn-sm " type="button" title="Disable" asp-page="DisableProduct" asp-route-id="@Model.Product.ID"><i class="fa fa-eye-slash"></i></a>
