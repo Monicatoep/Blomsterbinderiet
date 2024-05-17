@@ -16,20 +16,6 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task<IEnumerable<Product>> GetObjectsAsync(string? include)
-        {
-            using (var context = new BlomstDbContext())
-            {
-                var query = context.Set<Product>().AsNoTracking();
-
-                if (include != null)
-                {
-                    query = query.Include(include);
-                }
-                return await query.ToListAsync();
-            }
-        }
-
         public async Task AddProductAsync(Product product, int[] idsOfKeywords)
         {
             using (var context = new BlomstDbContext())
@@ -68,6 +54,18 @@ namespace Blomsterbinderiet.Service
                 //update and save
                 context.Set<Product>().Update(tempProduct);
                 await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Product>> GetFirst4BuketProducts()
+        {
+            using (var context = new BlomstDbContext())
+            {
+                return await context.Products.AsNoTracking()
+                                             .Include(p => p.Keywords)
+                                             .Where(p => p.Keywords.Any(k => k.Name == "Buket"))
+                                             .Take(4)
+                                             .ToListAsync();
             }
         }
     }

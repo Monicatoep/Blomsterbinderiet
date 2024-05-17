@@ -230,5 +230,10 @@ namespace Blomsterbinderiet.Service
             return (await GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
         }
 
+        public async Task<IEnumerable<Product>> GetFirst4BuketProducts()
+        {
+            return await DbService.GetFirst4BuketProducts();
+        }
+
     }
 }
