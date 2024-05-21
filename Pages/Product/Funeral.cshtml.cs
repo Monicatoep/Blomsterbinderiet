@@ -17,20 +17,14 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Størst til mindst?")]
         public bool SortDirection { get; set; }
         [BindProperty]
-        [DisplayName("Navn skal indeholde")]
+        [DisplayName("Søg")]
         public string? SearchString { get; set; }
-        [BindProperty]
-        [DisplayName("Farve")]
-        public string? Colour { get; set; }
         [BindProperty]
         [DisplayName("Minimum")]
         public double? MinimumPrice { get; set; }
         [BindProperty]
         [DisplayName("Maksimum")]
         public double? MaksimumPrice { get; set; }
-        [BindProperty]
-        [DisplayName("Søg på produkt attribut")]
-        public string? KeywordNameSearch { get; set; }
         [BindProperty]
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
@@ -51,48 +45,47 @@ namespace Blomsterbinderiet.Pages.Product
         {
             CurrentPage = 1;
             SortProperty = nameof(Models.Product.Name);
-            await FilterSort();
+            await FilterSortAsync();
         }
 
         public async Task<IActionResult> OnGetResetAsync()
         {
             SortProperty = nameof(Models.Product.Name);
             SortDirection = false;
-            Colour = null;
             MinimumPrice = null;
             MaksimumPrice = null;
             ShowDisabled = false;
             CurrentPage = 1;
-            await FilterSort();
+            await FilterSortAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await FilterSort();
-
+            CurrentPage = 1;
+            await FilterSortAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostNewPageAsync(int pageNumber)
         {
             CurrentPage = pageNumber;
-            await FilterSort();
+            await FilterSortAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAddToBasketAsync(int id)
         {
-            await FilterSort();
+            await FilterSortAsync();
             CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
             Message = $"Tilføjede produkt til kurven";
             ID = id;
             return Page();
         }
 
-        private async Task FilterSort()
+        private async Task FilterSortAsync()
         {
-            Products = await ProductService.GetAllProductsFilteredAsync(SearchString, Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
+            Products = await ProductService.GetAllProductsFilteredAsync(SearchString, MinimumPrice, MaksimumPrice, ShowDisabled);
             Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
             Products = ProductService.Sort(Products, SortProperty, SortDirection);
             Products = Products.OrderBy(p => p.Disabled);

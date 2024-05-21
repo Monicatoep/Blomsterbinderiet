@@ -13,23 +13,17 @@ namespace Blomsterbinderiet.Pages.Product
         [DisplayName("Sorter efter")]
         public string? SortProperty { get; set; }
         [BindProperty]
-        [DisplayName("Søg på navn")]
+        [DisplayName("Søg")]
         public string? SearchString { get; set; }
         [BindProperty]
         [DisplayName("Størst til mindst?")]
         public bool SortDirection { get; set; }
-        [BindProperty]
-        [DisplayName("Farve")]
-        public string? Colour { get; set; }
         [BindProperty]
         [DisplayName("Minimum")]
         public double? MinimumPrice { get; set; }
         [BindProperty]
         [DisplayName("Maksimum")]
         public double? MaksimumPrice { get; set; }
-        [BindProperty]
-        [DisplayName("Søg på produkt attribut")]
-        public string? KeywordNameSearch { get; set; }
         [BindProperty]
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
@@ -51,28 +45,18 @@ namespace Blomsterbinderiet.Pages.Product
         {
             CurrentPage = 1;
             SortProperty = nameof(Models.Product.Name);
-            await FilterSort();
-        }
-
-        public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
-        {
-            CurrentPage = 1;
-            SortProperty = nameof(Models.Product.Name);
-            KeywordNameSearch = keywordName;
-            await FilterSort();
-            return Page();
+            await FilterSortAsync();
         }
 
         public async Task<IActionResult> OnGetResetAsync()
         {
             SortProperty = nameof(Models.Product.Name);
             SortDirection = false;
-            Colour = null;
             MinimumPrice = null;
             MaksimumPrice = null;
             ShowDisabled = false;
             CurrentPage = 1;
-            await FilterSort();
+            await FilterSortAsync();
             return Page();
         }
 
@@ -80,53 +64,38 @@ namespace Blomsterbinderiet.Pages.Product
         {
             CurrentPage = 1;
             SortProperty = nameof(Models.Product.Name);
-            await FilterSort();
-
             SearchString = searchString;
-            Colour = searchString;
-            KeywordNameSearch = searchString;
-            searchString = searchString.ToLower();
-            //set Products to only contain where either product name or searchString is part of one another
-
-            //this way of filtering the products is only availeble when using the search bar on index
-            Products = Products.Where(p => 
-                p.Name.ToLower().Contains(searchString) || 
-                searchString.Contains(p.Name.ToLower()) ||
-                p.Colour.ToLower().Contains(searchString) || 
-                searchString.Contains(p.Colour.ToLower()) ||
-                p.Keywords.Any(k =>
-                   k.Name.ToLower().Contains(searchString) ||
-                   searchString.Contains(k.Name.ToLower())
-                   )
-                );
+            await FilterSortAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await FilterSort();
+            Console.WriteLine(CurrentPage);
+            CurrentPage = 1;
+            await FilterSortAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostNewPageAsync(int pageNumber)
         {
             CurrentPage = pageNumber;
-            await FilterSort();
+            await FilterSortAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAddToBasket(int id)
         {
-            await FilterSort();
+            await FilterSortAsync();
             CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
             Message = $"Tilføjede produkt til kurven";
             ID = id;
             return Page();
         }
 
-        private async Task FilterSort()
+        private async Task FilterSortAsync()
         {
-            Products = await ProductService.GetAllProductsFilteredAsync(SearchString, Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
+            Products = await ProductService.GetAllProductsFilteredAsync(SearchString, MinimumPrice, MaksimumPrice, ShowDisabled);
             Products = ProductService.Sort(Products, SortProperty, SortDirection);
             Products = Products.OrderBy(p => p.Disabled);
             PageCount = (int)Math.Ceiling(Products.Count() / 6d);

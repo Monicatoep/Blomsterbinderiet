@@ -167,26 +167,24 @@ namespace Blomsterbinderiet.Service
         /// if they are equal to either or between price1 and price2 if price1 is 
         /// null but price2 isn't then price1 will act as 0.
         /// </remarks>
-        public async Task<IEnumerable<Product>> GetAllProductsFilteredAsync(string name, string colour, double? minPrice, double? maxPrice, string keywordNameSearch, bool showDisabled)
+        public async Task<IEnumerable<Product>> GetAllProductsFilteredAsync(string searchString, double? minPrice, double? maxPrice, bool showDisabled)
         {
             IEnumerable<Product> Products = await GetAllProductsIncludeKeywordsAsync();
 
-            if (name != null)
+            if (searchString != null)
             {
-                name = name.ToLower();
-                Products = Products.Where(p => 
-                    p.Name.ToLower().Contains(name) || 
-                    name.Contains(p.Name.ToLower())
-                    );
-            }
-
-            if (colour != null)
-            {
-                colour.ToLower();
+                searchString = searchString.ToLower();
                 Products = Products.Where(p =>
-                    p.Colour.ToLower().Contains(colour) ||
-                    colour.Contains(p.Name.ToLower())
+                    p.Name.ToLower().Contains(searchString) ||
+                    p.Colour.ToLower().Contains(searchString) ||
+                    p.Keywords.Any(k =>
+                       k.Name.ToLower().Contains(searchString)
+                       )
                     );
+                if (searchString != "bårebuket")
+                {
+                    Products = Products.Where(p => !p.Keywords.Any(k => k.Name.ToLower() == "bårebuket"));
+                }
             }
 
             if (minPrice != null && maxPrice != null)
@@ -200,17 +198,6 @@ namespace Blomsterbinderiet.Service
                 Products = Products.Where(p => p.Price <= maxPrice);
             }
 
-            if (keywordNameSearch != null)
-            {
-                keywordNameSearch = keywordNameSearch.ToLower();
-                Products = Products.Where(p => 
-                    p.Keywords.Any(k =>
-                        k.Name.ToLower().Contains(keywordNameSearch) ||
-                        keywordNameSearch.Contains(k.Name.ToLower())
-                        )
-                    );
-            }
-
             if (!showDisabled)
             {
                 Products = from product in Products
@@ -218,19 +205,6 @@ namespace Blomsterbinderiet.Service
                            select product;
             }
             return Products;
-        }
-
-        /// <summary>
-        /// This method returns all tuples/rows in the "Products" entity excluding the disabled, or rather expired, products
-        /// which should not be shown to the customer.<br />
-        /// The returned IEnumerable containing the non-expired products gets sorted alphabetically by their name.
-        /// </summary>
-        /// <returns>
-        /// An IEnumerable of Product objects containing non-disabled products which is ordered by the <c>Name</c> property
-        /// </returns>
-        public async Task<IEnumerable<Product>> GetAllProductsStandardFilterAndSortAsync()
-        {
-            return (await GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
         }
 
         public async Task<IEnumerable<Product>> GetFirst4BouquetProductsAsync()

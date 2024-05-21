@@ -29,11 +29,6 @@
                         <input asp-for="@Model.SearchString" class="form-control" id="noborder" />
                         <span asp-validation-for="@Model.SearchString" class="text-danger"></span>
                     </div>
-                    <div>
-                        <label asp-for="@Model.Colour"></label>
-                        <input asp-for="@Model.Colour" class="form-control" id="noborder" />
-                        <span asp-validation-for="@Model.Colour" class="text-danger"></span>
-                    </div>
                     <div class="row">
                         <label>Pris klasse</label>
                         <div class="col">
@@ -48,11 +43,6 @@
                         </div>
                     </div>
                     <div>
-                        <label asp-for="@Model.KeywordNameSearch"></label>
-                        <input asp-for="@Model.KeywordNameSearch" class="form-control" id="noborder" />
-                        <span asp-validation-for="@Model.KeywordNameSearch" class="text-danger"></span>
-                    </div>
-                    <div>
                         <input asp-for="@Model.CurrentPage" class="form-check-input" hidden/>
                     </div>
                     @if ((HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee")))
@@ -63,7 +53,8 @@
                             <span asp-validation-for="@Model.ShowDisabled" class="text-danger"></span>
                         </div>
                     }
-                    <button type="submit" class="btn btn-success">Bekræft</button>
+                    @* asp-page-handler is required in the "button" tag because reasons unknown to us *@
+                    <button type="submit" asp-page-handler="" class="btn btn-success">Bekræft</button>
                     <a class="btn btn-success" asp-page-handler="Reset">Nulstil</a>
                 </form>
             </div>
