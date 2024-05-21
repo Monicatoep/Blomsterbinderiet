@@ -19,7 +19,7 @@ namespace Blomsterbinderiet.Pages.Admin
 
         public void OnGet()
         {
-            Keywords = KeywordService.GetAllKeywordsAsync().Result.ToList();
+            Keywords = KeywordService.GetAllKeywordsAsync().Result.OrderBy(k => k.Name).ToList();
         }
     }
 }
