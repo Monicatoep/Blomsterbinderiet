@@ -86,12 +86,19 @@
                     <div>
                         <input asp-for="PickUpDate" value="@DateTime.Now.AddDays(1)" />
                     </div>
+                    @{
+                        if (Model.Message != null)
+                        {
+                            <p class="text-danger">@Model.Message</p>
+                        }
+                    }
                 </div>
                 @if (Model.User.Role == "Customer" || Model.User.Role == "Admin")
                 {
                     <button class="btn btn-danger" id="btnyellow" type="submit" title="Bekræft" asp-page-handler="OnPostAsync">Bekræft ordre</button>
                 }
             </form>
+
         </div>
     </div>
 </div>

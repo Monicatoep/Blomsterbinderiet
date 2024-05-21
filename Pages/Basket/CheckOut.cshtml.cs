@@ -21,6 +21,8 @@ namespace Blomsterbinderiet.Pages.Basket
         [BindProperty]
         public DateTime PickUpDate { get; set; }
 
+        public string Message;
+
         public CheckOutModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
         {
             UserService = userService;
@@ -48,13 +50,25 @@ namespace Blomsterbinderiet.Pages.Basket
                 OrderLines = await CookieService.LoadOrderLinesAsync(basketItems);
                 return Page();
             }
+
             User = await UserService.GetUserByHttpContextAsync(HttpContext);
             OrderLines = await CookieService.LoadOrderLinesAsync(basketItems);
 
-            await OrderService.CreateNewOrderAsync(User, PickUpDate, OrderLines);
-          
-            CookieService.SaveCookie(Response.Cookies, null);
-            return RedirectToPage("/Basket/Confirmation");
+            if (!(PickUpDate >= DateTime.Now.AddDays(1)))
+            {
+                Message = "Du skal vælge et afhentningstidspunkt der er minimum 24 timer fra nu.";
+                return Page();
+            }
+
+            else
+            {
+                await OrderService.CreateNewOrderAsync(User, PickUpDate, OrderLines);
+
+                CookieService.SaveCookie(Response.Cookies, null);
+                return RedirectToPage("/Basket/Confirmation");
+            }
+
+           
         }
     }
 }
