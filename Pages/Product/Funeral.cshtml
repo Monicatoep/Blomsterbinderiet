@@ -16,12 +16,11 @@
         <div class="col-3">
             <div class="card-body">
                 <h5 class="card-title">Filter</h5>
-                <form method="post">
+                <form method="post" id="FilterForm">
                     <div>
                         <label asp-for="@Model.SortProperty"></label>
                         <select asp-for="@Model.SortProperty" class="form-select" id="noborder">
                             <option value="@nameof(Models.Product.Name)">Navn</option>
-                            <option value="@nameof(Models.Product.Description)">Beskrivelse</option>
                             <option value="@nameof(Models.Product.Price)">Pris</option>
                             <option value="@nameof(Models.Product.Colour)">Farve</option>
                         </select>
@@ -60,6 +59,9 @@
                         <input asp-for="@Model.KeywordNameSearch" class="form-control" id="noborder" />
                         <span asp-validation-for="@Model.KeywordNameSearch" class="text-danger"></span>
                     </div>
+                    <div>
+                        <input asp-for="@Model.CurrentPage" class="form-check-input" hidden />
+                    </div>
                     @if ((HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee")))
                     {
                         <div>
@@ -79,13 +81,15 @@
                     <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3">
                         @if (Model.Products != null)
                         {
-                            int length = Model.Products.Count();
-                            if (length == 0)
+                            int length = 0;
+                            if (Model.Products != null)
                             {
-                                <p>Fandt ingen produkter med de givne filtre</p>
+                                length = Model.Products.Count();
+                                if (length >= 24) length = 24;
                             }
-                            foreach (var product in Model.Products.Take(24))
+                            @for (int i = 0; i < length; i++)
                             {
+                                var product = Model.Products.ElementAt(i);
                                 string cardClass = product.Disabled ? "card card-body disabled-product" : "card card-body";
                                 <div class="col">
                                     <div class="@cardClass">
@@ -114,15 +118,15 @@
                                         <div class="d-flex justify-content-between">
                                             @if (!HttpContext.User.IsInRole("Admin"))
                                             {
-                                                <form method="post">
-                                                    <button class="btn btn-success" id="btngreen" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
-                                                </form>
+                                                <button class="btn btn-success" form="FilterForm" id="btngreen" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
                                             }
                                             <a class="btn" id="btnlight" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@product.ID">Se mere</a>
                                             @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
                                             {
-                                                <a class="btn btn-primary" asp-page="/Product/UpdateProduct" asp-route-id="@product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
+                                                <a class="btn btn-primary" id="btnyellow" asp-page="/Product/UpdateProduct" asp-route-id="@product.ID"><i class="fa fa-pencil-square-o"></i> Opdater</a>
                                             }
+
+
                                         </div>
                                         @if (Model.Message != null && Model.ID == product.ID)
                                         {
@@ -135,20 +139,64 @@
                             }
                         }
                     </div>
+                    @{
+                        if (Model.Products != null)
+                        {
+                            int length = Model.Products.Count();
+                            if (length >= 24) length = 24;
+                            if (length == 0)
+                            {
+                                <p>Fandt ingen produkter med de givne filtre</p>
+                            }
+                        }
+                    }
                 </div>
             </div>
         </div>
+        <div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col justify-content-center d-flex">
+                <ul class="pagination pagination-lg">
+                    <li class="page-item">
+                        <button class="page-link" form="FilterForm" type="submit" asp-page-handler="NewPage" asp-route-pageNumber="1">Første</button>
+                    </li>
+                    @{
+                        int width = 2;
+                        int min = Model.CurrentPage - width;
+                        int max = Model.CurrentPage + width;
+                        if (min < 1)
+                        {
+                            min = 1;
+                        }
+                        if (max > Model.PageCount)
+                        {
+                            max = Model.PageCount;
+                        }
+                        for (int i = min; i <= max; i++)
+                        {
+                            if (i == Model.CurrentPage)
+                            {
+                                <li class="page-item disabled">
+                                    <button class="page-link">@i</button>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <button class="page-link" form="FilterForm" type="submit" asp-page-handler="NewPage" asp-route-pageNumber="@i">@i</button>
+                                </li>
+
+                            }
+                        }
+                    }
+                    <li class="page-item">
+                        <button class="page-link" form="FilterForm" type="submit" asp-page-handler="NewPage" asp-route-pageNumber="@Model.PageCount">Sidste</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+</div>

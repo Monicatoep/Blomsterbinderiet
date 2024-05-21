@@ -34,6 +34,9 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         [DisplayName("Vis deaktiverede produkter")]
         public bool ShowDisabled { get; set; }
+        [BindProperty]
+        public int CurrentPage { get; set; }
+        public int PageCount { get; set; }
         public IEnumerable<Models.Product> Products { get; private set; }
         public string Message { get; set; }
         public int ID { get; set; }
@@ -46,48 +49,55 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task OnGetAsync()
         {
-            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
-            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
-            Products = Products.Where(p => p.Disabled == false);
-            Products = Products.OrderBy(p => p.Name);
+            CurrentPage = 1;
+            SortProperty = nameof(Models.Product.Name);
+            await FilterSort();
         }
 
         public async Task<IActionResult> OnGetResetAsync()
         {
-            SortProperty = null;
+            SortProperty = nameof(Models.Product.Name);
             SortDirection = false;
             Colour = null;
             MinimumPrice = null;
             MaksimumPrice = null;
             ShowDisabled = false;
-            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
-            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
-            Products = Products.Where(p => p.Disabled == false);
-            Products = Products.OrderBy(p => p.Name);
+            CurrentPage = 1;
+            await FilterSort();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Products = await ProductService.GetAllProductsFilteredAsync(SearchString, Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
-            Products = ProductService.Sort(Products, SortProperty, SortDirection);
-            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
-            //Products.OrderBy(p => p.Disabled);
+            await FilterSort();
 
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostNewPageAsync(int pageNumber)
+        {
+            CurrentPage = pageNumber;
+            await FilterSort();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAddToBasketAsync(int id)
         {
+            await FilterSort();
             CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
-
-            Products = await ProductService.GetAllProductsIncludeKeywordsAsync();
-            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
-            Products = Products.Where(p => p.Disabled == false);
-            Products = Products.OrderBy(p => p.Name);
             Message = $"Tilføjede produkt til kurven";
             ID = id;
             return Page();
+        }
+
+        private async Task FilterSort()
+        {
+            Products = await ProductService.GetAllProductsFilteredAsync(SearchString, Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
+            Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
+            Products = ProductService.Sort(Products, SortProperty, SortDirection);
+            Products = Products.OrderBy(p => p.Disabled);
+            PageCount = (int)Math.Ceiling(Products.Count() / 6d);
+            Products = Products.Skip((CurrentPage - 1) * 6).Take(6);
         }
     }
 }

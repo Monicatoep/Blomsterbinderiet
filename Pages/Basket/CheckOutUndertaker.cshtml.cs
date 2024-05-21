@@ -28,6 +28,7 @@ namespace Blomsterbinderiet.Pages.Basket
         [Required(ErrorMessage = "Der skal angives en leveringsadresse")]
         [BindProperty]
         public string? Address { get; set; }
+        public string Message; 
 
         public CheckOutUndertakerModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
         {
@@ -58,6 +59,12 @@ namespace Blomsterbinderiet.Pages.Basket
             }
             User = await UserService.GetUserByHttpContextAsync(HttpContext);
             OrderLines = await CookieService.LoadOrderLinesAsync(basketItems);
+
+            if (!(CeremonyStart >= DateTime.Now.AddDays(1)))
+            {
+                Message = "Du skal vælge et afhentningstidspunkt der er minimum 24 timer fra nu.";
+                return Page();
+            }
 
             await OrderService.CreateNewOrderWithDeliveryAsync(User, CeremonyStart, OrderLines, new Models.Delivery(DeseasedName, Address));
 

@@ -92,6 +92,14 @@
                         <label asp-for="@Model.CeremonyStart" class="control-label"></label>
                         <input asp-for="@Model.CeremonyStart" class="form-control" id="noborder" value="@DateTime.Now.AddDays(1)"/>
                         <span asp-validation-for="@Model.CeremonyStart" class="text-danger"></span>
+
+                    @{
+                        if (Model.Message != null)
+                        {
+                            <p class="text-danger">@Model.Message</p>
+                        }
+                    }
+
                     </div>
                     <hr>
                     <div class="form-group">
