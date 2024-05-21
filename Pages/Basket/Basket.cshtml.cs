@@ -19,33 +19,33 @@ namespace Blomsterbinderiet.Pages.Basket
             this.OrderService = orderService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             BasketItems = CookieService.ReadCookie(Request.Cookies);
             if(BasketItems != null)
             {
-                OrderLines = CookieService.LoadOrderLines(BasketItems).ToList();
+                OrderLines = await CookieService.LoadOrderLinesAsync(BasketItems);
             }
             OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
         }
 
-        public IActionResult OnPostPlus(int id)
+        public async Task<IActionResult> OnPostPlusAsync(int id)
         {
             IEnumerable<BasketItem> basketItems = CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
+            OrderLines = await CookieService.LoadOrderLinesAsync(basketItems);
 
             OrderSum = OrderService.GetOrderSum(OrderLines);
             
             return Page();
         }
 
-        public IActionResult OnPostMinus(int id)
+        public async Task<IActionResult> OnPostMinusAsync(int id)
         {
             IEnumerable<BasketItem> basketItems = CookieService.MinusOne(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
+            OrderLines = await CookieService.LoadOrderLinesAsync(basketItems);
 
             if (OrderLines.Count == 0)
             {
@@ -59,11 +59,11 @@ namespace Blomsterbinderiet.Pages.Basket
             return Page();
         }
 
-        public IActionResult OnPostRemove(int id)
+        public async Task<IActionResult> OnPostRemoveAsync(int id)
         {
             IEnumerable<BasketItem> basketItems = CookieService.RemoveBasketItem(Request.Cookies, Response.Cookies, id);
 
-            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
+            OrderLines = await CookieService.LoadOrderLinesAsync(basketItems);
 
             if(OrderLines.Count == 0)
             {

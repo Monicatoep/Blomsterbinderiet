@@ -40,7 +40,7 @@ namespace Blomsterbinderiet.Service
             output.Append(_cookieName, jsonString, cookieOptions);
         }
 
-        public async Task<IEnumerable<OrderLine>>? LoadOrderLinesAsync(IEnumerable<BasketItem> basket)
+        public async Task<List<OrderLine>>? LoadOrderLinesAsync(IEnumerable<BasketItem> basket)
         {
             if (basket == null)
             {

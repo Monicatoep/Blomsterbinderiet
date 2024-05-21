@@ -42,7 +42,7 @@ namespace Blomsterbinderiet.Pages.Basket
             User = await UserService.GetUserByHttpContextAsync(HttpContext);
 
             IEnumerable<BasketItem> basketItems = CookieService.ReadCookie(Request.Cookies);
-            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
+            OrderLines = await CookieService.LoadOrderLinesAsync(basketItems);
             OrderSum = OrderService.GetOrderSum(OrderLines);
             return Page();
         }
@@ -53,11 +53,11 @@ namespace Blomsterbinderiet.Pages.Basket
             if (!ModelState.IsValid)
             {
                 User = await UserService.GetUserByHttpContextAsync(HttpContext);
-                OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
+                OrderLines = await CookieService.LoadOrderLinesAsync(basketItems);
                 return Page();
             }
             User = await UserService.GetUserByHttpContextAsync(HttpContext);
-            OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
+            OrderLines = await CookieService.LoadOrderLinesAsync(basketItems);
 
             await OrderService.CreateNewOrderWithDeliveryAsync(User, CeremonyStart, OrderLines, new Models.Delivery(DeseasedName, Address));
 
