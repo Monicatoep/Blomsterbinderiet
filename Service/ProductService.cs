@@ -174,12 +174,19 @@ namespace Blomsterbinderiet.Service
             if (name != null)
             {
                 name = name.ToLower();
-                Products = Products.Where(p => p.Name.ToLower().Contains(name) || name.Contains(p.Name.ToLower()));
+                Products = Products.Where(p => 
+                    p.Name.ToLower().Contains(name) || 
+                    name.Contains(p.Name.ToLower())
+                    );
             }
 
             if (colour != null)
             {
-                Products = Products.Where(p => p.Colour.ToLower().Contains(colour.ToLower()));
+                colour.ToLower();
+                Products = Products.Where(p =>
+                    p.Colour.ToLower().Contains(colour) ||
+                    colour.Contains(p.Name.ToLower())
+                    );
             }
 
             if (minPrice != null && maxPrice != null)
@@ -195,7 +202,13 @@ namespace Blomsterbinderiet.Service
 
             if (keywordNameSearch != null)
             {
-                Products = Products.Where(p => p.Keywords.Any(k => k.Name.ToLower().Contains(keywordNameSearch.ToLower())));
+                keywordNameSearch = keywordNameSearch.ToLower();
+                Products = Products.Where(p => 
+                    p.Keywords.Any(k =>
+                        k.Name.ToLower().Contains(keywordNameSearch) ||
+                        keywordNameSearch.Contains(k.Name.ToLower())
+                        )
+                    );
             }
 
             if (!showDisabled)

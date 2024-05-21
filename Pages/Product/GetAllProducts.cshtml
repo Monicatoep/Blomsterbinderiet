@@ -9,12 +9,11 @@
         <div class="col-3">
             <div class="card-body">
                 <h5 class="card-title">Filter</h5>
-                <form method="post">
+                <form method="post" id="FilterForm">
                     <div>
                         <label asp-for="@Model.SortProperty"></label>
                         <select asp-for="@Model.SortProperty" class="form-select" id="noborder">
                             <option value="@nameof(Models.Product.Name)">Navn</option>
-                            <option value="@nameof(Models.Product.Description)">Beskrivelse</option>
                             <option value="@nameof(Models.Product.Price)">Pris</option>
                             <option value="@nameof(Models.Product.Colour)">Farve</option>
                         </select>
@@ -52,6 +51,9 @@
                         <label asp-for="@Model.KeywordNameSearch"></label>
                         <input asp-for="@Model.KeywordNameSearch" class="form-control" id="noborder" />
                         <span asp-validation-for="@Model.KeywordNameSearch" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <input asp-for="@Model.CurrentPage" class="form-check-input" hidden/>
                     </div>
                     @if ((HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee")))
                     {
@@ -109,9 +111,7 @@
                                         <div class="d-flex justify-content-between">
                                             @if (!HttpContext.User.IsInRole("Admin"))
                                             {
-                                                <form method="post">
-                                                    <button class="btn btn-success" id="btngreen" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
-                                                </form>
+                                                <button class="btn btn-success" form="FilterForm" id="btngreen" type="submit" asp-page-handler="AddToBasket" asp-route-id="@product.ID"><i class="fa-solid fa-basket-shopping"></i> Tilføj til kurv</button>
                                             }
                                             <a class="btn" id="btnlight" type="button" title="Se mere" asp-page="ProductDetails" asp-route-id="@product.ID">Se mere</a>
                                             @if (HttpContext.User.IsInRole("Admin") || HttpContext.User.IsInRole("Employee"))
@@ -146,17 +146,51 @@
                 </div>
             </div>
         </div>
-    </div>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+        <div>
+            
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col justify-content-center d-flex">
+                <ul class="pagination pagination-lg">
+                    <li class="page-item">
+                        <button class="page-link" form="FilterForm" type="submit" asp-page-handler="NewPage" asp-route-pageNumber="1">Første</button>
+                    </li>
+                    @{
+                        int width = 2;
+                        int min = Model.CurrentPage - width;
+                        int max = Model.CurrentPage + width;
+                        if (min < 1)
+                        {
+                            min = 1;
+                        }
+                        if (max > Model.PageCount)
+                        {
+                            max = Model.PageCount;
+                        }
+                        for (int i = min; i <= max; i++)
+                        {
+                            if (i == Model.CurrentPage)
+                            {
+                                <li class="page-item disabled">
+                                    <button class="page-link">@i</button>
+                                </li>
+                                
+                            }
+                            else
+                            {
+                                <li class="page-item">
+                                    <button class="page-link" form="FilterForm" type="submit" asp-page-handler="NewPage" asp-route-pageNumber="@i">@i</button>
+                                </li>
+                                
+                            }
+                        }
+                    }
+                    <li class="page-item">
+                        <button class="page-link" form="FilterForm" type="submit" asp-page-handler="NewPage" asp-route-pageNumber="@Model.PageCount">Sidste</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>   
+</div>
