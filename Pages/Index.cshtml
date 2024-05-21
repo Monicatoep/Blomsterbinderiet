@@ -21,7 +21,7 @@
 <div class="card mt-5" id="outercard">
     <div class="container">
         <div class="row p-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
-            @foreach (Models.Product product in Model.ProductService.GetFirst4BuketProducts().Result)
+            @foreach (Models.Product product in Model.ProductService.GetFirst4BouquetProductsAsync().Result)
             {
                 <div class="pb-3 px-3">
                     <div class="col card p-3">

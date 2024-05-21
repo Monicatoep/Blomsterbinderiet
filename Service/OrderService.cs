@@ -6,37 +6,36 @@ namespace Blomsterbinderiet.Service
 {
     public class OrderService
     {
-        private DbGenericService<OrderLine> OrderlineService { get; set; }
+        private DbGenericService<OrderLine> OrderLineDbService { get; set; }
         private DbGenericService<Delivery> DeliveryDbService { get; set; }
+        private DbGenericService<Order> OrderDbService { get; set; }
         private UserService UserService { get; set; }
         private ProductService ProductService { get; set; }
-        private DbGenericService<Order> DbService { get; set; }
         public List<Order> Orders { get; set; }
         public List<Delivery> Deliveries { get; set; }
         public List<OrderLine> OrderLines { get; set; } = new List<OrderLine>();
 
         public OrderService(DbGenericService<Order> dbService, DbGenericService<OrderLine> orderlineService, DbGenericService<Delivery> deliveryDbService, UserService userService, ProductService productService)
         {
-            DbService = dbService;
+            OrderDbService = dbService;
             Orders = dbService.GetObjectsAsync().Result.ToList();
             Deliveries = deliveryDbService.GetObjectsAsync().Result.ToList();
-            OrderlineService = orderlineService;
+            OrderLineDbService = orderlineService;
             UserService = userService;
             ProductService = productService;
             DeliveryDbService = deliveryDbService;
         }
 
         public async Task<List<Order>> GetAllOrdersAsync()
-
         {
-            Orders = (await DbService.GetObjectsAsync()).ToList();
+            Orders = (await OrderDbService.GetObjectsAsync()).ToList();
             List<Order> orders = Orders;
             return orders;
         }
         public async Task<List<Order>> GetAllOrdersWeekAsync()
 
         {
-            Orders = (await DbService.GetObjectsAsync(nameof(Order.Customer))).ToList();
+            Orders = (await OrderDbService.GetObjectsAsync(nameof(Order.Customer))).ToList();
             List<Order> orders = (from order in Orders
                                          where order.PickUpDate < DateTime.Now.AddDays(7) && order.PickUpDate>=DateTime.Now
                                          select order).ToList();
@@ -45,7 +44,7 @@ namespace Blomsterbinderiet.Service
 
         public async Task<Order?> GetOrderByIdAsync(int id)
         {
-            return await DbService.GetObjectByIdAsync(id);
+            return await OrderDbService.GetObjectByIdAsync(id);
         }
 
         public async Task<Delivery?> GetDeliveryByOrderIdAsync(int id)
@@ -55,7 +54,7 @@ namespace Blomsterbinderiet.Service
 
         public async Task UpdateOrderAsync(Order order)
         {
-            await DbService.UpdateObjectAsync(order);
+            await OrderDbService.UpdateObjectAsync(order);
         }
 
         public double GetOrderSum(IEnumerable<OrderLine> orderLines)
@@ -91,13 +90,13 @@ namespace Blomsterbinderiet.Service
         public async Task AddOrderAsync(Order order)
         {
             Orders.Add(order);
-            await DbService.AddObjectAsync(order);
+            await OrderDbService.AddObjectAsync(order);
         }
 
         public async Task AddOrderLineAsync(OrderLine orderLine)
         {
             OrderLines.Add(orderLine);
-            await OrderlineService.AddObjectAsync(orderLine);
+            await OrderLineDbService.AddObjectAsync(orderLine);
         }
 
         public async Task AddDeliveryAsync(Delivery delivery)
@@ -108,21 +107,21 @@ namespace Blomsterbinderiet.Service
 
         public async Task DenyOrderAsync(int id)
         {
-            Order order = DbService.GetObjectByIdAsync(id).Result;
+            Order order = await OrderDbService.GetObjectByIdAsync(id);
             order.OrderStatus = Status.Afvist;
-            await DbService.UpdateObjectAsync(order);
+            await OrderDbService.UpdateObjectAsync(order);
         }
 
         public async Task ConfirmOrderAsync(int id)
         {
-            Order order = DbService.GetObjectByIdAsync(id).Result;
+            Order order = await OrderDbService.GetObjectByIdAsync(id);
             order.OrderStatus = Status.Bekræftet;
-            await DbService.UpdateObjectAsync(order);
+            await OrderDbService.UpdateObjectAsync(order);
         }
 
         public async Task OrderInProgressAsync(int id, string uId)
         {
-            Order order = DbService.GetObjectByIdAsync(id).Result;
+            Order order = await OrderDbService.GetObjectByIdAsync(id);
             order.OrderStatus = Status.Klargøres;
 
             string userId = uId;
@@ -133,12 +132,12 @@ namespace Blomsterbinderiet.Service
                 order.EmployeeID = order.Employee.ID;
             }
 
-            await DbService.UpdateObjectAsync(order);
+            await OrderDbService.UpdateObjectAsync(order);
         }
 
         public async Task ChangeOrderStatusAsync(int id)
         {
-            Order order = DbService.GetObjectByIdAsync(id).Result;
+            Order order = await OrderDbService.GetObjectByIdAsync(id);
             if (order.OrderStatus == Status.Klargøres)
             {
                 order.OrderStatus = Status.Færdig;
@@ -148,7 +147,7 @@ namespace Blomsterbinderiet.Service
                 order.CompletedDate = DateTime.Now;
                 order.OrderStatus = Status.Udleveret;
             }
-            await DbService.UpdateObjectAsync(order);
+            await OrderDbService.UpdateObjectAsync(order);
         }
 
         public async Task<IEnumerable<MyOrdersDAO>> GetOrdersByUserIdAsync(int id)
@@ -156,7 +155,7 @@ namespace Blomsterbinderiet.Service
             int userId = id;
             var orders = from o in await GetAllOrdersAsync()
                      where o.CustomerID == userId
-                     join l in OrderlineService.GetObjectsAsync().Result on o.Id equals l.OrderID into ol
+                     join l in OrderLineDbService.GetObjectsAsync().Result on o.Id equals l.OrderID into ol
                      orderby o.OrderDate descending
                      select new MyOrdersDAO{ Order = o, OrderLine = ol, Amount = ol.Sum((OrderLine o) => o.Amount) };
             return orders;
@@ -283,7 +282,7 @@ namespace Blomsterbinderiet.Service
 
         public async Task <IEnumerable<OrderLine>> GetOrderlinesByOrderIdAsync(int id)
         {
-            OrderLines = (await OrderlineService.GetObjectsAsync()).ToList();
+            OrderLines = (await OrderLineDbService.GetObjectsAsync()).ToList();
             return from orderLine in OrderLines
                    where orderLine.OrderID == id
                    select orderLine;

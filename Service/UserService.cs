@@ -6,30 +6,30 @@ namespace Blomsterbinderiet.Service
 {
     public class UserService
     {
-        private DbGenericService<User> DbService { get; set; }
+        private DbGenericService<User> UserDbService { get; set; }
         public List<User> Users { get; set; }
 
         public UserService(DbGenericService<User> dbService)
         {
-            DbService = dbService;
+            UserDbService = dbService;
             Users = dbService.GetObjectsAsync().Result.ToList();
         }
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            Users = (await DbService.GetObjectsAsync()).ToList();
+            Users = (await UserDbService.GetObjectsAsync()).ToList();
             return Users;
         }
 
         public async Task<User?> GetUserByIdAsync(int id)
         {
-            User user = await DbService.GetObjectByIdAsync(id);
+            User user = await UserDbService.GetObjectByIdAsync(id);
             return user;
         }
 
         public async Task<User?> GetUserByIdAsync(string id)
         {
-            return await DbService.GetObjectByIdAsync(Convert.ToInt32(id));
+            return await UserDbService.GetObjectByIdAsync(Convert.ToInt32(id));
         }
 
         public User? GetUserByEmail(string email)
@@ -44,18 +44,18 @@ namespace Blomsterbinderiet.Service
 
         public async Task UpdateUserAsync(User user)
         {
-            await DbService.UpdateObjectAsync(user);
+            await UserDbService.UpdateObjectAsync(user);
         }
 
         public async Task UpdateUserAsync(User user, IEnumerable<string> updatedProperties)
         {
-            await DbService.UpdateObjectAsync(user, updatedProperties);
+            await UserDbService.UpdateObjectAsync(user, updatedProperties);
         }
 
         public async Task AddUserAsync(User user)
         {
             Users.Add(user);
-            await DbService.AddObjectAsync(user);
+            await UserDbService.AddObjectAsync(user);
         }
 
         public IEnumerable<User> SortByName()
@@ -105,19 +105,21 @@ namespace Blomsterbinderiet.Service
             user.State = "Deaktiveret";
             await UpdateUserAsync(user);
         }
+
         public async Task<IEnumerable<User>> GetEmployeesAsync()
         {
-
             return from user in Users
                    where user.Role == "Employee"
                    select user;
         }
+
         public IEnumerable<User> FilterByStatus(string status)
         {
             return from user in Users
                    where user.State == status
                    select user;
         }
+
         public IEnumerable<User> FilterByRole(string role)
         {
             return from user in Users

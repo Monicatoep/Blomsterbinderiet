@@ -28,7 +28,7 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Product = await ProductService.GetProductIncludingKeywordsByID(id);
+            Product = await ProductService.GetProductIncludingKeywordsByIDAsync(id);
             KeywordIDs = new List<int>();
             foreach(Keyword keyword in Product.Keywords)
             {
