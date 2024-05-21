@@ -77,7 +77,7 @@ namespace Blomsterbinderiet.Pages.Product
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddToBasket(int id)
+        public async Task<IActionResult> OnPostAddToBasketAsync(int id)
         {
             CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 

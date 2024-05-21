@@ -10,12 +10,13 @@ namespace Blomsterbinderiet.Service
         public KeywordService(DbGenericService<Keyword> keywordsDbService)
         {
             KeywordsDbService = keywordsDbService;
-            Keywords = keywordsDbService.GetObjectsAsync().Result.ToList();
+            Keywords = keywordsDbService.GetObjectsAsync().Result.OrderBy(k => k.Name).ToList();
         }
 
         public async Task<IEnumerable<Keyword>> GetAllKeywordsAsync()
         {
-            return await KeywordsDbService.GetObjectsAsync();
+            var keywords = await KeywordsDbService.GetObjectsAsync();
+            return keywords.OrderBy(k => k.Name).ToList();
         }
 
         public async Task AddKeywordAsync(Keyword keyword)

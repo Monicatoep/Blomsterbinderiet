@@ -118,7 +118,7 @@ else if(Model.User.Role == "Undertaker")
                                 <h6 class="mb-0" id="textcolor">Navn</h6>
                             </div>
                             <div class="col-sm-9" id="textcolor">
-                                @Model.User.Name
+                                @Model.UserService.GetUserByIdAsync(Convert.ToInt32(Model.Order.CustomerID)).Result.Name
                             </div>
                         </div>
                         <hr>
@@ -127,7 +127,7 @@ else if(Model.User.Role == "Undertaker")
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9" id="textcolor">
-                                @Model.User.Email
+                                @Model.UserService.GetUserByIdAsync(Convert.ToInt32(Model.Order.CustomerID)).Result.Email
                             </div>
                         </div>
                         <hr>
@@ -136,7 +136,7 @@ else if(Model.User.Role == "Undertaker")
                                 <h6 class="mb-0">Telefon</h6>
                             </div>
                             <div class="col-sm-9" id="textcolor">
-                                @Model.User.Phone
+                                @Model.UserService.GetUserByIdAsync(Convert.ToInt32(Model.Order.CustomerID)).Result.Phone
                             </div>
                         </div>
                         <hr>
@@ -145,7 +145,7 @@ else if(Model.User.Role == "Undertaker")
                                 <h6 class="mb-0">Adresse</h6>
                             </div>
                             <div class="col-sm-9" id="textcolor">
-                                @Model.User.Address
+                                @Model.UserService.GetUserByIdAsync(Convert.ToInt32(Model.Order.CustomerID)).Result.Address
                             </div>
                         </div>
                         <hr>

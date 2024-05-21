@@ -20,8 +20,8 @@ namespace Blomsterbinderiet.Pages.Basket
         [Required(ErrorMessage = "Der skal angives afdødes navn")]
         [BindProperty]
         public string? DeseasedName { get; set; }
-        [DisplayName("Begravelses start")]
-        [Required(ErrorMessage = "Der skal angives begravelses start")]
+        [DisplayName("Begravelsestidspunkt")]
+        [Required(ErrorMessage = "Der skal angives begravelsestispunkt")]
         [BindProperty]
         public DateTime CeremonyStart { get; set; }
         [DisplayName("Leveringsadresse")]
