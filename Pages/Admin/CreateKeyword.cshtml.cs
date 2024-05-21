@@ -11,8 +11,6 @@ namespace Blomsterbinderiet.Pages.Admin
     public class CreateKeywordModel : PageModel
     {
         private KeywordService KeywordService { get; set; }
-        
-        public IEnumerable<Keyword> Keywords { get; set; }
 
         [BindProperty]
         [Required(ErrorMessage = "Du skal indtaste et navn")]
