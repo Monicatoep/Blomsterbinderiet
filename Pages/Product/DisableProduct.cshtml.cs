@@ -16,6 +16,7 @@ namespace Blomsterbinderiet.Pages.Product
         {
             ProductService = productService;
         }
+
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Product = await ProductService.GetProductByIdAsync(id);

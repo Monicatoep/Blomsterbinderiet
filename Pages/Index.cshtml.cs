@@ -25,7 +25,7 @@ namespace Blomsterbinderiet.Pages
 
         public IActionResult OnPost()
         {
-            if(SearchString == null)
+            if (SearchString == null)
             {
                 return Page();
             }

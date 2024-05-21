@@ -6,7 +6,7 @@ namespace Blomsterbinderiet.Service
 {
     public class ProductDbService : DbGenericService<Product>
     {
-        public async Task<Product?> GetProductIncludingKeywordsByID(int id)
+        public async Task<Product?> GetProductIncludingKeywordsByIDAsync(int id)
         {
             using (var context = new BlomstDbContext())
             {
@@ -26,7 +26,7 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task UpdateObjectAsync(Product product, IEnumerable<int> idsOfKeywords)
+        public async Task UpdateProductAsync(Product product, IEnumerable<int> idsOfKeywords)
         {
             using (var context = new BlomstDbContext())
             {
@@ -57,7 +57,7 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task<IEnumerable<Product>> GetFirst4BuketProducts()
+        public async Task<IEnumerable<Product>> GetFirst4BouquetProductsAsync()
         {
             using (var context = new BlomstDbContext())
             {

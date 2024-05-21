@@ -8,9 +8,9 @@ namespace Blomsterbinderiet.Service
     public class ProductService
     {
         /// <summary>
-        /// <c>DbService</c> represents a reference to the DbGenericService object handling CRUD calls to the database for the <see cref="Product"/> objects 
+        /// <c>ProductDbService</c> represents a reference to the DbGenericService object handling CRUD calls to the database for the <see cref="Product"/> objects 
         /// </summary>
-        private ProductDbService DbService { get; set; }
+        private ProductDbService ProductDbService { get; set; }
         public List<Product> Products { get; set; }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Blomsterbinderiet.Service
         /// <param name="dbService">Reference to a <see cref="DbGenericService{T=Product}"/> object where T is Product</param>
         public ProductService(ProductDbService dbService)
         {
-            DbService = dbService;
+            ProductDbService = dbService;
         }
 
         /// <summary>
@@ -39,12 +39,12 @@ namespace Blomsterbinderiet.Service
         /// 
         public async Task<Product?> GetProductByIdAsync(int id)
         {
-            return await DbService.GetObjectByIdAsync(id);
+            return await ProductDbService.GetObjectByIdAsync(id);
         }
 
-        public async Task<Product?> GetProductIncludingKeywordsByID(int id)
+        public async Task<Product?> GetProductIncludingKeywordsByIDAsync(int id)
         {
-            return await DbService.GetProductIncludingKeywordsByID(id);
+            return await ProductDbService.GetProductIncludingKeywordsByIDAsync(id);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Blomsterbinderiet.Service
         /// <returns>A task object containing an IEnumerable containing Product objects</returns>
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            return await DbService.GetObjectsAsync();
+            return await ProductDbService.GetObjectsAsync();
         }
 
         /// <summary>
@@ -62,14 +62,9 @@ namespace Blomsterbinderiet.Service
         /// </summary>
         /// <param name="product">A product object whose properties get sent to the database</param>
         /// <returns>A Task object which can be used to tell when a operation is done</returns>
-        public async Task UpdateProductAsync(Product product)
-        {
-            await DbService.UpdateObjectAsync(product);
-        }
-
         public async Task UpdateProductAsync(Product product, IEnumerable<int> idsOfKeywords)
         {
-            await DbService.UpdateObjectAsync(product, idsOfKeywords);
+            await ProductDbService.UpdateProductAsync(product, idsOfKeywords);
         }
 
         /// <summary>
@@ -80,14 +75,9 @@ namespace Blomsterbinderiet.Service
         /// </remarks>
         /// <param name="product">An object of type Product</param>
         /// <returns>Returns a task object representing the Add operation</returns>
-        public async Task AddProductAsync(Product product)
-        {
-            await DbService.AddObjectAsync(product);
-        }
-
         public async Task AddProductAsync(Product product, int[] idsOfKeywords)
         {
-            await DbService.AddProductAsync(product, idsOfKeywords);
+            await ProductDbService.AddProductAsync(product, idsOfKeywords);
         }
 
         /// <summary>
@@ -98,9 +88,9 @@ namespace Blomsterbinderiet.Service
         /// <returns>A task object representing the DisableProduct operation</returns>
         public async Task DisableProductAsync(int id)
         {
-            Product productToBeDisabled = DbService.GetObjectByIdAsync(id).Result;
+            Product productToBeDisabled = await ProductDbService.GetObjectByIdAsync(id);
             productToBeDisabled.Disabled = true;
-            await DbService.UpdateObjectAsync(productToBeDisabled);
+            await ProductDbService.UpdateObjectAsync(productToBeDisabled);
             Products = (await GetAllProductsAsync()).ToList();
         }
 
@@ -111,9 +101,9 @@ namespace Blomsterbinderiet.Service
         /// <returns>A task object representing the re-enable operation</returns>
 		public async Task ReenableProductAsync(int id)
 		{
-			Product productToBeReenabled = await DbService.GetObjectByIdAsync(id);
+			Product productToBeReenabled = await ProductDbService.GetObjectByIdAsync(id);
 			productToBeReenabled.Disabled = false;
-			await DbService.UpdateObjectAsync(productToBeReenabled);
+			await ProductDbService.UpdateObjectAsync(productToBeReenabled);
             Products = (await GetAllProductsAsync()).ToList();
         }
 
@@ -124,7 +114,7 @@ namespace Blomsterbinderiet.Service
         /// <param name="property">Name of the Property which the IEnumerable should be ordered by</param>
         /// <param name="largeToSmall">Optional parameter, true if the ordering of the data should reversed before it's returned</param>
         /// <returns>The input IEnumerable but ordered by the name-specified property</returns>
-        public IEnumerable<Product> Sort(IEnumerable<Product> dataToBeSorted,string property, bool largeToSmall=false)
+        public IEnumerable<Product> Sort(IEnumerable<Product> dataToBeSorted, string property, bool largeToSmall=false)
         {
             switch(property)
             {
@@ -154,7 +144,7 @@ namespace Blomsterbinderiet.Service
         /// <returns>A IEnumerable of Product objects whose <c>Keyword</c> navigation property has been included</returns>
         public async Task<IEnumerable<Product>> GetAllProductsIncludeKeywordsAsync()
         {
-            return await DbService.GetObjectsAsync(nameof(Models.Product.Keywords));
+            return await ProductDbService.GetObjectsAsync(nameof(Models.Product.Keywords));
         }
 
         /// <summary>
@@ -177,7 +167,7 @@ namespace Blomsterbinderiet.Service
         /// if they are equal to either or between price1 and price2 if price1 is 
         /// null but price2 isn't then price1 will act as 0.
         /// </remarks>
-        public async Task<IEnumerable<Product>> GetAllProductsFiltered(string name, string colour, double? minPrice, double? maxPrice, string keywordNameSearch, bool showDisabled)
+        public async Task<IEnumerable<Product>> GetAllProductsFilteredAsync(string name, string colour, double? minPrice, double? maxPrice, string keywordNameSearch, bool showDisabled)
         {
             IEnumerable<Product> Products = await GetAllProductsIncludeKeywordsAsync();
 
@@ -225,15 +215,14 @@ namespace Blomsterbinderiet.Service
         /// <returns>
         /// An IEnumerable of Product objects containing non-disabled products which is ordered by the <c>Name</c> property
         /// </returns>
-        public async Task<IEnumerable<Product>> GetAllProductsStandardFilterAndSort()
+        public async Task<IEnumerable<Product>> GetAllProductsStandardFilterAndSortAsync()
         {
             return (await GetAllProductsAsync()).Where(p => p.Disabled == false).OrderBy(p => p.Name);
         }
 
-        public async Task<IEnumerable<Product>> GetFirst4BuketProducts()
+        public async Task<IEnumerable<Product>> GetFirst4BouquetProductsAsync()
         {
-            return await DbService.GetFirst4BuketProducts();
+            return await ProductDbService.GetFirst4BouquetProductsAsync();
         }
-
     }
 }

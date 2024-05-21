@@ -40,7 +40,7 @@ namespace Blomsterbinderiet.Service
             output.Append(_cookieName, jsonString, cookieOptions);
         }
 
-        public IEnumerable<OrderLine>? LoadOrderLines(IEnumerable<BasketItem> basket)
+        public async Task<IEnumerable<OrderLine>>? LoadOrderLinesAsync(IEnumerable<BasketItem> basket)
         {
             if (basket == null)
             {
@@ -50,7 +50,7 @@ namespace Blomsterbinderiet.Service
 
             foreach (BasketItem BItem in basket)
             {
-                Product line = ProductService.GetProductByIdAsync(BItem.ProductID).Result;
+                Product line = await ProductService.GetProductByIdAsync(BItem.ProductID);
                 OrderLine Temporary = new() { Amount = BItem.Amount, Product = line };
                 orderLines.Add(Temporary);
             }
@@ -133,7 +133,7 @@ namespace Blomsterbinderiet.Service
             return null;
         }
 
-        public IEnumerable<BasketItem> Remove(IRequestCookieCollection input, IResponseCookies output, int id)
+        public IEnumerable<BasketItem> RemoveBasketItem(IRequestCookieCollection input, IResponseCookies output, int id)
         {
             ICollection<BasketItem> basketItems = ReadCookie(input);
             BasketItem toBeRemoved = null;

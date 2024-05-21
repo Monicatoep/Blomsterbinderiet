@@ -69,7 +69,7 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Products = await ProductService.GetAllProductsFiltered(SearchString, Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
+            Products = await ProductService.GetAllProductsFilteredAsync(SearchString, Colour, MinimumPrice, MaksimumPrice, KeywordNameSearch, ShowDisabled);
             Products = ProductService.Sort(Products, SortProperty, SortDirection);
             Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
             //Products.OrderBy(p => p.Disabled);

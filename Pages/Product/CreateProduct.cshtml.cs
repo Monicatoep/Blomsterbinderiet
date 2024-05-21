@@ -17,7 +17,7 @@ namespace Blomsterbinderiet.Pages.Product
         [BindProperty]
         public int[] KeywordIDs { get; set; }
         public string Confirmation { get; set; }
-        public IEnumerable<Keyword> ProductKeywords{ get; set; }
+        public IEnumerable<Keyword> ProductKeywords { get; set; }
 
         public CreateProductModel(ProductService productService, ImageService imageService, KeywordService keywordService)
         {
@@ -25,8 +25,6 @@ namespace Blomsterbinderiet.Pages.Product
             ImageService = imageService;
             KeywordService = keywordService;
         }
-
-
 
         public async Task<IActionResult> OnGetAsync()
         {

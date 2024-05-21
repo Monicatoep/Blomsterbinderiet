@@ -29,8 +29,6 @@ namespace Blomsterbinderiet.Pages.UserPages
             User = await UserService.GetUserByHttpContextAsync(HttpContext);
             OrderLines = (await OrderService.GetOrderlinesByOrderIdAsync(id)).ToList();
             OrderSum = await OrderService.GetOrderSumAsync(OrderLines);
-        }
-
-       
+        }       
     }
 }

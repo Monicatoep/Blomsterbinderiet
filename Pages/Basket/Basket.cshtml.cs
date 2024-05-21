@@ -61,7 +61,7 @@ namespace Blomsterbinderiet.Pages.Basket
 
         public IActionResult OnPostRemove(int id)
         {
-            IEnumerable<BasketItem> basketItems = CookieService.Remove(Request.Cookies, Response.Cookies, id);
+            IEnumerable<BasketItem> basketItems = CookieService.RemoveBasketItem(Request.Cookies, Response.Cookies, id);
 
             OrderLines = CookieService.LoadOrderLines(basketItems).ToList();
 

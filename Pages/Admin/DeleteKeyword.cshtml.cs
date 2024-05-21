@@ -23,7 +23,7 @@ namespace Blomsterbinderiet.Pages.Admin
             Keyword = await KeywordService.GetKeywordByIdAsync(id);
             if (User == null)
             {
-                return RedirectToPage("/NotFound");
+                return RedirectToPage("/Static/NotFound");
             }
             return Page();
         }

@@ -45,7 +45,7 @@ namespace Blomsterbinderiet.Pages.Product
 
 		public async Task OnGetAsync()
         {
-            Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            Products = await ProductService.GetAllProductsStandardFilterAndSortAsync();
         }
 
         public async Task<IActionResult> OnGetKeywordAsync(string keywordName)
@@ -69,13 +69,13 @@ namespace Blomsterbinderiet.Pages.Product
             MinimumPrice = null;
             MaksimumPrice = null;
             ShowDisabled = false;
-            Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            Products = await ProductService.GetAllProductsStandardFilterAndSortAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnGetSearchStringAsync(string searchString)
         {
-            Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            Products = await ProductService.GetAllProductsStandardFilterAndSortAsync();
             SearchString = searchString;
             Colour = searchString;
             searchString = searchString.ToLower();
@@ -91,7 +91,7 @@ namespace Blomsterbinderiet.Pages.Product
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Products = await ProductService.GetAllProductsFiltered(SearchString, Colour,MinimumPrice,MaksimumPrice,KeywordNameSearch,ShowDisabled);
+            Products = await ProductService.GetAllProductsFilteredAsync(SearchString, Colour,MinimumPrice,MaksimumPrice,KeywordNameSearch,ShowDisabled);
             Products = ProductService.Sort(Products, SortProperty, SortDirection);
             //Products.OrderBy(p => p.Disabled);
 
@@ -102,7 +102,7 @@ namespace Blomsterbinderiet.Pages.Product
         {
             CookieService.PlusOne(Request.Cookies, Response.Cookies, id);
 
-            Products = await ProductService.GetAllProductsStandardFilterAndSort();
+            Products = await ProductService.GetAllProductsStandardFilterAndSortAsync();
             Message = $"Tilføjede produkt til kurven";
             ID = id;
             return Page();

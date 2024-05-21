@@ -4,8 +4,8 @@ namespace Blomsterbinderiet.Service
 {
     public class KeywordService
     {
-        public List<Keyword> Keywords { get; set; }
         private DbGenericService<Keyword> KeywordsDbService { get; set; }
+        public List<Keyword> Keywords { get; set; }
 
         public KeywordService(DbGenericService<Keyword> keywordsDbService)
         {
