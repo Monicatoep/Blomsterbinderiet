@@ -23,19 +23,19 @@ namespace Blomsterbinderiet.Models
         public string? CommentShop { get; set; }
         public Status OrderStatus { get; set; }
 
-        public Order(User customer, DateTime orderDate, DateTime PickUpTime)
+        public Order()
+        {
+        }
+
+        public Order(User customer, DateTime orderDate, DateTime pickUpTime)
         {
             CustomerID = customer.ID;
             EmployeeID = null;
             Employee = null;
             OrderDate = orderDate;
             CommentShop = null;
-            PickUpDate = PickUpTime;
+            PickUpDate = pickUpTime;
             OrderStatus = Status.Ny;
-        }
-
-        public Order()
-        {
         }
 
         public override string ToString()

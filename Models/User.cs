@@ -32,6 +32,10 @@ namespace Blomsterbinderiet.Models
         
         public string? State { get; set; }
 
+        public User()
+        {
+        }
+
         public User(string name, string password, string role, string email, string phone, string address)
         {
             Name = name;
@@ -41,10 +45,6 @@ namespace Blomsterbinderiet.Models
             Phone = phone;
             Address = address;
             State = "Aktiv";
-        }
-
-        public User()
-        {
         }
 
         public override string ToString()

@@ -51,7 +51,6 @@ namespace Blomsterbinderiet.Pages.Product
             {
                 Product.Image = ImageService.ConvertToByteArray(Product.UploadedImage);
             }
-            //await ProductService.AddProductAsync(Product, KeywordIDs);
             await ProductService.UpdateProductAsync(Product, KeywordIDs);
 
             Confirmation = "Opdaterede produktet";
