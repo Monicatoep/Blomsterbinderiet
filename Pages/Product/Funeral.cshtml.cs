@@ -88,7 +88,7 @@ namespace Blomsterbinderiet.Pages.Product
             Products = await ProductService.GetAllProductsFilteredAsync(SearchString, MinimumPrice, MaksimumPrice, ShowDisabled);
             Products = Products.Where(p => p.Keywords.Any(k => k.Name.Contains("Begravelse")));
             Products = ProductService.Sort(Products, SortProperty, SortDirection);
-            Products = Products.OrderBy(p => p.Disabled);
+            Products = Products.OrderByDescending(p => p.Disabled);
             PageCount = (int)Math.Ceiling(Products.Count() / 6d);
             Products = Products.Skip((CurrentPage - 1) * 6).Take(6);
         }
