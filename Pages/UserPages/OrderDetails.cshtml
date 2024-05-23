@@ -4,10 +4,9 @@
 }
 
 <div class="container p-4">
-    <a asp-page="/Admin/GetAllOrders" class="btn btn-primary mb-2" id="btnlight">Tilbage til oversigten</a>
-
 @if (Model.User.Role == "Customer")
 {
+    <a asp-page="/UserPages/MyOrders" class="btn btn-primary mb-2" id="btnlight">Tilbage til oversigten</a>
     <div class="col-md-10">
         <div class="card mb-3 p-3" id="titlecard">
             <h1>Ordreoplysninger</h1>
@@ -56,6 +55,7 @@
 }
 else if(Model.User.Role == "Undertaker")
 {
+        <a asp-page="/UserPages/MyOrders" class="btn btn-primary mb-2" id="btnlight">Tilbage til oversigten</a>
         <div class="col-md-10">
             <div class="card mb-3 p-3" id="titlecard">
                 <h1>Ordreoplysninger</h1>
@@ -106,6 +106,7 @@ else if(Model.User.Role == "Undertaker")
 
     else if (Model.User.Role == "Admin" || Model.User.Role == "Employee")
     {
+        <a asp-page="/Admin/GetAllOrders" class="btn btn-primary mb-2" id="btnlight">Tilbage til oversigten</a>
         if(Model.Order.DeliveryId == null)
         {
             <div class="col-md-10">
