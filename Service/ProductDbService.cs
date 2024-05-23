@@ -31,10 +31,10 @@ namespace Blomsterbinderiet.Service
             using (var context = new BlomstDbContext())
             {
                 //start tasks
-                Task<Product> productTask = context.Set<Product>().Include(p => p.Keywords).FirstAsync(p => p.ID == product.ID);
-                Task<List<Keyword>> keywordsTask = context.Set<Keyword>().Where(k => idsOfKeywords.Contains(k.ID)).ToListAsync();
+                //Task<Product> productTask = ;
+                //Task<List<Keyword>> keywordsTask = ;
 
-                Product tempProduct = await productTask;
+                Product tempProduct = await context.Set<Product>().Include(p => p.Keywords).FirstAsync(p => p.ID == product.ID);
                 //remove all of its keywords
                 tempProduct.Keywords.Clear();
 
@@ -49,7 +49,7 @@ namespace Blomsterbinderiet.Service
                 }
 
                 //add the new keywords
-                tempProduct.Keywords = await keywordsTask;
+                tempProduct.Keywords = await context.Set<Keyword>().Where(k => idsOfKeywords.Contains(k.ID)).ToListAsync();
 
                 //update and save
                 context.Set<Product>().Update(tempProduct);

@@ -173,7 +173,7 @@ namespace Blomsterbinderiet.Service
 
             if (searchString != null)
             {
-                searchString = searchString.ToLower();
+                searchString = searchString.ToLower().Trim();
                 Products = Products.Where(p =>
                     p.Name.ToLower().Contains(searchString) ||
                     p.Colour.ToLower().Contains(searchString) ||
