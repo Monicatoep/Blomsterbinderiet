@@ -38,6 +38,8 @@ namespace Blomsterbinderiet.Pages.Customer
             {
                 return Page();
             }
+            Email = Email.Trim();
+            Password = Password.Trim();
             await UserService.AddUserAsync(new User(Name, PasswordHasher.HashPassword(null, Password), "Customer", Email, Phone, Address));
             return RedirectToPage("/UserPages/RegisterSuccess");
         }

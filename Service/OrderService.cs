@@ -57,6 +57,11 @@ namespace Blomsterbinderiet.Service
             await OrderDbService.UpdateObjectAsync(order);
         }
 
+        public async Task UpdateOrderAsync(Order order, string property)
+        {
+            await OrderDbService.UpdateObjectAsync(order,new List<string>(){ property });
+        }
+
         public double GetOrderSum(IEnumerable<OrderLine> orderLines)
         {
             double orderSum = 0;

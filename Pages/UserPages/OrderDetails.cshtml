@@ -151,6 +151,19 @@ else if(Model.User.Role == "Undertaker")
                             </div>
                         </div>
                         <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Kommentar</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                <form method="post">
+                                    <input asp-for="@Model.Order.CommentShop" asp-route-id="@Model.Order.Id" class="form-control" id="noborder" />
+                                    <br/>
+                                    <button type="submit" class="btn btn-success">Gem</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
             </div>
@@ -197,6 +210,24 @@ else if(Model.User.Role == "Undertaker")
                             </div>
                             <div class="col-sm-9" id="textcolor">
                                 @Model.User.Phone
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Kommentar</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                <form method="post">
+                                    <input asp-for="@Model.Order.CommentShop" asp-route-id="@Model.Order.Id" class="form-control" id="noborder" />
+                                    <br />
+                                    <button type="submit" class="btn btn-success">Gem</button>
+                                    @if(Model.Message != null)
+                                    {
+                                        <br />
+                                        <p>@Model.Message</p>
+                                    }
+                                </form>
                             </div>
                         </div>
                         <hr>

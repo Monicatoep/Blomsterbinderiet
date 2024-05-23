@@ -38,7 +38,8 @@ namespace Blomsterbinderiet.Pages.Customer
                 Message = "Login fejlede";
                 return Page(); 
             }
-            
+            Email = Email.Trim();
+            Password = Password.Trim();
             ClaimsIdentity identity = CookieService.Login(await UserService.GetAllUsersAsync(), Email, Password);
             if(identity != null)
             {
