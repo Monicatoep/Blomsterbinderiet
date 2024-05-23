@@ -10,9 +10,6 @@ namespace Blomsterbinderiet.Pages.UserPages
         public OrderService OrderService { get; set; }
         public UserService UserService { get; set; }
         public ProductService ProductService { get; set; }
-
-        
-        public string? Comment { get; set; }
         [BindProperty]
         public Order Order { get; set; }
         public List<OrderLine> OrderLines { get; set; }
