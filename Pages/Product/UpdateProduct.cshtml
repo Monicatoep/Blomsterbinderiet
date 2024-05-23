@@ -1,7 +1,9 @@
 ﻿@page
 @model UpdateProductModel
 @{
+    ViewData["Title"] = "Opdater produkt";
 }
+
 <form method="post" enctype="multipart/form-data">
     <input asp-for="@Model.Product.ID" class="form-control" hidden />
     <div>
