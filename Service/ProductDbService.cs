@@ -30,10 +30,6 @@ namespace Blomsterbinderiet.Service
         {
             using (var context = new BlomstDbContext())
             {
-                //start tasks
-                //Task<Product> productTask = ;
-                //Task<List<Keyword>> keywordsTask = ;
-
                 Product tempProduct = await context.Set<Product>().Include(p => p.Keywords).FirstAsync(p => p.ID == product.ID);
                 //remove all of its keywords
                 tempProduct.Keywords.Clear();
