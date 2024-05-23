@@ -28,6 +28,7 @@ namespace Blomsterbinderiet.Pages.UserPages
             {
                 return Page();
             }
+            User.Email = User.Email.Trim();
             await UserService.UpdateUserAsync(User, new List<string>() { nameof(User.Name), nameof(User.Phone), nameof(User.Address) });
             Message = "Opdaterede din profil";
             return Page();

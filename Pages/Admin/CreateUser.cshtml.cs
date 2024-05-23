@@ -64,6 +64,8 @@ namespace Blomsterbinderiet.Pages.Admin
             {
                 return Page();
             }
+            Password = Password.Trim();
+            Email = Email.Trim();
             await UserService.AddUserAsync(new User(Name,PasswordHasher.HashPassword(null, Password), Role, Email, Phone, Address));
             return RedirectToPage("/Admin/CreateUserSuccess");
         }
