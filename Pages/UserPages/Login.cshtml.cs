@@ -18,8 +18,7 @@ namespace Blomsterbinderiet.Pages.Customer
         [BindProperty, DataType(DataType.Password)]
         [Required]
         public string Password { get; set; }
-        public string Message { get; set; }
-        public string ID { get; set; }        
+        public string Message { get; set; }       
 
         public LoginModel(UserService userService, CookieService cookieService)
         {

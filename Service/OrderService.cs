@@ -124,12 +124,12 @@ namespace Blomsterbinderiet.Service
             await OrderDbService.UpdateObjectAsync(order);
         }
 
-        public async Task OrderInProgressAsync(int id, string uId)
+        public async Task OrderInProgressAsync(int id, string userID)
         {
             Order order = await OrderDbService.GetObjectByIdAsync(id);
             order.OrderStatus = Status.Klargøres;
 
-            string userId = uId;
+            string userId = userID;
             
             if (userId != null)
             {
@@ -162,7 +162,7 @@ namespace Blomsterbinderiet.Service
                      where o.CustomerID == userId
                      join l in OrderLineDbService.GetObjectsAsync().Result on o.Id equals l.OrderID into ol
                      orderby o.OrderDate descending
-                     select new MyOrdersDAO{ Order = o, OrderLine = ol, Amount = ol.Sum((OrderLine o) => o.Amount) };
+                     select new MyOrdersDAO{ Order = o, OrderLines = ol, Amount = ol.Sum((OrderLine o) => o.Amount) };
             return orders;
         }
 
@@ -176,7 +176,7 @@ namespace Blomsterbinderiet.Service
             }
         }
 
-        public async Task CreateNewOrderWithDeliveryAsync(User user, DateTime pickUpTime, List<OrderLine> orderLines, Models.Delivery delivery)
+        public async Task CreateNewOrderWithDeliveryAsync(User user, DateTime pickUpTime, List<OrderLine> orderLines, Delivery delivery)
         {
             Delivery newDelivery = new(delivery.DeseasedName, delivery.Address);
             await AddDeliveryAsync(newDelivery);
@@ -285,7 +285,7 @@ namespace Blomsterbinderiet.Service
                    select order;
         } 
 
-        public async Task <IEnumerable<OrderLine>> GetOrderlinesByOrderIdAsync(int id)
+        public async Task<IEnumerable<OrderLine>> GetOrderlinesByOrderIdAsync(int id)
         {
             OrderLines = (await OrderLineDbService.GetObjectsAsync()).ToList();
             return from orderLine in OrderLines

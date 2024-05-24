@@ -127,9 +127,6 @@ namespace Blomsterbinderiet.Service
                 case nameof(Product.Colour):
                     dataToBeSorted = dataToBeSorted.OrderBy(p => p.Colour);
                     break;
-                case nameof(Product.Description):
-                    dataToBeSorted = dataToBeSorted.OrderBy(p => p.Description);
-                    break;
             }
             if(largeToSmall)
             {

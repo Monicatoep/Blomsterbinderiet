@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blomsterbinderiet.Pages.Basket
 {
+    [Authorize(Roles = "Undertaker")]
     public class CheckOutUndertakerModel : PageModel
     {
-        public ProductService ProductService { get; set; }
         private CookieService CookieService { get; set; }
         private UserService UserService { get; set; }
         private OrderService OrderService { get; set; }
@@ -28,12 +29,11 @@ namespace Blomsterbinderiet.Pages.Basket
         [Required(ErrorMessage = "Der skal angives en leveringsadresse")]
         [BindProperty]
         public string? Address { get; set; }
-        public string Message; 
+        public string Message { get; set; }
 
-        public CheckOutUndertakerModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
+        public CheckOutUndertakerModel(UserService userService, CookieService cookieService, OrderService orderService)
         {
             UserService = userService;
-            ProductService = productService;
             CookieService = cookieService;
             OrderService = orderService;
         }

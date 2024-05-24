@@ -27,7 +27,7 @@ namespace Blomsterbinderiet.Service
 
         public async Task<Keyword> DeleteKeywordAsync(int id)
         {
-            Keyword keywordToBeDeleted = KeywordsDbService.GetObjectByIdAsync(id).Result;
+            Keyword keywordToBeDeleted = await KeywordsDbService.GetObjectByIdAsync(id);
             Keywords.Remove(keywordToBeDeleted);
             await KeywordsDbService.DeleteObjectAsync(keywordToBeDeleted);
             return keywordToBeDeleted;

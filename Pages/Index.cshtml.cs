@@ -7,7 +7,7 @@ namespace Blomsterbinderiet.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        public ProductService ProductService;
+        public ProductService ProductService { get; set; }
 
         [BindProperty]
         public string SearchString { get; set; }

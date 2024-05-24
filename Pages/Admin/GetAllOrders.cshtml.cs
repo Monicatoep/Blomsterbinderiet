@@ -15,7 +15,7 @@ namespace Blomsterbinderiet.Pages.Admin
         public UserService UserService { get; set; }
         public List<Order> MyOrders { get; set; }
         public List<User> Employees { get; set; }
-        public Status[] StatusList{ get; set; }
+        public Status[] StatusList { get; set; }
         [BindProperty]
         public DateOnly Date { get; set; }
       

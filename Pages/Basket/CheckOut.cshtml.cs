@@ -1,5 +1,6 @@
 using Blomsterbinderiet.Models;
 using Blomsterbinderiet.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel;
@@ -7,9 +8,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Blomsterbinderiet.Pages.Basket
 {
+    [Authorize(Roles = "Customer")]
     public class CheckOutModel : PageModel
     {
-        public ProductService ProductService { get; set; }
         private CookieService CookieService { get; set; }
         private UserService UserService { get; set; }
         private OrderService OrderService { get; set; }
@@ -21,12 +22,11 @@ namespace Blomsterbinderiet.Pages.Basket
         [BindProperty]
         public DateTime PickUpDate { get; set; }
 
-        public string Message;
+        public string Message { get; set; }
 
-        public CheckOutModel(UserService userService, ProductService productService, CookieService cookieService, OrderService orderService)
+        public CheckOutModel(UserService userService, CookieService cookieService, OrderService orderService)
         {
             UserService = userService;
-            ProductService = productService;
             CookieService = cookieService;
             OrderService = orderService;
         }
@@ -59,7 +59,6 @@ namespace Blomsterbinderiet.Pages.Basket
                 Message = "Du skal vælge et afhentningstidspunkt der er minimum 24 timer fra nu.";
                 return Page();
             }
-
             else
             {
                 await OrderService.CreateNewOrderAsync(User, PickUpDate, OrderLines);
@@ -67,8 +66,6 @@ namespace Blomsterbinderiet.Pages.Basket
                 CookieService.SaveCookie(Response.Cookies, null);
                 return RedirectToPage("/Basket/Confirmation");
             }
-
-           
         }
     }
 }

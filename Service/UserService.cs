@@ -32,16 +32,6 @@ namespace Blomsterbinderiet.Service
             return await UserDbService.GetObjectByIdAsync(Convert.ToInt32(id));
         }
 
-        public User? GetUserByEmail(string email)
-        {
-            foreach (User u in Users)
-            {
-                if (u.Email.Equals(email))
-                { return u; }
-            }
-            return null;
-        }
-
         public async Task UpdateUserAsync(User user)
         {
             await UserDbService.UpdateObjectAsync(user);

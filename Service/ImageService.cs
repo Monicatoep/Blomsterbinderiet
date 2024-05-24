@@ -9,13 +9,13 @@
             WebHostEnvironment = webHostEnvironment;
         }
 
-        public byte[] ConvertToByteArray(IFormFile temp)
+        public byte[] ConvertToByteArray(IFormFile tempUploadedFile)
         {
-            var filePath = Path.Combine(Path.Combine(WebHostEnvironment.WebRootPath, "images"), temp.FileName);
+            var filePath = Path.Combine(Path.Combine(WebHostEnvironment.WebRootPath, "images"), tempUploadedFile.FileName);
 
             using (FileStream fs = System.IO.File.Create(filePath))
             {
-                temp.CopyTo(fs);
+                tempUploadedFile.CopyTo(fs);
             }
             byte[] temp2 = System.IO.File.ReadAllBytes(filePath);
             System.IO.File.Delete(filePath);

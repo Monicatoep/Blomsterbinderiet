@@ -10,7 +10,7 @@ namespace Blomsterbinderiet.Pages.Product
     public class UpdateProductModel : PageModel
     {
         private ProductService ProductService { get; set; }
-        public ImageService ImageService { get; set; }
+        private ImageService ImageService { get; set; }
         private KeywordService KeywordService { get; set; }
         [BindProperty]
         public Models.Product Product { get; set; }

@@ -2,12 +2,13 @@ using Blomsterbinderiet.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Blomsterbinderiet.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blomsterbinderiet.Pages.Basket
 {
     public class BasketModel : PageModel
     {
-        public CookieService CookieService { get; set; }
+        private CookieService CookieService { get; set; }
         private OrderService OrderService { get; set; }
         public ICollection<BasketItem> BasketItems { get; set; }
         public List<OrderLine> OrderLines { get; set; }
