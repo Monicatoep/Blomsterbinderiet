@@ -3,7 +3,8 @@
 namespace Blomsterbinderiet.Service
 {
     /// <summary>
-    /// This class is responsible for handling <see cref="Product"/> objects. It contains filter-, sort- and CRUD methods.
+    /// This class is responsible for handling <see cref="Product"/> objects.
+    /// It contains filter-, sort- and CRUD methods.
     /// </summary>
     public class ProductService
     {
@@ -11,37 +12,45 @@ namespace Blomsterbinderiet.Service
         /// <c>ProductDbService</c> represents a reference to the DbGenericService object handling CRUD calls to the database for the <see cref="Product"/> objects 
         /// </summary>
         private ProductDbService ProductDbService { get; set; }
+
+        /// <summary>
+        /// A list of product object references
+        /// </summary>
         public List<Product> Products { get; set; }
 
         /// <summary>
         /// Constructor for the <c>ProductService</c> class. 
         /// </summary>
         /// <remarks>
-        /// The constructor must be dependency injected an 
-        /// object of type <see cref="DbGenericService{T=Product}"/> where T is a type of Product
+        /// The constructor must be dependency injected a 
+        /// reference to an object of type <see cref="Service.ProductDbService"/>
         /// </remarks>
-        /// <param name="dbService">Reference to a <see cref="DbGenericService{T=Product}"/> object where T is Product</param>
+        /// <param name="dbService">A reference</param>
         public ProductService(ProductDbService dbService)
         {
             ProductDbService = dbService;
         }
 
         /// <summary>
-        /// Method <c>GetProductByIdAsync</c> calls the <c>GetObjectByIdAsync</c> in the DbGenericService class.
-        /// <seealso cref="DbGenericService{T}.GetObjectByIdAsync"/>
+        /// Retrieves a Product object from the database using the argument value of id
         /// </summary>
-        /// <param name="id">The primary key of a tuple</param>
+        /// <param name="id">The primary key of the Product tuple that gets returned</param>
         /// <returns>A Task object containing a Product object, it is null if no tuple in the database had a matching primary key</returns>
         /// <remarks>
-        /// If no tuple, with the given input value of the "id" parameter as a primarykey,
+        /// If no tuple, with the given input value of the "id" parameter as a primary key,
         /// exists in the database then a null object is returned
         /// </remarks>
-        /// 
         public async Task<Product?> GetProductByIdAsync(int id)
         {
             return await ProductDbService.GetObjectByIdAsync(id);
         }
 
+        /// <summary>
+        /// This method returns a reference to a Product object which 
+        /// has its navigation property <see cref="Product.Keywords"/> filled
+        /// </summary>
+        /// <param name="id">This represents the primary key of the Product</param>
+        /// <returns>A Task object representing the operation of retrieving the Product including its keywords from the database</returns>
         public async Task<Product?> GetProductIncludingKeywordsByIDAsync(int id)
         {
             return await ProductDbService.GetProductIncludingKeywordsByIDAsync(id);
@@ -61,6 +70,7 @@ namespace Blomsterbinderiet.Service
         /// on the supplied <see cref="Product"/> object in the database 
         /// </summary>
         /// <param name="product">A product object whose properties get sent to the database</param>
+        /// <param name="idsOfKeywords">The ids, the primary key, of the keywords which the product should only contain after the update</param>
         /// <returns>A Task object which can be used to tell when a operation is done</returns>
         public async Task UpdateProductAsync(Product product, IEnumerable<int> idsOfKeywords)
         {
@@ -68,12 +78,14 @@ namespace Blomsterbinderiet.Service
         }
 
         /// <summary>
-        /// Adds the passed <see cref="Product"/> object to the "Products" entity/table in the database
+        /// Adds the provided object, of type Product, to the "Products" entity/table in the database
         /// </summary>
         /// <remarks>
         /// The Product object passed to this method must have its primary key, "ID", set to null.
         /// </remarks>
-        /// <param name="product">An object of type Product</param>
+        /// <param name="product">An object of type Product which should be inserted into the database</param>
+        /// <param name="idsOfKeywords">An array of integers which represent the ids of the keywords
+        /// which the Product should have in the database</param>
         /// <returns>Returns a task object representing the Add operation</returns>
         public async Task AddProductAsync(Product product, int[] idsOfKeywords)
         {
@@ -81,7 +93,7 @@ namespace Blomsterbinderiet.Service
         }
 
         /// <summary>
-        /// Sets the <c>Disabled</c> property to <c>true</c>, on a product object specified by the primary key.
+        /// Sets <see cref="Product.Disabled"/> to <c>true</c>, on the product object specified by the primary key.
         /// And updates the "Products" entity/table in the database
         /// </summary>
         /// <param name="id">Primary key of a product tuple/object</param>
@@ -95,7 +107,8 @@ namespace Blomsterbinderiet.Service
         }
 
         /// <summary>
-        /// Sets the <c>Disabled</c> property to <c>false</c>, on a product object specified by the primary key
+        /// Sets <see cref="Product.Disabled"/> to <c>false</c>, on the product object specified by the primary key.
+        /// And updates the "Products" entity/table in the database
         /// </summary>
         /// <param name="id">Primary key of a product tuple/object</param>
         /// <returns>A task object representing the re-enable operation</returns>
@@ -108,12 +121,15 @@ namespace Blomsterbinderiet.Service
         }
 
         /// <summary>
-        /// This method orders the input IEnumerable by a name-specified property
+        /// This method orders the input IEnumerable by a name-specified property.
+        /// If the <c>property</c> argument isn't "Name", "Price" or "Colour" then
+        /// the IEnumerable will not get sorted and though the ordering will be reversed
+        /// if the argument to <c>largeToSmall</c> is true.
         /// </summary>
         /// <param name="dataToBeSorted">The IEnumerable of Products to be sorted</param>
         /// <param name="property">Name of the Property which the IEnumerable should be ordered by</param>
         /// <param name="largeToSmall">Optional parameter, true if the ordering of the data should reversed before it's returned</param>
-        /// <returns>The input IEnumerable but ordered by the name-specified property</returns>
+        /// <returns>The input IEnumerable but ordered by the name-specified property and optionally in descending order</returns>
         public IEnumerable<Product> Sort(IEnumerable<Product> dataToBeSorted, string property, bool largeToSmall=false)
         {
             switch(property)
@@ -141,20 +157,19 @@ namespace Blomsterbinderiet.Service
         /// <returns>A IEnumerable of Product objects whose <c>Keyword</c> navigation property has been included</returns>
         public async Task<IEnumerable<Product>> GetAllProductsIncludeKeywordsAsync()
         {
-            return await ProductDbService.GetObjectsAsync(nameof(Models.Product.Keywords));
+            return await ProductDbService.GetObjectsAsync(nameof(Product.Keywords));
         }
 
         /// <summary>
         /// This method returns a IEnumerable of Product objects where Keywords have been included in the navigation property <see cref="Product.Keywords"/>.
         /// <para>Before the IEnumerable is returned its content gets filtered based on the parameters</para>
-        /// <para>If a parameter is null then its filter is skipped</para>
-        /// <para>Except for the price filter which is only skipped when both price1 and price2 is null</para>
+        /// <para>If an argument is null then its filter is skipped</para>
+        /// <para>Except for the price filter which is only skipped when both minePrice and maxPrice is null</para>
         /// </summary>
-        /// <param name="colour">Colour which the <see cref="Product.Colour"/> property must be</param>
-        /// <param name="minPrice"></param>
-        /// <param name="maxPrice"></param>
-        /// <param name="keywordNameSearch"></param>
-        /// <param name="showDisabled"></param>
+        /// <param name="searchString">A string the products name, colour or any of is keywords names must contain</param>
+        /// <param name="minPrice">Minimum price a products price property be must equal to or larger than</param>
+        /// <param name="maxPrice">Maksimum price a products price property be must equal to or smaller than</param>
+        /// <param name="showDisabled">Whether products which are disabled should be included</param>
         /// <returns>
         /// An IEnumerable of Products including the Keyword navigation property 
         /// which has been filtered and sorted according to the given parameters.
@@ -204,6 +219,10 @@ namespace Blomsterbinderiet.Service
             return Products;
         }
 
+        /// <summary>
+        /// This method retrieves the first 4 products of which contains a keywords with the name "Buket".
+        /// </summary>
+        /// <returns>The first 4 Products which has a keyword named "Buket"</returns>
         public async Task<IEnumerable<Product>> GetFirst4BouquetProductsAsync()
         {
             return await ProductDbService.GetFirst4BouquetProductsAsync();
