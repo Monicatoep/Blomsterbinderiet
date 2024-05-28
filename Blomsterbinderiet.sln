@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blomsterbinderiet", "Blomsterbinderiet.csproj", "{F5753C77-AAC3-4BE4-8DDC-C921A2FEF01D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "..\UnitTestProject\UnitTestProject.csproj", "{82D7E449-5032-4B52-9EBF-A9512B9BE15B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blomsterbinderiet.test", "Blomsterbinderiet.test\Blomsterbinderiet.test.csproj", "{EC4FEDBF-BFE6-46B0-BE62-C46FB0F51D1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{F5753C77-AAC3-4BE4-8DDC-C921A2FEF01D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5753C77-AAC3-4BE4-8DDC-C921A2FEF01D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5753C77-AAC3-4BE4-8DDC-C921A2FEF01D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82D7E449-5032-4B52-9EBF-A9512B9BE15B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82D7E449-5032-4B52-9EBF-A9512B9BE15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82D7E449-5032-4B52-9EBF-A9512B9BE15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82D7E449-5032-4B52-9EBF-A9512B9BE15B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC4FEDBF-BFE6-46B0-BE62-C46FB0F51D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC4FEDBF-BFE6-46B0-BE62-C46FB0F51D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC4FEDBF-BFE6-46B0-BE62-C46FB0F51D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC4FEDBF-BFE6-46B0-BE62-C46FB0F51D1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
