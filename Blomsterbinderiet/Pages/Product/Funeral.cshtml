@@ -84,7 +84,7 @@
                             {
                                 var product = Model.Products.ElementAt(i);
                                 string cardClass = product.Disabled ? "card card-body disabled-product" : "card card-body";
-                                <div class="col">
+                                <div class="col d-flex align-items-stretch">
                                     <div class="@cardClass">
                                         <h5 class="card-title">@product.Name</h5>
                                         @{
@@ -105,7 +105,9 @@
                                             {
                                                 description = description.Substring(0, 57) + "...";
                                             }
-                                            <p class="card-text">@description</p>
+                                            <div class="col d-flex align-items-stretch">
+                                                <p class="card-text">@description</p>
+                                            </div>
                                         }
                                         <p class="card-text">@product.Price kr</p>
                                         <div class="d-flex justify-content-between">
