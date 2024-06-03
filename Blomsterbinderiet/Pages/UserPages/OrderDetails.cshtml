@@ -5,57 +5,57 @@
 }
 
 <div class="container p-4">
-@if (Model.User.Role == "Customer")
-{
-    <a asp-page="/UserPages/MyOrders" class="btn btn-primary mb-2" id="btnlight">Tilbage til oversigten</a>
-    <div class="col-md-10">
-        <div class="card mb-3 p-3" id="titlecard">
-            <h1>Ordreoplysninger</h1>
-        </div>
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0" id="textcolor">Navn</h6>
+    @if (Model.User.Role == "Customer")
+    {
+        <a asp-page="/UserPages/MyOrders" class="btn btn-primary mb-2" id="btnlight">Tilbage til oversigten</a>
+        <div class="col-md-10">
+            <div class="card mb-3 p-3" id="titlecard">
+                <h1>Ordreoplysninger</h1>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0" id="textcolor">Navn</h6>
+                        </div>
+                        <div class="col-sm-9" id="textcolor">
+                            @Model.User.Name
+                        </div>
                     </div>
-                    <div class="col-sm-9" id="textcolor">
-                        @Model.User.Name
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9" id="textcolor">
+                            @Model.User.Email
+                        </div>
                     </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Telefon</h6>
+                        </div>
+                        <div class="col-sm-9" id="textcolor">
+                            @Model.User.Phone
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Adresse</h6>
+                        </div>
+                        <div class="col-sm-9" id="textcolor">
+                            @Model.User.Address
+                        </div>
+                    </div>
+                    <hr>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Email</h6>
-                    </div>
-                    <div class="col-sm-9" id="textcolor">
-                        @Model.User.Email
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Telefon</h6>
-                    </div>
-                    <div class="col-sm-9" id="textcolor">
-                        @Model.User.Phone
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Adresse</h6>
-                    </div>
-                    <div class="col-sm-9" id="textcolor">
-                        @Model.User.Address
-                    </div>
-                </div>
-                <hr>
             </div>
         </div>
-    </div>
-}
-else if(Model.User.Role == "Undertaker")
-{
+    }
+    else if (Model.User.Role == "Undertaker")
+    {
         <a asp-page="/UserPages/MyOrders" class="btn btn-primary mb-2" id="btnlight">Tilbage til oversigten</a>
         <div class="col-md-10">
             <div class="card mb-3 p-3" id="titlecard">
@@ -69,7 +69,7 @@ else if(Model.User.Role == "Undertaker")
                         </div>
                         <div class="col-sm-9" id="textcolor">
                             @Model.OrderService.GetDeliveryByOrderIdAsync(Convert.ToInt32(Model.Order.DeliveryId)).Result.DeseasedName
-                            
+
                         </div>
                     </div>
                     <hr>
@@ -108,7 +108,7 @@ else if(Model.User.Role == "Undertaker")
     else if (Model.User.Role == "Admin" || Model.User.Role == "Employee")
     {
         <a asp-page="/Admin/GetAllOrders" class="btn btn-primary mb-2" id="btnlight">Tilbage til oversigten</a>
-        if(Model.Order.DeliveryId == null)
+        if (Model.Order.DeliveryId == null)
         {
             <div class="col-md-10">
                 <div class="card mb-3 p-3" id="titlecard">
@@ -159,7 +159,7 @@ else if(Model.User.Role == "Undertaker")
                             <div class="col-sm-9" id="textcolor">
                                 <form method="post">
                                     <input asp-for="@Model.Order.CommentShop" asp-route-id="@Model.Order.Id" class="form-control" id="noborder" />
-                                    <br/>
+                                    <br />
                                     <button type="submit" class="btn btn-success">Gem</button>
                                 </form>
                             </div>
@@ -169,7 +169,7 @@ else if(Model.User.Role == "Undertaker")
                 </div>
             </div>
         }
-        else if(Model.Order.DeliveryId != null)
+        else if (Model.Order.DeliveryId != null)
         {
             <div class="col-md-10">
                 <div class="card mb-3 p-3" id="titlecard">
@@ -223,7 +223,7 @@ else if(Model.User.Role == "Undertaker")
                                     <input asp-for="@Model.Order.CommentShop" asp-route-id="@Model.Order.Id" class="form-control" id="noborder" />
                                     <br />
                                     <button type="submit" class="btn btn-success">Gem</button>
-                                    @if(Model.Message != null)
+                                    @if (Model.Message != null)
                                     {
                                         <br />
                                         <p>@Model.Message</p>
@@ -235,7 +235,7 @@ else if(Model.User.Role == "Undertaker")
                     </div>
                 </div>
             </div>
-        }             
+        }
     }
 
     <div class="col-md-10">
@@ -243,6 +243,7 @@ else if(Model.User.Role == "Undertaker")
             <table class="table">
                 <thead>
                     <tr class="table-success">
+                        <th></th>
                         <th>Produkt</th>
                         <th>Stykpris</th>
                         <th>Antal</th>
@@ -253,6 +254,21 @@ else if(Model.User.Role == "Undertaker")
                     @foreach (Models.OrderLine item in Model.OrderLines)
                     {
                         <tr class="table-warning">
+                            <td width="100">
+                                @{
+                                    Models.Product product = Model.ProductService.GetProductByIdAsync(item.ProductID).Result;
+                                    if (product.Image != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(product.Image);
+                                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                        <img src="@imgSrc" class="img-thumbnail" width="100" />
+                                    }
+                                    else
+                                    {
+                                        <img class="img-thumbnail" width="100" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" />
+                                    }
+                                }
+                            </td>
                             <td>@Model.ProductService.GetProductByIdAsync(item.ProductID).Result.Name</td>
                             <td>@item.ProductPrice</td>
                             <td>@item.Amount</td>

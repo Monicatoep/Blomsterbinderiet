@@ -17,6 +17,7 @@
                     <table class="table">
                         <thead>
                             <tr class="table-success">
+                                <th></th>
                                 <th>Produkt</th>
                                 <th>Stykpris</th>
                                 <th>Antal</th>
@@ -27,6 +28,20 @@
                             @foreach (Models.OrderLine item in Model.OrderLines)
                             {
                                 <tr class="table-warning">
+                                    <td width="100">
+                                        @{
+                                            if (item.Product.Image != null)
+                                            {
+                                                var base64 = Convert.ToBase64String(item.Product.Image);
+                                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                                <img src="@imgSrc" class="img-thumbnail" width="100" />
+                                            }
+                                            else
+                                            {
+                                                <img class="img-thumbnail" width="100" src="https://i0.wp.com/godstedlund.dk/wp-content/uploads/2023/04/placeholder-5.png?w=1200&ssl=1" />
+                                            }
+                                        }
+                                    </td>
                                     <td>@item.Product.Name</td>
                                     <td>@item.Product.Price</td>
                                     <td>
@@ -76,3 +91,4 @@
         }
     </div>
 </div>
+                                        
