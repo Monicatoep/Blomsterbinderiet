@@ -179,6 +179,16 @@ else if(Model.User.Role == "Undertaker")
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
+                                <h6 class="mb-0" id="textcolor">Kundenavn</h6>
+                            </div>
+                            <div class="col-sm-9" id="textcolor">
+                                @Model.UserService.GetUserByIdAsync(Model.Order.CustomerID).Result.Name
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
                                 <h6 class="mb-0" id="textcolor">Afdødes navn</h6>
                             </div>
                             <div class="col-sm-9" id="textcolor">
